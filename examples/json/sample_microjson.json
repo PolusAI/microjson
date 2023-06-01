@@ -1,0 +1,67 @@
+{
+  "coordinatesystem": {
+    "axes": [
+      "x",
+      "y",
+      "z"
+    ],
+    "units": [
+      "micrometer",
+      "micrometer",
+      "micrometer"
+    ],
+    "pixelsPerUnit": [
+      0.5,
+      0.5,
+      2
+    ]    
+  },
+  "type": "FeatureCollection",
+  "features": [
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.522875,
+          51.070292
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "marker-size": "small",
+        "marker-color": "#f5a91a",
+        "marker-symbol": "b"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [
+                20.522875,
+                51.070292
+              ],
+              [
+                20.522875,
+                51.070292
+              ],
+              [
+                20.522875,
+                51.070292
+              ],
+              [
+                20.522875,
+                51.070292
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

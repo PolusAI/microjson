@@ -1,0 +1,7 @@
+site_name: MicroJSON specification
+site_author: Bengt Ljungquist
+copyright: (c) 2023 PolusAI
+nav:
+    - Specification: index.md
+    - Examples: example.md
+    - Validation Tool: validation.md

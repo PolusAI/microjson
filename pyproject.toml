@@ -1,0 +1,18 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "microjson"
+version = "0.1.0"
+description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
+authors = ["Bengt Ljungquist <bengt,ljungquist@nextonicsolutions.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = "^1.8.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+nox = "^2021.6.12"
