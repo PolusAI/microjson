@@ -1,7 +1,7 @@
 import json
 import pytest
 from pydantic import ValidationError
-from microjson import MicroJSON, GeoJSON
+from microjson import MicroJSONAuto, GeoJSONAuto
 import os
 
 # Define the directories containing the example JSON files
@@ -31,7 +31,7 @@ def test_valid_geojsons(filename):
 
     # Try to parse the data as a GeoJSON object
     try:
-        _ = GeoJSON.parse_obj(data)
+        _ = GeoJSONAuto.parse_obj(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -47,7 +47,7 @@ def test_invalid_geojsons(filename):
 
     # This will raise a ValidationError if the data does not match the GeoJSON
     try:
-        _ = GeoJSON.parse_obj(data)
+        _ = GeoJSONAuto.parse_obj(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:
@@ -66,7 +66,7 @@ def test_valid_microjsons(filename):
 
     # Try to parse the data as a GeoJSON object
     try:
-        _ = MicroJSON.parse_obj(data)
+        _ = MicroJSONAuto.parse_obj(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -83,7 +83,7 @@ def test_invalid_microjsons(filename):
     # This will raise a ValidationError if the data does not
     # match the GeoJSON schema
     try:
-        _ = MicroJSON.parse_obj(data)
+        _ = MicroJSONAuto.parse_obj(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:

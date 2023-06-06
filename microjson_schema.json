@@ -1,0 +1,854 @@
+{
+  "title": "MicroJSON",
+  "description": "The root object of a MicroJSON file",
+  "anyOf": [
+    {
+      "$ref": "#/definitions/MicroFeature"
+    },
+    {
+      "$ref": "#/definitions/MicroFeatureCollection"
+    },
+    {
+      "$ref": "#/definitions/MicroPoint"
+    },
+    {
+      "$ref": "#/definitions/MicroMultiPoint"
+    },
+    {
+      "$ref": "#/definitions/MicroLineString"
+    },
+    {
+      "$ref": "#/definitions/MicroMultiLineString"
+    },
+    {
+      "$ref": "#/definitions/MicroPolygon"
+    },
+    {
+      "$ref": "#/definitions/MicroMultiPolygon"
+    },
+    {
+      "$ref": "#/definitions/MicroGeometryCollection"
+    }
+  ],
+  "definitions": {
+    "Point": {
+      "title": "Point",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Point"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "minItems": 2,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MultiPoint": {
+      "title": "MultiPoint",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiPoint"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "LineString": {
+      "title": "LineString",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "LineString"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MultiLineString": {
+      "title": "MultiLineString",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiLineString"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 3
+            }
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "Polygon": {
+      "title": "Polygon",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Polygon"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 3
+            }
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MultiPolygon": {
+      "title": "MultiPolygon",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiPolygon"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 3
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "GeometryCollection": {
+      "title": "GeometryCollection",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "GeometryCollection"
+          ],
+          "type": "string"
+        },
+        "geometries": {
+          "title": "Geometries",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Point"
+              },
+              {
+                "$ref": "#/definitions/MultiPoint"
+              },
+              {
+                "$ref": "#/definitions/LineString"
+              },
+              {
+                "$ref": "#/definitions/MultiLineString"
+              },
+              {
+                "$ref": "#/definitions/Polygon"
+              },
+              {
+                "$ref": "#/definitions/MultiPolygon"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "geometries"
+      ]
+    },
+    "Unit": {
+      "title": "Unit",
+      "description": "An enumeration.",
+      "enum": [
+        "pixel",
+        "meter",
+        "decimeter",
+        "centimeter",
+        "millimeter",
+        "micrometer",
+        "nanometer",
+        "picometer",
+        "radian",
+        "degree"
+      ]
+    },
+    "Coordinatesystem": {
+      "title": "Coordinatesystem",
+      "type": "object",
+      "properties": {
+        "axes": {
+          "title": "Axes",
+          "description": "The coordinate system of the coordinates",
+          "type": "array",
+          "items": {
+            "enum": [
+              "x",
+              "y",
+              "z",
+              "r",
+              "theta",
+              "phi"
+            ],
+            "type": "string"
+          }
+        },
+        "units": {
+          "description": "The units of the coordinates",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Unit"
+          }
+        },
+        "pixelsPerUnit": {
+          "title": "Pixelsperunit",
+          "description": "The number of pixels per unit",
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "axes",
+        "units",
+        "pixelsPerUnit"
+      ]
+    },
+    "MicroFeature": {
+      "title": "MicroFeature",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Feature"
+          ],
+          "type": "string"
+        },
+        "geometry": {
+          "title": "Geometry",
+          "description": "The geometric data\n                                             of the feature",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Point"
+            },
+            {
+              "$ref": "#/definitions/MultiPoint"
+            },
+            {
+              "$ref": "#/definitions/LineString"
+            },
+            {
+              "$ref": "#/definitions/MultiLineString"
+            },
+            {
+              "$ref": "#/definitions/Polygon"
+            },
+            {
+              "$ref": "#/definitions/MultiPolygon"
+            },
+            {
+              "$ref": "#/definitions/GeometryCollection"
+            }
+          ]
+        },
+        "properties": {
+          "title": "Properties",
+          "description": "Properties of the\n                                       feature",
+          "type": "object"
+        },
+        "id": {
+          "title": "Id",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ]
+    },
+    "Feature": {
+      "title": "Feature",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Feature"
+          ],
+          "type": "string"
+        },
+        "geometry": {
+          "title": "Geometry",
+          "description": "The geometric data\n                                             of the feature",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Point"
+            },
+            {
+              "$ref": "#/definitions/MultiPoint"
+            },
+            {
+              "$ref": "#/definitions/LineString"
+            },
+            {
+              "$ref": "#/definitions/MultiLineString"
+            },
+            {
+              "$ref": "#/definitions/Polygon"
+            },
+            {
+              "$ref": "#/definitions/MultiPolygon"
+            },
+            {
+              "$ref": "#/definitions/GeometryCollection"
+            }
+          ]
+        },
+        "properties": {
+          "title": "Properties",
+          "description": "Properties of the\n                                       feature",
+          "type": "object"
+        },
+        "id": {
+          "title": "Id",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ]
+    },
+    "MicroFeatureCollection": {
+      "title": "MicroFeatureCollection",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "FeatureCollection"
+          ],
+          "type": "string"
+        },
+        "features": {
+          "title": "Features",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Feature"
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "features"
+      ]
+    },
+    "MicroPoint": {
+      "title": "MicroPoint",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Point"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "minItems": 2,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroMultiPoint": {
+      "title": "MicroMultiPoint",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiPoint"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroLineString": {
+      "title": "MicroLineString",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "LineString"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroMultiLineString": {
+      "title": "MicroMultiLineString",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiLineString"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 3
+            }
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroPolygon": {
+      "title": "MicroPolygon",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "Polygon"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 3
+            }
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroMultiPolygon": {
+      "title": "MicroMultiPolygon",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "MultiPolygon"
+          ],
+          "type": "string"
+        },
+        "coordinates": {
+          "title": "Coordinates",
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 3
+              }
+            }
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "coordinates"
+      ]
+    },
+    "MicroGeometryCollection": {
+      "title": "MicroGeometryCollection",
+      "type": "object",
+      "properties": {
+        "bbox": {
+          "title": "Bbox",
+          "minItems": 4,
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "type": {
+          "title": "Type",
+          "enum": [
+            "GeometryCollection"
+          ],
+          "type": "string"
+        },
+        "geometries": {
+          "title": "Geometries",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Point"
+              },
+              {
+                "$ref": "#/definitions/MultiPoint"
+              },
+              {
+                "$ref": "#/definitions/LineString"
+              },
+              {
+                "$ref": "#/definitions/MultiLineString"
+              },
+              {
+                "$ref": "#/definitions/Polygon"
+              },
+              {
+                "$ref": "#/definitions/MultiPolygon"
+              }
+            ]
+          }
+        },
+        "coordinatesystem": {
+          "$ref": "#/definitions/Coordinatesystem"
+        }
+      },
+      "required": [
+        "type",
+        "geometries"
+      ]
+    }
+  }
+}
