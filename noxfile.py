@@ -8,9 +8,8 @@ def export_ts(session):
     session.run("datamodel-codegen",
                 "--reuse-model",
                 "--snake-case-field",
-                "--input", "GeoJSON.json",
-                "--input-file-type", "json",
-                "--output", "microjson/geojson.py",
+                "--input", "external",
+                "--output", "geojson",
                 "--target", "3.9")
     session.run("pydantic2ts", "--module", "microjson/model.py",
                 "--output", "microjsonschema.ts")
