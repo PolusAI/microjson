@@ -3,93 +3,93 @@ This JSON file demonstrates how MicroJSON can be used to define and describe com
 
 ```json
 {
-  "coordinatesystem": {
-    "axes": [
-      "x",
-      "y",
-      "z"
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    200.0,
+                    150.0
+                ],
+                "coordinatesystem": {
+                    "axes": [
+                        "x",
+                        "y"
+                    ],
+                    "units": [
+                        "micrometer",
+                        "micrometer"
+                    ],
+                    "pixelsPerUnit": [
+                        0.5,
+                        0.5
+                    ]
+                }
+            },
+            "properties": {
+                "name": "Reference Point",
+                "description": "Specific point of interest",
+                "color": "red"
+            },
+            "id": "1"
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        100.0,
+                        100.0
+                    ],
+                    [
+                        200.0,
+                        200.0
+                    ],
+                    [
+                        300.0,
+                        100.0
+                    ]
+                ],
+                "coordinatesystem": {
+                    "axes": [
+                        "x",
+                        "y"
+                    ],
+                    "units": [
+                        "micrometer",
+                        "micrometer"
+                    ],
+                    "pixelsPerUnit": [
+                        0.5,
+                        0.5
+                    ]
+                }
+            },
+            "properties": {
+                "name": "Cell Path",
+                "description": "Path traced within a cell",
+                "color": "blue"
+            },
+            "id": "2"
+        }
     ],
-    "units": [
-      "micrometer",
-      "micrometer",
-      "micrometer"
-    ],
-    "pixelsPerUnit": [
-      0.5,
-      0.5,
-      2
-    ],    
-  },
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cell-1",
-        "type": "cell",
-        "label": "Cell A",
-        "color": "red"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [10, 10],
-            [10, 50],
-            [50, 50],
-            [50, 10],
-            [10, 10]
-          ]
+    "coordinatesystem": {
+        "axes": [
+            "x",
+            "y"
+        ],
+        "units": [
+            "micrometer",
+            "micrometer"
+        ],
+        "pixelsPerUnit": [
+            0.5,
+            0.5
         ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cell-2",
-        "type": "cell",
-        "label": "Cell B",
-        "color": "blue"
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [60, 60],
-            [60, 100],
-            [100, 100],
-            [100, 60],
-            [60, 60]
-          ]
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "nucleus-1",
-        "type": "nucleus",
-        "label": "Nucleus A",
-        "parentCell": "cell-1"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [30, 30]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "nucleus-2",
-        "type": "nucleus",
-        "label": "Nucleus B",
-        "parentCell": "cell-2"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [80, 80]
-      }
     }
-  ]
 }
+
 ```
