@@ -52,6 +52,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"properties"`: (Optional) A JSON object containing properties specific to the feature, or a JSON null value.
 - `"id"`: (Optional) A unique identifier for this feature.
 
+
 #### Special Feature Objects
 
 - **Image**: An image MUST have the following key-value pairs in its “properties” object:
