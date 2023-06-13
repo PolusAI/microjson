@@ -334,7 +334,7 @@
         },
         "geometry": {
           "title": "Geometry",
-          "description": "The geometric data\n                                             of the feature",
+          "description": "The geometry of the\n                                   feature",
           "anyOf": [
             {
               "$ref": "#/definitions/Point"
@@ -356,6 +356,9 @@
             },
             {
               "$ref": "#/definitions/GeometryCollection"
+            },
+            {
+              "type": "null"
             }
           ]
         },

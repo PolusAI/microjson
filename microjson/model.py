@@ -59,14 +59,16 @@ GeometryType = Union[Point,
                      MultiLineString,
                      Polygon,
                      MultiPolygon,
-                     GeometryCollection]
+                     GeometryCollection,
+                     type(None)
+                     ]
 
 
 class Feature(GeoAbstract):
     type: Literal["Feature"]
-    geometry: Optional[GeometryType] = Field(...,
-                                             description="""The geometric data
-                                             of the feature""")
+    geometry: GeometryType = Field(...,
+                                   description="""The geometry of the
+                                   feature""")
     properties: Optional[Dict] = Field(...,
                                        description="""Properties of the
                                        feature""")
@@ -97,17 +99,14 @@ class Unit(Enum):
 
 
 class Coordinatesystem(BaseModel):
-    axes: List[Literal["x", "y", "z", "r", "theta", "phi"]] = Field(
-        ..., description="The coordinate system of the coordinates"
-    )
-    units: List[Unit] = Field(..., description="The units of the coordinates")
-    pixelsPerUnit: List[float] = Field(
-        ..., description="The number of pixels per unit"
-    )
+    axes: List[Literal["x", "y", "z", "r", "theta", "phi"]]
+    units: Optional[List[Unit]]
+    pixelsPerUnit: Optional[List[float]]
 
 
 class MicroPoint(Point):
     coordinatesystem: Optional[Coordinatesystem]
+    radius: Optional[float]
 
 
 class MicroMultiPoint(MultiPoint):
@@ -124,6 +123,7 @@ class MicroMultiLineString(MultiLineString):
 
 class MicroPolygon(Polygon):
     coordinatesystem: Optional[Coordinatesystem]
+    subtype: Optional[Literal["rectangle", "cuboid"]]
 
 
 class MicroMultiPolygon(MultiPolygon):

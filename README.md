@@ -6,7 +6,7 @@ MicroJSON is a JSON-based format inspired by [GeoJSON](https://geojson.org), des
 
 MicroJSON offers a range of features designed to meet the needs of microscopy data representation:
 
-- **Flexible Data Structures:** MicroJSON can represent diverse data structures, including geometries (such as points, multipoints, linestrings, polygons), features (individual entities with specific properties), and feature collections (groups of features).
+- **Flexible Data Structures:** MicroJSON can represent diverse data structures, including geometries (such as points, multipoints, linestrings, polygons), features (individual entities with specific properties), feature collections (groups of features), and coordinate systems.
 
 - **Standardized Format:** MicroJSON uses the widely adopted JSON format, ensuring compatibility with a wide range of programming languages and tools.
 
@@ -22,12 +22,11 @@ Refer to the examples foler to see samples of MicroJSON files as well as a simpl
 
 ## Specification
 
-For more detailed information about the MicroJSON structure and its components, please refer to the [Specification](docs/index.md) file.
+For more detailed information about the MicroJSON structure and its components, please refer to the [Specification](docs/index.md) file. It also includes a page on [MicroJSON and OME NGFF](docs/ome_ngff.md).
 
+## External Resources
 
-## Validation
-
-We provide validation through Pydantic data classes. [Validation documentation](docs/validation.md).
+The GeoJSON test files are copied from the [GeoJSON Schema GitHub repository](https://github.com/geojson/schema), and are Copyright (c) 2018 Tim Schaub under MIT License.
 
 ## Contribution
 

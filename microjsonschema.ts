@@ -44,18 +44,9 @@ export type MicroJSON =
   | MicroGeometryCollection;
 
 export interface Coordinatesystem {
-  /**
-   * The coordinate system of the coordinates
-   */
   axes: ("x" | "y" | "z" | "r" | "theta" | "phi")[];
-  /**
-   * The units of the coordinates
-   */
-  units: Unit[];
-  /**
-   * The number of pixels per unit
-   */
-  pixelsPerUnit: number[];
+  units?: Unit[];
+  pixelsPerUnit?: number[];
 }
 export interface Feature {
   /**
@@ -64,8 +55,8 @@ export interface Feature {
   bbox?: [number, number, number, number, ...number[]];
   type: "Feature";
   /**
-   * The geometric data
-   *                                              of the feature
+   * The geometry of the
+   *                                    feature
    */
   geometry: Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon | GeometryCollection;
   /**
@@ -158,8 +149,8 @@ export interface MicroFeature {
   bbox?: [number, number, number, number, ...number[]];
   type: "Feature";
   /**
-   * The geometric data
-   *                                              of the feature
+   * The geometry of the
+   *                                    feature
    */
   geometry: Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon | GeometryCollection;
   /**
@@ -202,6 +193,7 @@ export interface MicroPoint {
    */
   coordinates: [number, number] | [number, number, number];
   coordinatesystem?: Coordinatesystem;
+  radius?: number;
 }
 export interface MicroMultiPoint {
   /**
@@ -238,6 +230,7 @@ export interface MicroPolygon {
   type: "Polygon";
   coordinates: [number, number] | [number, number, number][][];
   coordinatesystem?: Coordinatesystem;
+  subtype?: "rectangle" | "cuboid";
 }
 export interface MicroMultiPolygon {
   /**

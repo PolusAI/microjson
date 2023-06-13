@@ -1,3 +1,0 @@
-# MicroJSON Pydantic validation
-
-To ensure the correctness and validity of MicroJSON files, we provide a tool that uses the Python Pydantic library to create a model of the MicroJSON schema, which forms the basis of the validation process. The validation works by comparing your MicroJSON files against the defined Pydantic model. It checks for adherence to the schema, ensuring that required fields are present and that the data types for all fields are as expected. The pydantic model is in the `microjson.py` file. It contains both a pydantic model for GeoJSON, `microjson.GeoJSON`, as well as MicroJSON, `microjson.MicroJSON`

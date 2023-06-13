@@ -1,25 +1,14 @@
 import json
 import pytest
 from pydantic import ValidationError
-from microjson import MicroJSONAuto, GeoJSONAuto
-import os
+from microjson import MicroJSONRound, gather_example_files
+from geojson.roundtrip import GeoJSON
 
 # Define the directories containing the example JSON files
-VALID_EXAMPLES_DIR = 'tests/json/valid'
-INVALID_EXAMPLES_DIR = 'tests/json/invalid'
+VALID_EXAMPLES_DIR = 'tests/geojson/json/geojson/valid'
+INVALID_EXAMPLES_DIR = 'tests/geojson/json/geojson/invalid'
 
-
-def gather_example_files(directory):
-    files = []
-    # Walk through the directory
-    for dirpath, dirnames, filenames in os.walk(directory):
-        # Filter to just the .json files
-        example_files = [os.path.join(dirpath, f)
-                         for f in filenames if f.endswith('.json')]
-        files.extend(example_files)
-    return files
-
-
+# Gather the example files
 valid_examples = gather_example_files(VALID_EXAMPLES_DIR)
 invalid_examples = gather_example_files(INVALID_EXAMPLES_DIR)
 
@@ -31,7 +20,7 @@ def test_valid_geojsons(filename):
 
     # Try to parse the data as a GeoJSON object
     try:
-        _ = GeoJSONAuto.parse_obj(data)
+        _ = GeoJSON.parse_obj(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -47,7 +36,7 @@ def test_invalid_geojsons(filename):
 
     # This will raise a ValidationError if the data does not match the GeoJSON
     try:
-        _ = GeoJSONAuto.parse_obj(data)
+        _ = GeoJSON.parse_obj(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:
@@ -66,7 +55,7 @@ def test_valid_microjsons(filename):
 
     # Try to parse the data as a GeoJSON object
     try:
-        _ = MicroJSONAuto.parse_obj(data)
+        _ = MicroJSONRound.parse_obj(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -83,7 +72,7 @@ def test_invalid_microjsons(filename):
     # This will raise a ValidationError if the data does not
     # match the GeoJSON schema
     try:
-        _ = MicroJSONAuto.parse_obj(data)
+        _ = MicroJSONRound.parse_obj(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:
