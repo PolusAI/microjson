@@ -86,14 +86,33 @@ class GeoJSON(BaseModel):
 
 
 class Unit(Enum):
-    PIXEL = 'pixel'
-    METER = 'meter'
-    DECIMETER = 'decimeter'
+    ANGSTROM = 'angstrom'
+    ATTOMETER = 'attometer'
     CENTIMETER = 'centimeter'
-    MILLIMETER = 'millimeter'
+    DECIMETER = 'decimeter'
+    EXAMETER = 'exameter'
+    FEMTOMETER = 'femtometer'
+    FOOT = 'foot'
+    GIGAMETER = 'gigameter'
+    HECTOMETER = 'hectometer'
+    INCH = 'inch'
+    KILOMETER = 'kilometer'
+    MEGAMETER = 'megameter'
+    METER = 'meter'
     MICROMETER = 'micrometer'
+    MILE = 'mile'
+    MILLIMETER = 'millimeter'
     NANOMETER = 'nanometer'
+    PARSEC = 'parsec'
+    PETAMETER = 'petameter'
     PICOMETER = 'picometer'
+    TERAMETER = 'terameter'
+    YARD = 'yard'
+    YOCTOMETER = 'yoctometer'
+    YOTTAMETER = 'yottameter'
+    ZEPTOMETER = 'zeptometer'
+    ZETTAMETER = 'zettameter'
+    PIXEL = 'pixel'
     RADIAN = 'radian'
     DEGREE = 'degree'
 
@@ -123,7 +142,7 @@ class MicroMultiLineString(MultiLineString):
 
 class MicroPolygon(Polygon):
     coordinatesystem: Optional[Coordinatesystem]
-    subtype: Optional[Literal["rectangle", "cuboid"]]
+    subtype: Optional[Literal["Rectangle", "Cuboid"]]
 
 
 class MicroMultiPolygon(MultiPolygon):
@@ -136,6 +155,7 @@ class MicroGeometryCollection(GeometryCollection):
 
 class MicroFeature(Feature):
     coordinatesystem: Optional[Coordinatesystem]
+    ref: Optional[Union[StrictStr, StrictInt]]
 
 
 class MicroFeatureCollection(FeatureCollection):

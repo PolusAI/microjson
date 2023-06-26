@@ -10,7 +10,7 @@ MicroJSON is a format, inspired by [GeoJSON](https://geojson.org), for encoding 
 
 A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it MAY have of a top level property `"coordinatesystem"`:  
 
-- `"coordinatesystem"`: (Optional) A coordinate system object as defined in the section [Coordinates object](#coordinates-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units.
+- `"coordinatesystem"`: (Optional) A coordinate system object as defined in the section [Coordinates object](#coordinates-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it MAY also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
 
 A MicroJSON object MAY have a `"bbox"` property":
 
@@ -21,7 +21,7 @@ A MicroJSON object MAY have a `"bbox"` property":
 
 A geometry object is a JSON object where the `type` member's value is one of the following strings: `"Point"`, `"MultiPoint"`, `"LineString"`, `"MultiLineString"`, `"Polygon"`, `"Rectangle"`, `"MultiPolygon"`, or `"GeometryCollection"`.
 
-Each geometry object must have a `"coordinates"` member with an array value. The structure of the coordinates array depends on the geometry type.
+Each geometry object MUST have a `"coordinates"` member with an array value. The structure of the coordinates array depends on the geometry type.
 
 - **Point**: The coordinates array must contain two or three (if 3D) numbers representing the X and Y (and Z) coordinates of the point in the image. A “Point” Geometry MAY have a radius, if indicating a circular object, with the value in pixels, specified as a member `“radius”` of the Geometry object.
 
@@ -51,6 +51,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"geometry"`: A geometry object as defined in the section above or a JSON null value.
 - `"properties"`: (Optional) A JSON object containing properties specific to the feature, or a JSON null value.
 - `"id"`: (Optional) A unique identifier for this feature.
+- `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
 
 
 #### Special Feature Objects
@@ -61,7 +62,8 @@ A feature object represents a spatially bounded entity associated with propertie
 
     - `"URI"`: A string with the image URI, e.g. “./image_1.tif"
 
-    An Image MUST also have a geometry object (as its “geometry” member) of type “Rectangle”, indicating the shape of the image.
+    An Image MUST also have a geometry object (as its “geometry” member) of type "Polygon", subtype “Rectangle”, indicating the shape of the image. An Image MAY have the following additional key-value pairs in its “properties” object:
+    - `"correction"`: A list of coordinates indicating the relative correction of the image, e.g. `[1, 2]` indicating a correction of 1 units in the x direction and 2 units in the y direction, with units as defined by the coordinate system. If the coordinate system is not defined, the units are pixels.
 
 ### FeatureCollection Object
 
@@ -83,7 +85,7 @@ A coordinates object represents the choice of axes (2D or 3D) and potentially th
 
 It MAY contain the following properties:
 
-- `"units"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“pixel“, “meter”, ”decimeter”, “centimeter“, “millimeter”, “micrometer”, “nanometer”, “picometer“, “radian“, “degree“]`
+- `"units"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
 - `"pixelsPerUnit"`: A decimal value, except for angles, where it SHOULD have the value “0”.
 
 

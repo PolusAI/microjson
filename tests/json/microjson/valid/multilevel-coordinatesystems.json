@@ -35,7 +35,21 @@
                         300.0,
                         100.0
                     ]
-                ]
+                ],
+                "coordinatesystem": {
+                    "axes": [
+                        "x",
+                        "y"
+                    ],
+                    "units": [
+                        "micrometer",
+                        "micrometer"
+                    ],
+                    "pixelsPerUnit": [
+                        1,
+                        1
+                    ]
+                }
             },
             "properties": {
                 "name": "Cell Path",

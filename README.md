@@ -22,7 +22,7 @@ Refer to the examples foler to see samples of MicroJSON files as well as a simpl
 
 ## Specification
 
-For more detailed information about the MicroJSON structure and its components, please refer to the [Specification](docs/index.md) file. It also includes a page on [MicroJSON and OME NGFF](docs/ome_ngff.md).
+For more detailed information about the MicroJSON structure and its components, please refer to the [Specification](docs/index.md) file.
 
 ## External Resources
 

@@ -38,5 +38,4 @@ theme:
       accent: lime
 nav:
   - Home: 'index.md'
-  - Example: 'example.md'
-  - OME NGFF integration: 'ome_ngff.md'
+  - Examples: 'example.md'

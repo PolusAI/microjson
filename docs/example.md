@@ -1,5 +1,6 @@
-# Sample MicroJSON File
-This JSON file demonstrates how MicroJSON can be used to define and describe complex structures related to microscopy, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
+# MicroJSON Examples
+## Basic MicroJSON
+This JSON file demonstrates how MicroJSON can be used to define and describe different structures related to microscopy, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
 
 ```json
 {
@@ -12,21 +13,7 @@ This JSON file demonstrates how MicroJSON can be used to define and describe com
                 "coordinates": [
                     200.0,
                     150.0
-                ],
-                "coordinatesystem": {
-                    "axes": [
-                        "x",
-                        "y"
-                    ],
-                    "units": [
-                        "micrometer",
-                        "micrometer"
-                    ],
-                    "pixelsPerUnit": [
-                        0.5,
-                        0.5
-                    ]
-                }
+                ]
             },
             "properties": {
                 "name": "Reference Point",
@@ -63,8 +50,8 @@ This JSON file demonstrates how MicroJSON can be used to define and describe com
                         "micrometer"
                     ],
                     "pixelsPerUnit": [
-                        0.5,
-                        0.5
+                        1,
+                        1
                     ]
                 }
             },
@@ -92,4 +79,45 @@ This JSON file demonstrates how MicroJSON can be used to define and describe com
     }
 }
 
+```
+
+## Stitching Vector MicroJSON
+This JSON file demonstrates how MicroJSON can be used to define and describe a stitching vector, which is used to describe the spatial relationship between multiple images that may be stitched together.
+```json
+{
+    "type": "FeatureCollection",
+    "coordinatesystem": {
+      "axes": ["x", "y"]
+    },
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
+        },
+        "properties": {
+          "type": "Image",
+          "URI": "./image_1.tif"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
+        },
+        "properties": {
+          "type": "Image",
+          "URI": "./image_2.tif"
+        }
+      }
+    ],
+    "properties": {
+      "type": "StitchingVector"
+    }
+}
+  
 ```
