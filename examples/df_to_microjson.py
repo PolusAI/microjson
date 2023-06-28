@@ -22,11 +22,18 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
             coordinates=row['coordinates']
         )
 
+        # create a new properties object dynamically
+        properties = mj.Properties(
+            descriptive={'name': row['name']},
+            numerical={'value': row['value']},
+            multi_numerical={'values': row['values']}
+        )
+
         # Create a new Feature object
-        feature = mj.Feature(
+        feature = mj.MicroFeature(
             type=row['type'],
             geometry=geometry,
-            properties={},  # Add an empty properties dictionary
+            properties=properties,
             coordinatesystem=mj.Coordinatesystem(
                 axes=row['coordinatesystem_axes'],
                 units=row['coordinatesystem_units']
@@ -36,10 +43,27 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         # Add the Feature object to the list
         features.append(feature)
 
+    # Create a value range object
+    value_range = {
+        'value': {
+            'min': df['value'].min(),
+            'max': df['value'].max()
+        },
+        'values': {
+            'min': df['values'].apply(min).min(),
+            'max': df['values'].apply(max).max()
+        }
+    }
+
+    # Create a list of descriptive fields
+    descriptive_fields = ['name']
+
     # Create a new FeatureCollection object
-    feature_collection = mj.FeatureCollection(
+    feature_collection = mj.MicroFeatureCollection(
         type='FeatureCollection',
-        features=features
+        features=features,
+        value_range=value_range,
+        descriptive_fields=descriptive_fields
     )
 
     return feature_collection
@@ -52,15 +76,21 @@ data = [{
     'geometry_type': 'Point',
     'coordinates': [0, 0],
     'coordinatesystem_axes': ['x', 'y'],
-    'coordinatesystem_units': ['pixel', 'pixel']
+    'coordinatesystem_units': ['pixel', 'pixel'],
+    'name': 'Point 1',
+    'value': 1,
+    'values': [1, 2, 3]
 }, {
     'type': 'Feature',
     'geometry_type': 'Polygon',
     'coordinates': [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
     'coordinatesystem_axes': ['x', 'y'],
-    'coordinatesystem_units': ['pixel', 'pixel']
+    'coordinatesystem_units': ['pixel', 'pixel'],
+    'name': 'Polygon 1',
+    'value': 2,
+    'values': [4, 5, 6]
 }]
 
 df = pd.DataFrame(data)
 feature_collection_model = df_to_microjson(df)
-print(feature_collection_model.json(indent=2))
+print(feature_collection_model.json(indent=2, exclude_unset=True))

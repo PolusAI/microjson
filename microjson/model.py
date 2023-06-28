@@ -64,28 +64,6 @@ GeometryType = Union[Point,
                      ]
 
 
-class Descriptive(BaseModel):
-    # Allows for a dictionary with string values
-    descriptive: Optional[Dict[str, str]]
-
-
-class Numerical(BaseModel):
-    # Allows for a dictionary with numerical values
-    numerical: Optional[Dict[str, float]]
-
-
-class MultiNumerical(BaseModel):
-    # Allows for a dictionary where each key maps to a list of numerical values
-    multi_numerical: Optional[Dict[str, List[float]]]
-
-
-class Properties(BaseModel):
-    # other fields...
-    descriptive: Optional[Descriptive]
-    numerical: Optional[Numerical]
-    multi_numerical: Optional[MultiNumerical]
-
-
 class Feature(GeoAbstract):
     type: Literal["Feature"]
     geometry: GeometryType = Field(...,
@@ -150,6 +128,13 @@ class Coordinatesystem(BaseModel):
     axes: List[Literal["x", "y", "z", "r", "theta", "phi"]]
     units: Optional[List[Unit]]
     pixelsPerUnit: Optional[List[float]]
+
+
+class Properties(BaseModel):
+    # other fields...
+    descriptive: Optional[Dict[str, str]]
+    numerical: Optional[Dict[str, float]]
+    multi_numerical: Optional[Dict[str, List[float]]]
 
 
 class MicroFeature(Feature):

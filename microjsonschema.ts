@@ -67,11 +67,6 @@ export interface Coordinatesystem {
   units?: Unit[];
   pixelsPerUnit?: number[];
 }
-export interface Descriptive {
-  descriptive?: {
-    [k: string]: string;
-  };
-}
 export interface Feature {
   /**
    * @minItems 4
@@ -191,16 +186,12 @@ export interface MicroFeature {
   ref?: string | number;
 }
 export interface Properties {
-  descriptive?: Descriptive;
-  numerical?: Numerical;
-  multi_numerical?: MultiNumerical;
-}
-export interface Numerical {
+  descriptive?: {
+    [k: string]: string;
+  };
   numerical?: {
     [k: string]: number;
   };
-}
-export interface MultiNumerical {
   multi_numerical?: {
     [k: string]: number[];
   };

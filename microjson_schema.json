@@ -313,8 +313,8 @@
         "geometries"
       ]
     },
-    "Descriptive": {
-      "title": "Descriptive",
+    "Properties": {
+      "title": "Properties",
       "type": "object",
       "properties": {
         "descriptive": {
@@ -323,26 +323,14 @@
           "additionalProperties": {
             "type": "string"
           }
-        }
-      }
-    },
-    "Numerical": {
-      "title": "Numerical",
-      "type": "object",
-      "properties": {
+        },
         "numerical": {
           "title": "Numerical",
           "type": "object",
           "additionalProperties": {
             "type": "number"
           }
-        }
-      }
-    },
-    "MultiNumerical": {
-      "title": "MultiNumerical",
-      "type": "object",
-      "properties": {
+        },
         "multi_numerical": {
           "title": "Multi Numerical",
           "type": "object",
@@ -352,21 +340,6 @@
               "type": "number"
             }
           }
-        }
-      }
-    },
-    "Properties": {
-      "title": "Properties",
-      "type": "object",
-      "properties": {
-        "descriptive": {
-          "$ref": "#/definitions/Descriptive"
-        },
-        "numerical": {
-          "$ref": "#/definitions/Numerical"
-        },
-        "multi_numerical": {
-          "$ref": "#/definitions/MultiNumerical"
         }
       }
     },
