@@ -385,6 +385,24 @@
         "properties"
       ]
     },
+    "ValueRange": {
+      "title": "ValueRange",
+      "type": "object",
+      "properties": {
+        "min": {
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ]
+    },
     "FeatureCollection": {
       "title": "FeatureCollection",
       "type": "object",
@@ -409,6 +427,20 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Feature"
+          }
+        },
+        "value_range": {
+          "title": "Value Range",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ValueRange"
+          }
+        },
+        "descriptive_fields": {
+          "title": "Descriptive Fields",
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       },

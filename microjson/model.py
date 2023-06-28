@@ -64,6 +64,28 @@ GeometryType = Union[Point,
                      ]
 
 
+class Descriptive(BaseModel):
+    # Allows for a dictionary with string values
+    descriptive: Optional[Dict[str, str]]
+
+
+class Numerical(BaseModel):
+    # Allows for a dictionary with numerical values
+    numerical: Optional[Dict[str, float]]
+
+
+class MultiNumerical(BaseModel):
+    # Allows for a dictionary where each key maps to a list of numerical values
+    multi_numerical: Optional[Dict[str, List[float]]]
+
+
+class Properties(BaseModel):
+    # other fields...
+    descriptive: Optional[Descriptive]
+    numerical: Optional[Numerical]
+    multi_numerical: Optional[MultiNumerical]
+
+
 class Feature(GeoAbstract):
     type: Literal["Feature"]
     geometry: GeometryType = Field(...,
@@ -75,9 +97,16 @@ class Feature(GeoAbstract):
     id: Optional[Union[StrictStr, StrictInt]]
 
 
+class ValueRange(BaseModel):
+    min: float
+    max: float
+
+
 class FeatureCollection(GeoAbstract):
     type: Literal["FeatureCollection"]
     features: List[Feature]
+    value_range: Optional[Dict[str, ValueRange]]
+    descriptive_fields: Optional[List[str]] 
 
 
 class GeoJSON(BaseModel):
@@ -123,56 +152,19 @@ class Coordinatesystem(BaseModel):
     pixelsPerUnit: Optional[List[float]]
 
 
-class MicroPoint(Point):
-    coordinatesystem: Optional[Coordinatesystem]
-    radius: Optional[float]
-
-
-class MicroMultiPoint(MultiPoint):
-    coordinatesystem: Optional[Coordinatesystem]
-
-
-class MicroLineString(LineString):
-    coordinatesystem: Optional[Coordinatesystem]
-
-
-class MicroMultiLineString(MultiLineString):
-    coordinatesystem: Optional[Coordinatesystem]
-
-
-class MicroPolygon(Polygon):
-    coordinatesystem: Optional[Coordinatesystem]
-    subtype: Optional[Literal["Rectangle", "Cuboid"]]
-
-
-class MicroMultiPolygon(MultiPolygon):
-    coordinatesystem: Optional[Coordinatesystem]
-
-
-class MicroGeometryCollection(GeometryCollection):
-    coordinatesystem: Optional[Coordinatesystem]
-
-
 class MicroFeature(Feature):
     coordinatesystem: Optional[Coordinatesystem]
     ref: Optional[Union[StrictStr, StrictInt]]
+    # 
+    properties: Properties
 
 
 class MicroFeatureCollection(FeatureCollection):
     coordinatesystem: Optional[Coordinatesystem]
 
 
-MicroGeometryType = Union[MicroPoint,
-                          MicroMultiPoint,
-                          MicroLineString,
-                          MicroMultiLineString,
-                          MicroPolygon,
-                          MicroMultiPolygon,
-                          MicroGeometryCollection]
-
-
 class MicroJSON(BaseModel):
     """The root object of a MicroJSON file"""
     __root__: Union[MicroFeature,
                     MicroFeatureCollection,
-                    MicroGeometryType]
+                    GeometryType]

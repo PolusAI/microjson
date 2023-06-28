@@ -6,14 +6,33 @@
 */
 
 export type Unit =
-  | "pixel"
-  | "meter"
-  | "decimeter"
+  | "angstrom"
+  | "attometer"
   | "centimeter"
-  | "millimeter"
+  | "decimeter"
+  | "exameter"
+  | "femtometer"
+  | "foot"
+  | "gigameter"
+  | "hectometer"
+  | "inch"
+  | "kilometer"
+  | "megameter"
+  | "meter"
   | "micrometer"
+  | "mile"
+  | "millimeter"
   | "nanometer"
+  | "parsec"
+  | "petameter"
   | "picometer"
+  | "terameter"
+  | "yard"
+  | "yoctometer"
+  | "yottameter"
+  | "zeptometer"
+  | "zettameter"
+  | "pixel"
   | "radian"
   | "degree";
 /**
@@ -35,18 +54,23 @@ export type GeoJSON =
 export type MicroJSON =
   | MicroFeature
   | MicroFeatureCollection
-  | MicroPoint
-  | MicroMultiPoint
-  | MicroLineString
-  | MicroMultiLineString
-  | MicroPolygon
-  | MicroMultiPolygon
-  | MicroGeometryCollection;
+  | Point
+  | MultiPoint
+  | LineString
+  | MultiLineString
+  | Polygon
+  | MultiPolygon
+  | GeometryCollection;
 
 export interface Coordinatesystem {
   axes: ("x" | "y" | "z" | "r" | "theta" | "phi")[];
   units?: Unit[];
   pixelsPerUnit?: number[];
+}
+export interface Descriptive {
+  descriptive?: {
+    [k: string]: string;
+  };
 }
 export interface Feature {
   /**
@@ -135,6 +159,14 @@ export interface FeatureCollection {
   bbox?: [number, number, number, number, ...number[]];
   type: "FeatureCollection";
   features: Feature[];
+  value_range?: {
+    [k: string]: ValueRange;
+  };
+  descriptive_fields?: string[];
+}
+export interface ValueRange {
+  min: number;
+  max: number;
 }
 export interface GeoAbstract {
   /**
@@ -153,15 +185,25 @@ export interface MicroFeature {
    *                                    feature
    */
   geometry: Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon | GeometryCollection;
-  /**
-   * Properties of the
-   *                                        feature
-   */
-  properties: {
-    [k: string]: unknown;
-  };
+  properties: Properties;
   id?: string | number;
   coordinatesystem?: Coordinatesystem;
+  ref?: string | number;
+}
+export interface Properties {
+  descriptive?: Descriptive;
+  numerical?: Numerical;
+  multi_numerical?: MultiNumerical;
+}
+export interface Numerical {
+  numerical?: {
+    [k: string]: number;
+  };
+}
+export interface MultiNumerical {
+  multi_numerical?: {
+    [k: string]: number[];
+  };
 }
 export interface MicroFeatureCollection {
   /**
@@ -170,74 +212,9 @@ export interface MicroFeatureCollection {
   bbox?: [number, number, number, number, ...number[]];
   type: "FeatureCollection";
   features: Feature[];
-  coordinatesystem?: Coordinatesystem;
-}
-export interface MicroGeometryCollection {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "GeometryCollection";
-  geometries: (Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon)[];
-  coordinatesystem?: Coordinatesystem;
-}
-export interface MicroPoint {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "Point";
-  /**
-   * @minItems 2
-   * @maxItems 3
-   */
-  coordinates: [number, number] | [number, number, number];
-  coordinatesystem?: Coordinatesystem;
-  radius?: number;
-}
-export interface MicroMultiPoint {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "MultiPoint";
-  coordinates: [number, number] | [number, number, number][];
-  coordinatesystem?: Coordinatesystem;
-}
-export interface MicroLineString {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "LineString";
-  coordinates: [number, number] | [number, number, number][];
-  coordinatesystem?: Coordinatesystem;
-}
-export interface MicroMultiLineString {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "MultiLineString";
-  coordinates: [number, number] | [number, number, number][][];
-  coordinatesystem?: Coordinatesystem;
-}
-export interface MicroPolygon {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "Polygon";
-  coordinates: [number, number] | [number, number, number][][];
-  coordinatesystem?: Coordinatesystem;
-  subtype?: "rectangle" | "cuboid";
-}
-export interface MicroMultiPolygon {
-  /**
-   * @minItems 4
-   */
-  bbox?: [number, number, number, number, ...number[]];
-  type: "MultiPolygon";
-  coordinates: [number, number] | [number, number, number][][][];
+  value_range?: {
+    [k: string]: ValueRange;
+  };
+  descriptive_fields?: string[];
   coordinatesystem?: Coordinatesystem;
 }
