@@ -1,7 +1,13 @@
 {
     "type": "FeatureCollection",
     "coordinatesystem": {
-      "axes": ["x", "y"]
+      "axes": [{
+        "name": "x"
+      }
+      , {
+        "name": "y"
+      }
+      ]
     },
     "features": [
       {

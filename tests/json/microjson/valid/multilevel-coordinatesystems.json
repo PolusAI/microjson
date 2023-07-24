@@ -35,21 +35,7 @@
                         300.0,
                         100.0
                     ]
-                ],
-                "coordinatesystem": {
-                    "axes": [
-                        "x",
-                        "y"
-                    ],
-                    "units": [
-                        "micrometer",
-                        "micrometer"
-                    ],
-                    "pixelsPerUnit": [
-                        1,
-                        1
-                    ]
-                }
+                ]
             },
             "properties": {
                 "name": "Cell Path",
@@ -62,16 +48,37 @@
     ],
     "coordinatesystem": {
         "axes": [
-            "x",
-            "y"
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "y-axis"
+            }
         ],
-        "units": [
-            "micrometer",
-            "micrometer"
-        ],
-        "pixelsPerUnit": [
-            0.5,
-            0.5
+        "tranformation_matrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
         ]
     }
 }

@@ -1,3 +1,4 @@
+"""MicroJSON and GeoJSON models, defined manually using pydantic."""
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
@@ -7,35 +8,42 @@ Coordinates = conlist(float, min_items=2, max_items=3)
 
 
 class GeoAbstract(BaseModel):
+    """Abstract base class for all GeoJSON objects"""
     bbox: Optional[List[float]] = Field(None, min_items=4)
 
 
 class Point(GeoAbstract):
+    """A GeoJSON Point object"""
     type: Literal["Point"]
     coordinates: Coordinates
 
 
 class MultiPoint(GeoAbstract):
+    """A GeoJSON MultiPoint object"""
     type: Literal["MultiPoint"]
     coordinates: List[Coordinates]
 
 
 class LineString(GeoAbstract):
+    """A GeoJSON LineString object"""
     type: Literal["LineString"]
     coordinates: List[Coordinates]
 
 
 class MultiLineString(GeoAbstract):
+    """A GeoJSON MultiLineString object"""
     type: Literal["MultiLineString"]
     coordinates: List[List[Coordinates]]
 
 
 class Polygon(GeoAbstract):
+    """A GeoJSON Polygon object"""
     type: Literal["Polygon"]
     coordinates: List[List[Coordinates]]
 
 
 class MultiPolygon(GeoAbstract):
+    """A GeoJSON MultiPolygon object"""
     type: Literal["MultiPolygon"]
     coordinates: List[List[List[Coordinates]]]
 
@@ -49,6 +57,7 @@ GeometryBaseType = Union[Point,
 
 
 class GeometryCollection(GeoAbstract):
+    """A GeoJSON GeometryCollection object"""
     type: Literal["GeometryCollection"]
     geometries: List[GeometryBaseType]
 
@@ -65,6 +74,7 @@ GeometryType = Union[Point,
 
 
 class Feature(GeoAbstract):
+    """A GeoJSON Feature object"""
     type: Literal["Feature"]
     geometry: GeometryType = Field(...,
                                    description="""The geometry of the
@@ -76,15 +86,15 @@ class Feature(GeoAbstract):
 
 
 class ValueRange(BaseModel):
+    """A range of values for MicroJSON quantitative properties"""
     min: float
     max: float
 
 
 class FeatureCollection(GeoAbstract):
+    """A GeoJSON FeatureCollection object"""
     type: Literal["FeatureCollection"]
     features: List[Feature]
-    value_range: Optional[Dict[str, ValueRange]]
-    descriptive_fields: Optional[List[str]] 
 
 
 class GeoJSON(BaseModel):
@@ -93,6 +103,7 @@ class GeoJSON(BaseModel):
 
 
 class Unit(Enum):
+    """A unit of measurement"""
     ANGSTROM = 'angstrom'
     ATTOMETER = 'attometer'
     CENTIMETER = 'centimeter'
@@ -124,28 +135,50 @@ class Unit(Enum):
     DEGREE = 'degree'
 
 
-class Coordinatesystem(BaseModel):
-    axes: List[Literal["x", "y", "z", "r", "theta", "phi"]]
-    units: Optional[List[Unit]]
-    pixelsPerUnit: Optional[List[float]]
+class AxisType(Enum):
+    """The type of an axis"""
+    CARTESIAN = 'cartesian'
+    ANGULAR = 'angular'
+    TEMPORAL = 'temporal'
+    SPECTRAL = 'spectral'
+
+
+class Axis(BaseModel):
+    """An axis of a coordinate system"""
+    name: StrictStr
+    type: Optional[AxisType]
+    unit: Optional[Unit]
+    pixels_per_unit: Optional[float]
+    description: Optional[str]
+
+
+class CoordinateSystem(BaseModel):
+    """A coordinate system for MicroJSON coordinates"""
+    axes: List[Axis]
+    transformation_matrix: Optional[List[List[float]]]
 
 
 class Properties(BaseModel):
-    # other fields...
+    """Metadata properties of a MicroJSON feature"""
     descriptive: Optional[Dict[str, str]]
     numerical: Optional[Dict[str, float]]
     multi_numerical: Optional[Dict[str, List[float]]]
 
 
 class MicroFeature(Feature):
-    coordinatesystem: Optional[Coordinatesystem]
+    """A MicroJSON feature, which is a GeoJSON feature with additional
+    metadata"""
+    coordinatesystem: Optional[List[Axis]]
     ref: Optional[Union[StrictStr, StrictInt]]
-    # 
     properties: Properties
 
 
 class MicroFeatureCollection(FeatureCollection):
-    coordinatesystem: Optional[Coordinatesystem]
+    """A MicroJSON feature collection, which is a GeoJSON feature
+    collection with additional metadata"""
+    coordinatesystem: Optional[CoordinateSystem]
+    value_range: Optional[Dict[str, ValueRange]]
+    descriptive_fields: Optional[List[str]]
 
 
 class MicroJSON(BaseModel):

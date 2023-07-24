@@ -33,11 +33,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         feature = mj.MicroFeature(
             type=row['type'],
             geometry=geometry,
-            properties=properties,
-            coordinatesystem=mj.Coordinatesystem(
-                axes=row['coordinatesystem_axes'],
-                units=row['coordinatesystem_units']
-            )
+            properties=properties
         )
 
         # Add the Feature object to the list
@@ -63,7 +59,31 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         type='FeatureCollection',
         features=features,
         value_range=value_range,
-        descriptive_fields=descriptive_fields
+        descriptive_fields=descriptive_fields,
+        coordinatesystem= {
+            'axes': [
+                {
+                    'name': 'x',
+                    'type': 'cartesian',
+                    'unit': 'meter',
+                    'pixels_per_unit': 1,
+                    'description': 'The x-coordinate'
+                },
+                {
+                    'name': 'y',
+                    'type': 'cartesian',
+                    'unit': 'meter',
+                    'pixels_per_unit': 1,
+                    'description': 'The y-coordinate'
+                }
+            ],
+            'transformation_matrix': [
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1]
+            ],
+            'origo': 'top-left'
+        }
     )
 
     return feature_collection
@@ -75,8 +95,6 @@ data = [{
     'type': 'Feature',
     'geometry_type': 'Point',
     'coordinates': [0, 0],
-    'coordinatesystem_axes': ['x', 'y'],
-    'coordinatesystem_units': ['pixel', 'pixel'],
     'name': 'Point 1',
     'value': 1,
     'values': [1, 2, 3]
@@ -84,8 +102,6 @@ data = [{
     'type': 'Feature',
     'geometry_type': 'Polygon',
     'coordinates': [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
-    'coordinatesystem_axes': ['x', 'y'],
-    'coordinatesystem_units': ['pixel', 'pixel'],
     'name': 'Polygon 1',
     'value': 2,
     'values': [4, 5, 6]
