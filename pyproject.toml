@@ -6,6 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "microjson"
 version = "0.1.2"
 description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
+readme = "README.md"
 authors = ["Bengt Ljungquist <bengt.ljungquist@nextonicsolutions.com>"]
 license = "MIT"
 classifiers = [
