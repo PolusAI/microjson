@@ -8,6 +8,18 @@ version = "0.1.0"
 description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
 authors = ["Bengt Ljungquist <bengt.ljungquist@nextonicsolutions.com>"]
 license = "MIT"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["json", "microscopy", "microjson"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -19,7 +31,20 @@ nox = "^2022.1.7"
 pre-commit = "^2.15.0"
 pydantic-to-typescript = "^1.0.8"
 datamodel-code-generator = "^0.13.1"
+bumpver = "^2023.1125"
 
 
 [tool.pytest.ini_options]
 testpaths = ["tests/"]
+
+[tool.bumpver]
+current_version = "0.1.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message  = "Bump version {old_version} -> {new_version}"
+commit          = true
+tag             = true
+push            = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
+"src/microjson/__init__.py" = ["{version}"]
