@@ -1,6 +1,6 @@
 # MicroJSON Examples
 ## Basic MicroJSON
-This JSON file demonstrates how MicroJSON can be used to define and describe different structures related to microscopy, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
+This JSON file demonstrates how MicroJSON can be used to define and describe different structures related to imaging, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
 
 ```json
 {
@@ -18,7 +18,8 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
             "properties": {
                 "name": "Reference Point",
                 "description": "Specific point of interest",
-                "color": "red"
+                "color": "red",
+                "property1": "value1"
             },
             "id": "1"
         },
@@ -39,42 +40,50 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
                         300.0,
                         100.0
                     ]
-                ],
-                "coordinatesystem": {
-                    "axes": [
-                        "x",
-                        "y"
-                    ],
-                    "units": [
-                        "micrometer",
-                        "micrometer"
-                    ],
-                    "pixelsPerUnit": [
-                        1,
-                        1
-                    ]
-                }
+                ]
             },
             "properties": {
                 "name": "Cell Path",
                 "description": "Path traced within a cell",
                 "color": "blue"
             },
-            "id": "2"
+            "id": "2",
+            "ref": "s3://mybucket/myfile.tif"
         }
     ],
     "coordinatesystem": {
         "axes": [
-            "x",
-            "y"
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "y-axis"
+            }
         ],
-        "units": [
-            "micrometer",
-            "micrometer"
-        ],
-        "pixelsPerUnit": [
-            0.5,
-            0.5
+        "transformation_matrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
         ]
     }
 }
@@ -87,7 +96,14 @@ This JSON file demonstrates how MicroJSON can be used to define and describe a s
 {
     "type": "FeatureCollection",
     "coordinatesystem": {
-      "axes": ["x", "y"]
+      "axes": [
+        {
+          "name": "x"
+        },
+        {
+          "name": "y"
+        }
+      ],
     },
     "features": [
       {
