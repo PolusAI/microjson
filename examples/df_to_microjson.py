@@ -1,5 +1,5 @@
 import pandas as pd
-import microjson.model as mj
+from microjson import model as mj
 from typing import List
 
 
