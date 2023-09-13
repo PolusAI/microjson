@@ -3,4 +3,4 @@ from .model import MicroJSON, GeoJSON
 #from .roundtrip import MicroJSON as MicroJSONRound
 from .utils import gather_example_files
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"
