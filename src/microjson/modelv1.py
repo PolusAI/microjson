@@ -1,7 +1,7 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic.v1 import BaseModel, Field, StrictInt, StrictStr, conlist
 
 
 Coordinates = conlist(float, min_items=2, max_items=3)
@@ -79,9 +79,10 @@ class Feature(GeoAbstract):
     geometry: GeometryType = Field(...,
                                    description="""The geometry of the
                                    feature""")
-    properties: Dict = Field(...,
-                             description="""Properties of the feature""")
-    id: Optional[Union[StrictStr, StrictInt]] = None
+    properties: Optional[Dict] = Field(...,
+                                       description="""Properties of the
+                                       feature""")
+    id: Optional[Union[StrictStr, StrictInt]]
 
 
 class ValueRange(BaseModel):
@@ -145,39 +146,39 @@ class AxisType(Enum):
 class Axis(BaseModel):
     """An axis of a coordinate system"""
     name: StrictStr
-    type: Optional[AxisType] = None
-    unit: Optional[Unit] = None
-    pixels_per_unit: Optional[float] = None
-    description: Optional[str] = None
+    type: Optional[AxisType]
+    unit: Optional[Unit]
+    pixels_per_unit: Optional[float]
+    description: Optional[str]
 
 
 class CoordinateSystem(BaseModel):
     """A coordinate system for MicroJSON coordinates"""
     axes: List[Axis]
-    transformation_matrix: Optional[List[List[float]]] = None
+    transformation_matrix: Optional[List[List[float]]]
 
 
 class Properties(BaseModel):
     """Metadata properties of a MicroJSON feature"""
-    descriptive: Optional[Dict[str, str]] = None
-    numerical: Optional[Dict[str, float]] = None
-    multi_numerical: Optional[Dict[str, List[float]]] = None
+    descriptive: Optional[Dict[str, str]]
+    numerical: Optional[Dict[str, float]]
+    multi_numerical: Optional[Dict[str, List[float]]]
 
 
 class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
-    coordinatesystem: Optional[List[Axis]] = None
-    ref: Optional[Union[StrictStr, StrictInt]] = None
+    coordinatesystem: Optional[List[Axis]]
+    ref: Optional[Union[StrictStr, StrictInt]]
     properties: Properties
 
 
 class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
-    coordinatesystem: Optional[CoordinateSystem] = None
-    value_range: Optional[Dict[str, ValueRange]] = None
-    descriptive_fields: Optional[List[str]] = None
+    coordinatesystem: Optional[CoordinateSystem]
+    value_range: Optional[Dict[str, ValueRange]]
+    descriptive_fields: Optional[List[str]]
 
 
 class MicroJSON(BaseModel):

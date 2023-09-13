@@ -7,7 +7,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 
 
 class Type(Enum):
@@ -15,11 +15,11 @@ class Type(Enum):
 
 
 class Point(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type = Field(..., title='Type')
     coordinates: List[float] = Field(...,
-                                     max_items=3, 
-                                     min_items=2, 
+                                     max_length=3, 
+                                     min_length=2, 
                                      title='Coordinates')
 
 
@@ -28,7 +28,7 @@ class Type1(Enum):
 
 
 class MultiPoint(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type1 = Field(..., title='Type')
     coordinates: List[List[float]] = Field(..., title='Coordinates')
 
@@ -38,7 +38,7 @@ class Type2(Enum):
 
 
 class LineString(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type2 = Field(..., title='Type')
     coordinates: List[List[float]] = Field(..., title='Coordinates')
 
@@ -48,7 +48,7 @@ class Type3(Enum):
 
 
 class MultiLineString(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type3 = Field(..., title='Type')
     coordinates: List[List[List[float]]] = Field(..., title='Coordinates')
 
@@ -58,7 +58,7 @@ class Type4(Enum):
 
 
 class Polygon(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type4 = Field(..., title='Type')
     coordinates: List[List[List[float]]] = Field(..., title='Coordinates')
 
@@ -68,7 +68,7 @@ class Type5(Enum):
 
 
 class MultiPolygon(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type5 = Field(..., title='Type')
     coordinates: List[List[List[List[float]]]] = Field(...,
                                                        title='Coordinates')
@@ -79,7 +79,7 @@ class Type6(Enum):
 
 
 class GeometryCollection(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type6 = Field(..., title='Type')
     geometries: List[
         Union[Point,
@@ -153,7 +153,7 @@ class Type7(Enum):
 
 
 class MicroFeature(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type7 = Field(..., title='Type')
     geometry: Union[
         Point,
@@ -175,7 +175,7 @@ class MicroFeature(BaseModel):
 
 
 class Feature(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type7 = Field(..., title='Type')
     geometry: Union[
         Point,
@@ -208,7 +208,7 @@ class Type9(Enum):
 
 
 class MicroFeatureCollection(BaseModel):
-    bbox: Optional[List[float]] = Field(None, min_items=4, title='Bbox')
+    bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type9 = Field(..., title='Type')
     features: List[Feature] = Field(..., title='Features')
     value_range: Optional[Dict[str, ValueRange]] = Field(None,

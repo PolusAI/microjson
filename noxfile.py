@@ -1,10 +1,11 @@
-import nox
+from nox_poetry import session
 
 
-@nox.session(python="3.9")
+@session(python="3.9")
 def export_ts(session):
-    session.install("-r", "requirements-dev.txt")
-    session.install("-e", ".")
+    #session.install("-r", "requirements-dev.txt")
+    #session.install("-e", ".")
+    session.install("microjson")
     session.run("datamodel-codegen",
                 "--reuse-model",
                 "--snake-case-field",
@@ -15,7 +16,7 @@ def export_ts(session):
                 "--output", "microjsonschema.ts")
 
     # generate GeoJSON schema
-    from microjson.model import GeoJSON
+    from microjson.modelv1 import GeoJSON
     # Get the schema for the model as a dictionary
     schema_dict = GeoJSON.schema()
     # Add 'null' to the list of allowed types for the 'geometry' field of 
@@ -25,7 +26,7 @@ def export_ts(session):
     with open('geojson_schema.json', 'w') as f:
         f.write(GeoJSON.schema_json(indent=2))
 
-    from microjson.model import MicroJSON
+    from microjson.modelv1 import MicroJSON
     with open('microjson_schema.json', 'w') as f:
         f.write(MicroJSON.schema_json(indent=2))
     
