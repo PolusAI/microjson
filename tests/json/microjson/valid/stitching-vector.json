@@ -1,0 +1,42 @@
+{
+    "type": "FeatureCollection",
+    "coordinatesystem": {
+      "axes": [{
+        "name": "x"
+      }
+      , {
+        "name": "y"
+      }
+      ]
+    },
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
+        },
+        "properties": {
+          "type": "Image",
+          "URI": "./image_1.tif"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
+        },
+        "properties": {
+          "type": "Image",
+          "URI": "./image_2.tif"
+        }
+      }
+    ],
+    "properties": {
+      "type": "StitchingVector"
+    }
+  }
+  

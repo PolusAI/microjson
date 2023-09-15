@@ -16,14 +16,6 @@ MicroJSON offers a range of features designed to meet the needs of microscopy da
 
 MicroJSON can be used with any application or tool that can process JSON data. Due to its design, it is particularly suited to applications related to the analysis, visualization, and manipulation of microscopy images.
 
-## Examples
-
-Refer to the examples foler to see samples of MicroJSON files as well as a simple parsing example, or the [example in the documentation](docs/example.md)
-
-## Specification
-
-For more detailed information about the MicroJSON structure and its components, please refer to the [Specification](docs/index.md) file.
-
 ## External Resources
 
 The GeoJSON test files are copied from the [GeoJSON Schema GitHub repository](https://github.com/geojson/schema), and are Copyright (c) 2018 Tim Schaub under MIT License.
@@ -34,8 +26,12 @@ We welcome contributions to the development and enhancement of MicroJSON. Whethe
 
 ## License
 
-MicroJSON is licensed under [MIT License](./LICENSE).
+MicroJSON is licensed under MIT License, (c) 2023 Polus AI & Nextonic Solutions LLC.
+
+## Authors
+Bengt Ljungquist [bengt.ljungquist@nextonicsolutions.com](bengt.ljungquist@nextonicsolutions.com)
+
 
 ---
 
-This project is maintained by Polus AI. For any queries or further discussion, please contact [contact details].
+This project is maintained by Polus AI. For any queries or further discussion, please contact the author on email address above.

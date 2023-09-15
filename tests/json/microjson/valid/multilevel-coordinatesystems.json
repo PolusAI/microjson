@@ -1,0 +1,84 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    200.0,
+                    150.0
+                ]
+            },
+            "properties": {
+                "name": "Reference Point",
+                "description": "Specific point of interest",
+                "color": "red",
+                "property1": "value1"
+            },
+            "id": "1"
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        100.0,
+                        100.0
+                    ],
+                    [
+                        200.0,
+                        200.0
+                    ],
+                    [
+                        300.0,
+                        100.0
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Cell Path",
+                "description": "Path traced within a cell",
+                "color": "blue"
+            },
+            "id": "2",
+            "ref": "s3://mybucket/myfile.tif"
+        }
+    ],
+    "coordinatesystem": {
+        "axes": [
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "y-axis"
+            }
+        ],
+        "tranformation_matrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    }
+}
