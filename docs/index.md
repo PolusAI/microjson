@@ -50,9 +50,9 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"type"`: A string with the value `"Feature"`.
 - `"geometry"`: A geometry object as defined in the section above or a JSON null value.
 - `"properties"`: (Optional) A JSON object containing properties and metadata specific to the feature, or a JSON null value. It MAY have the following sub-properties:
-    - `"descriptive"`: (Optional) A list with key-value pairs, with string keys and string values, e.g. `{"color": "red", "size": "large"}`.
-    - `"numerical"`: (Optional) A list with key-value pairs, with string keys and numerical values, e.g. `{"area": 123.45, "volume": 678.90}`.
-    - `"multi-numerical"`: (Optional) A list with key-value pairs, with string keys and list of numerical values, e.g. `{"area": [123.45, 234.56], "volume": [678.90, 789.01]}`.
+    - `"string"`: (Optional) A list with key-value pairs, with string keys and string values, e.g. `{"color": "red", "size": "large"}`.
+    - `"numeric"`: (Optional) A list with key-value pairs, with string keys and numerical values, e.g. `{"area": 123.45, "volume": 678.90}`.
+    - `"multi-numeric"`: (Optional) A list with key-value pairs, with string keys and list of numerical values, e.g. `{"area": [123.45, 234.56], "volume": [678.90, 789.01]}`.
 - `"id"`: (Optional) A unique identifier for this feature.
 - `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
 
@@ -71,10 +71,11 @@ A feature object represents a spatially bounded entity associated with propertie
 ### FeatureCollection Object
 
 A FeatureCollection object is a JSON object representing a collection of feature objects. A FeatureCollection object has a member with the name `"features"`. The value of `"features"` is a JSON array. Each element of the array is a Feature object as defined above. It is possible for this array to be empty. Additionally, it MAY have the following members:
-- `"descriptive_fields"`: (Optional) A list of strings, indicating the descriptive fields of the features in the collection, e.g. `["color", "size"]`.
+- `"string_fields"`: (Optional) A list of strings, indicating the descriptive fields of the features in the collection, e.g. `["color", "size"]`.
 - `"value_range"`: (Optional) A list of key-value pairs, with string keys and as keys another object with the fields:
-    * `"min"`: The minimum value of the field in the key (both `"numerical"` and `"multi-numerical"`) of the features in the collection, e.g. `{"area": 123.45, "volume": 678.90}`.
+    * `"min"`: The minimum value of the field in the key (both `"numeric"` and `"multi-numeric"`) of the features in the collection, e.g. `{"area": 123.45, "volume": 678.90}`.
     * `"max"`: The maximum value as above.
+- `"properties"`: (Optional) A JSON object containing properties and metadata specific to the feature collection, and which apply to all features of the collection, or a JSON null value. It has the same structure as the `"properties"` member of a Feature object.
 
 #### Special FeatureCollection Objects
 

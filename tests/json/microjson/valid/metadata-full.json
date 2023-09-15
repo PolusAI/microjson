@@ -1,14 +1,5 @@
 {
     "type": "FeatureCollection",
-    "coordinatesystem": {
-      "axes": [{
-        "name": "x"
-      }
-      , {
-        "name": "y"
-      }
-      ]
-    },
     "features": [
       {
         "type": "Feature",
@@ -18,13 +9,13 @@
           "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
         },
         "properties": {
-            "descriptive": {
+            "string": {
                 "well": "A1"
             },
-            "numerical": {
+            "numeric": {
                 "cellCount": 5 
             },
-            "multi-numerical": {
+            "multi-numeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
@@ -37,13 +28,13 @@
           "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
         },
         "properties": {
-            "descriptive": {
+            "string": {
                 "well": "A2"
             },
-            "numerical": {
+            "numeric": {
                 "cellCount": 10 
             },
-            "multivalues": {
+            "multi-numeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
@@ -59,5 +50,40 @@
             "max": 1
         }
     },
-    "descriptive_fields": ["well"]
+    "string_fields": ["well","imagename"],
+    "coordinatesystem": {
+      "axes": [
+          {
+              "name": "x",
+              "unit": "micrometer",
+              "type": "cartesian",
+              "pixelsPerUnit": 1,
+              "description": "x-axis"
+          },
+          {
+              "name": "y",
+              "unit": "micrometer",
+              "type": "cartesian",
+              "pixelsPerUnit": 1,
+              "description": "y-axis"
+          }
+      ],
+      "transformation_matrix": [
+          [
+              1.0,
+              0.0,
+              0.0
+          ],
+          [
+              0.0,
+              1.0,
+              0.0
+          ],
+          [
+              0.0,
+              0.0,
+              0.0
+          ]
+      ]
+    }
   }

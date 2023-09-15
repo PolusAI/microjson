@@ -1,453 +1,482 @@
 {
-  "title": "GeoJSON",
-  "description": "The root object of a GeoJSON file",
-  "anyOf": [
-    {
-      "$ref": "#/definitions/Feature"
-    },
-    {
-      "$ref": "#/definitions/FeatureCollection"
-    },
-    {
-      "$ref": "#/definitions/Point"
-    },
-    {
-      "$ref": "#/definitions/MultiPoint"
-    },
-    {
-      "$ref": "#/definitions/LineString"
-    },
-    {
-      "$ref": "#/definitions/MultiLineString"
-    },
-    {
-      "$ref": "#/definitions/Polygon"
-    },
-    {
-      "$ref": "#/definitions/MultiPolygon"
-    },
-    {
-      "$ref": "#/definitions/GeometryCollection"
-    }
-  ],
-  "definitions": {
-    "Point": {
-      "title": "Point",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "Point"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "minItems": 2,
-          "maxItems": 3,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
-    },
-    "MultiPoint": {
-      "title": "MultiPoint",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "MultiPoint"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            },
-            "minItems": 2,
-            "maxItems": 3
-          }
-        }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
-    },
-    "LineString": {
-      "title": "LineString",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "LineString"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            },
-            "minItems": 2,
-            "maxItems": 3
-          }
-        }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
-    },
-    "MultiLineString": {
-      "title": "MultiLineString",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "MultiLineString"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "number"
-              },
-              "minItems": 2,
-              "maxItems": 3
-            }
-          }
-        }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
-    },
-    "Polygon": {
-      "title": "Polygon",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "Polygon"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "number"
-              },
-              "minItems": 2,
-              "maxItems": 3
-            }
-          }
-        }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
-    },
-    "MultiPolygon": {
-      "title": "MultiPolygon",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "MultiPolygon"
-          ],
-          "type": "string"
-        },
-        "coordinates": {
-          "title": "Coordinates",
-          "type": "array",
-          "items": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "number"
+    "$defs": {
+        "Feature": {
+            "description": "A GeoJSON Feature object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
                 },
-                "minItems": 2,
-                "maxItems": 3
-              }
-            }
-          }
+                "type": {
+                    "const": "Feature",
+                    "title": "Type"
+                },
+                "geometry": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Point"
+                        },
+                        {
+                            "$ref": "#/$defs/MultiPoint"
+                        },
+                        {
+                            "$ref": "#/$defs/LineString"
+                        },
+                        {
+                            "$ref": "#/$defs/MultiLineString"
+                        },
+                        {
+                            "$ref": "#/$defs/Polygon"
+                        },
+                        {
+                            "$ref": "#/$defs/MultiPolygon"
+                        },
+                        {
+                            "$ref": "#/$defs/GeometryCollection"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The geometry of the\n                                   feature",
+                    "title": "Geometry"
+                },
+                "properties": {
+                    "type": "object",
+                    "description": "Properties of the feature",
+                    "title": "Properties"
+                },
+                "id": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Id"
+                }
+            },
+            "required": [
+                "type",
+                "geometry",
+                "properties"
+            ],
+            "title": "Feature",
+            "type": "object"
+        },
+        "FeatureCollection": {
+            "description": "A GeoJSON FeatureCollection object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "FeatureCollection",
+                    "title": "Type"
+                },
+                "features": {
+                    "items": {
+                        "$ref": "#/$defs/Feature"
+                    },
+                    "title": "Features",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "features"
+            ],
+            "title": "FeatureCollection",
+            "type": "object"
+        },
+        "GeometryCollection": {
+            "description": "A GeoJSON GeometryCollection object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "GeometryCollection",
+                    "title": "Type"
+                },
+                "geometries": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Point"
+                            },
+                            {
+                                "$ref": "#/$defs/MultiPoint"
+                            },
+                            {
+                                "$ref": "#/$defs/LineString"
+                            },
+                            {
+                                "$ref": "#/$defs/MultiLineString"
+                            },
+                            {
+                                "$ref": "#/$defs/Polygon"
+                            },
+                            {
+                                "$ref": "#/$defs/MultiPolygon"
+                            }
+                        ]
+                    },
+                    "title": "Geometries",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "geometries"
+            ],
+            "title": "GeometryCollection",
+            "type": "object"
+        },
+        "LineString": {
+            "description": "A GeoJSON LineString object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "LineString",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 2,
+                        "type": "array"
+                    },
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "LineString",
+            "type": "object"
+        },
+        "MultiLineString": {
+            "description": "A GeoJSON MultiLineString object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "MultiLineString",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "items": {
+                            "items": {
+                                "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 2,
+                            "type": "array"
+                        },
+                        "type": "array"
+                    },
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "MultiLineString",
+            "type": "object"
+        },
+        "MultiPoint": {
+            "description": "A GeoJSON MultiPoint object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "MultiPoint",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 2,
+                        "type": "array"
+                    },
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "MultiPoint",
+            "type": "object"
+        },
+        "MultiPolygon": {
+            "description": "A GeoJSON MultiPolygon object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "MultiPolygon",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "items": {
+                            "items": {
+                                "items": {
+                                    "type": "number"
+                                },
+                                "maxItems": 3,
+                                "minItems": 2,
+                                "type": "array"
+                            },
+                            "type": "array"
+                        },
+                        "type": "array"
+                    },
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "MultiPolygon",
+            "type": "object"
+        },
+        "Point": {
+            "description": "A GeoJSON Point object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "Point",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 2,
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "Point",
+            "type": "object"
+        },
+        "Polygon": {
+            "description": "A GeoJSON Polygon object",
+            "properties": {
+                "bbox": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "number"
+                            },
+                            "minItems": 4,
+                            "type": "array"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Bbox"
+                },
+                "type": {
+                    "const": "Polygon",
+                    "title": "Type"
+                },
+                "coordinates": {
+                    "items": {
+                        "items": {
+                            "items": {
+                                "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 2,
+                            "type": "array"
+                        },
+                        "type": "array"
+                    },
+                    "title": "Coordinates",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "type",
+                "coordinates"
+            ],
+            "title": "Polygon",
+            "type": "object"
         }
-      },
-      "required": [
-        "type",
-        "coordinates"
-      ]
     },
-    "GeometryCollection": {
-      "title": "GeometryCollection",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
+    "anyOf": [
+        {
+            "$ref": "#/$defs/Feature"
         },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "GeometryCollection"
-          ],
-          "type": "string"
+        {
+            "$ref": "#/$defs/FeatureCollection"
         },
-        "geometries": {
-          "title": "Geometries",
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Point"
-              },
-              {
-                "$ref": "#/definitions/MultiPoint"
-              },
-              {
-                "$ref": "#/definitions/LineString"
-              },
-              {
-                "$ref": "#/definitions/MultiLineString"
-              },
-              {
-                "$ref": "#/definitions/Polygon"
-              },
-              {
-                "$ref": "#/definitions/MultiPolygon"
-              }
-            ]
-          }
+        {
+            "$ref": "#/$defs/Point"
+        },
+        {
+            "$ref": "#/$defs/MultiPoint"
+        },
+        {
+            "$ref": "#/$defs/LineString"
+        },
+        {
+            "$ref": "#/$defs/MultiLineString"
+        },
+        {
+            "$ref": "#/$defs/Polygon"
+        },
+        {
+            "$ref": "#/$defs/MultiPolygon"
+        },
+        {
+            "$ref": "#/$defs/GeometryCollection"
+        },
+        {
+            "type": "null"
         }
-      },
-      "required": [
-        "type",
-        "geometries"
-      ]
-    },
-    "Feature": {
-      "title": "Feature",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "Feature"
-          ],
-          "type": "string"
-        },
-        "geometry": {
-          "title": "Geometry",
-          "description": "The geometry of the\n                                   feature",
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Point"
-            },
-            {
-              "$ref": "#/definitions/MultiPoint"
-            },
-            {
-              "$ref": "#/definitions/LineString"
-            },
-            {
-              "$ref": "#/definitions/MultiLineString"
-            },
-            {
-              "$ref": "#/definitions/Polygon"
-            },
-            {
-              "$ref": "#/definitions/MultiPolygon"
-            },
-            {
-              "$ref": "#/definitions/GeometryCollection"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "properties": {
-          "title": "Properties",
-          "description": "Properties of the\n                                       feature",
-          "type": "object"
-        },
-        "id": {
-          "title": "Id",
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "integer"
-            }
-          ]
-        }
-      },
-      "required": [
-        "type",
-        "geometry",
-        "properties"
-      ]
-    },
-    "ValueRange": {
-      "title": "ValueRange",
-      "type": "object",
-      "properties": {
-        "min": {
-          "title": "Min",
-          "type": "number"
-        },
-        "max": {
-          "title": "Max",
-          "type": "number"
-        }
-      },
-      "required": [
-        "min",
-        "max"
-      ]
-    },
-    "FeatureCollection": {
-      "title": "FeatureCollection",
-      "type": "object",
-      "properties": {
-        "bbox": {
-          "title": "Bbox",
-          "minItems": 4,
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "type": {
-          "title": "Type",
-          "enum": [
-            "FeatureCollection"
-          ],
-          "type": "string"
-        },
-        "features": {
-          "title": "Features",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Feature"
-          }
-        },
-        "value_range": {
-          "title": "Value Range",
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/ValueRange"
-          }
-        },
-        "descriptive_fields": {
-          "title": "Descriptive Fields",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "type",
-        "features"
-      ]
-    }
-  }
+    ],
+    "description": "The root object of a GeoJSON file",
+    "title": "GeoJSON"
 }

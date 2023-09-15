@@ -1,15 +1,15 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, RootModel
 
 
-Coordinates = conlist(float, min_items=2, max_items=3)
+Coordinates = conlist(float, min_length=2, max_length=3)
 
 
 class GeoAbstract(BaseModel):
     """Abstract base class for all GeoJSON objects"""
-    bbox: Optional[List[float]] = Field(None, min_items=4)
+    bbox: Optional[List[float]] = Field(None, min_length=4)
 
 
 class Point(GeoAbstract):
@@ -96,9 +96,9 @@ class FeatureCollection(GeoAbstract):
     features: List[Feature]
 
 
-class GeoJSON(BaseModel):
+class GeoJSON(RootModel):
     """The root object of a GeoJSON file"""
-    __root__: Union[Feature, FeatureCollection, GeometryType]
+    root: Union[Feature, FeatureCollection, GeometryType]
 
 
 class Unit(Enum):
@@ -159,9 +159,9 @@ class CoordinateSystem(BaseModel):
 
 class Properties(BaseModel):
     """Metadata properties of a MicroJSON feature"""
-    descriptive: Optional[Dict[str, str]] = None
-    numerical: Optional[Dict[str, float]] = None
-    multi_numerical: Optional[Dict[str, List[float]]] = None
+    string: Optional[Dict[str, str]] = None
+    numeric: Optional[Dict[str, float]] = None
+    multi_numeric: Optional[Dict[str, List[float]]] = None
 
 
 class MicroFeature(Feature):
@@ -178,10 +178,11 @@ class MicroFeatureCollection(FeatureCollection):
     coordinatesystem: Optional[CoordinateSystem] = None
     value_range: Optional[Dict[str, ValueRange]] = None
     descriptive_fields: Optional[List[str]] = None
+    propertie: Optional[Properties] = None
 
 
-class MicroJSON(BaseModel):
+class MicroJSON(RootModel):
     """The root object of a MicroJSON file"""
-    __root__: Union[MicroFeature,
+    root: Union[MicroFeature,
                     MicroFeatureCollection,
                     GeometryType]

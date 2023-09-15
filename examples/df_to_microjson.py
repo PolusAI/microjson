@@ -24,9 +24,9 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
 
         # create a new properties object dynamically
         properties = mj.Properties(
-            descriptive={'name': row['name']},
-            numerical={'value': row['value']},
-            multi_numerical={'values': row['values']}
+            string={'name': row['name']},
+            numeric={'value': row['value']},
+            multi_numeric={'values': row['values']}
         )
 
         # Create a new Feature object
@@ -109,4 +109,4 @@ data = [{
 
 df = pd.DataFrame(data)
 feature_collection_model = df_to_microjson(df)
-print(feature_collection_model.json(indent=2, exclude_unset=True))
+print(feature_collection_model.model_dump_json(indent=2, exclude_unset=True))

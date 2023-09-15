@@ -6,87 +6,92 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
 {
     "type": "FeatureCollection",
     "features": [
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    200.0,
-                    150.0
-                ]
-            },
-            "properties": {
-                "name": "Reference Point",
-                "description": "Specific point of interest",
-                "color": "red",
-                "property1": "value1"
-            },
-            "id": "1"
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
         },
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    [
-                        100.0,
-                        100.0
-                    ],
-                    [
-                        200.0,
-                        200.0
-                    ],
-                    [
-                        300.0,
-                        100.0
-                    ]
-                ]
+        "properties": {
+            "string": {
+                "well": "A1"
             },
-            "properties": {
-                "name": "Cell Path",
-                "description": "Path traced within a cell",
-                "color": "blue"
+            "numeric": {
+                "cellCount": 5 
             },
-            "id": "2",
-            "ref": "s3://mybucket/myfile.tif"
-        }
-    ],
-    "coordinatesystem": {
-        "axes": [
-            {
-                "name": "x",
-                "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
-                "description": "x-axis"
-            },
-            {
-                "name": "y",
-                "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
-                "description": "y-axis"
+            "multi-numeric": {
+                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
-        ],
-        "transformation_matrix": [
-            [
-                1.0,
-                0.0,
-                0.0
-            ],
-            [
-                0.0,
-                1.0,
-                0.0
-            ],
-            [
-                0.0,
-                0.0,
-                0.0
-            ]
-        ]
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "subtype": "Rectangle",
+          "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
+        },
+        "properties": {
+            "string": {
+                "well": "A2"
+            },
+            "numeric": {
+                "cellCount": 10 
+            },
+            "multi-numeric": {
+                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
+            }
+        }
+      }
+    ],
+    "value_range": {
+        "cellCount": {
+            "min": 0,
+            "max": 10
+        },
+        "ratioInfectivity": {
+            "min": 0,
+            "max": 1
+        }
+    },
+    "string_fields": ["well","imagename"],
+    "coordinatesystem": {
+      "axes": [
+          {
+              "name": "x",
+              "unit": "micrometer",
+              "type": "cartesian",
+              "pixelsPerUnit": 1,
+              "description": "x-axis"
+          },
+          {
+              "name": "y",
+              "unit": "micrometer",
+              "type": "cartesian",
+              "pixelsPerUnit": 1,
+              "description": "y-axis"
+          }
+      ],
+      "transformation_matrix": [
+          [
+              1.0,
+              0.0,
+              0.0
+          ],
+          [
+              0.0,
+              1.0,
+              0.0
+          ],
+          [
+              0.0,
+              0.0,
+              0.0
+          ]
+      ]
     }
-}
+  }
 
 ```
 

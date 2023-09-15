@@ -26,7 +26,7 @@ def test_valid_geojson(filename):
 
     # Try to parse the data as a GeoJSON object
     try:
-        _ = GeoJSON.parse_obj(data)
+        _ = GeoJSON.model_validate(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -42,7 +42,7 @@ def test_invalid_geojson(filename):
 
     # This will raise a ValidationError if the data does not match the GeoJSON
     try:
-        _ = GeoJSON.parse_obj(data)
+        _ = GeoJSON.model_validate(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:
@@ -61,7 +61,7 @@ def test_valid_microjson(filename):
 
     # Try to parse the data as a MicroJSON object
     try:
-        _ = MicroJSON.parse_obj(data)
+        _ = MicroJSON.model_validate(data)
     except ValidationError as e:
         pytest.fail(f"""ValidationError occurred
                     during validation of {filename}: {str(e)}""")
@@ -78,7 +78,7 @@ def test_invalid_microjson(filename):
     # This will raise a ValidationError if the data does not
     # match the MicroJSON schema
     try:
-        _ = MicroJSON.parse_obj(data)
+        _ = MicroJSON.model_validate(data)
         pytest.fail(f"""Parsing succeeded on {filename},
                     but it should not have.""")
     except ValidationError:
