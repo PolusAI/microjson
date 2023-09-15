@@ -59,7 +59,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         type='FeatureCollection',
         features=features,
         value_range=value_range,
-        descriptive_fields=descriptive_fields,
+        string_fields=string_fields,
         coordinatesystem= {
             'axes': [
                 {
@@ -82,7 +82,6 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
                 [0, 1, 0],
                 [0, 0, 1]
             ],
-            'origo': 'top-left'
         }
     )
 
