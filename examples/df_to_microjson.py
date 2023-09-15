@@ -52,7 +52,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
     }
 
     # Create a list of descriptive fields
-    descriptive_fields = ['name']
+    string_fields = ['name']
 
     # Create a new FeatureCollection object
     feature_collection = mj.MicroFeatureCollection(
