@@ -12,6 +12,11 @@ MicroJSON offers a range of features designed to meet the needs of microscopy da
 
 - **Extensibility:** MicroJSON can handle additional properties associated with specific features, such as metadata relating to microscopy images.
 
+## Additional Functions
+There are two additional functionalities added which supports binary images.
+**BinaryMicrojsonModel:** Converts objects in a binary image into polygon coordinates (rectangle, encoding) and save them in json file format using microjson package.
+**MicrojsonBinaryModel:** Reconstruct binary images using polygon coordinates from json file.
+
 ## Usage
 
 MicroJSON can be used with any application or tool that can process JSON data. Due to its design, it is particularly suited to applications related to the analysis, visualization, and manipulation of microscopy images.

@@ -23,8 +23,15 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9.15,<3.12"
+typer = "^0.7.0"
+scipy = ">=1.8,<1.9.2"
+filepattern = "^2.0.1"
+fastapi = "^0.103.1"
+llvmlite = "^0.40.1"
+vaex = "^4.17.0"
 pydantic = "^2.3.0"
+scikit-image = "0.20.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
