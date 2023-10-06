@@ -35,6 +35,8 @@ pre-commit = "^3.3.3"
 black = "^23.3.0"
 ruff = "^0.0.274"
 mypy = "^1.4.0"
+mkdocs = "^1.5.3"
+mkdocstrings = "^0.23.0"
 
 
 [tool.pytest.ini_options]
