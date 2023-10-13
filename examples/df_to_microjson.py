@@ -63,6 +63,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         features=features,
         value_range=value_range,
         string_fields=string_fields,
+        properties=mj.Properties(string={"plate": "Example Plate"}),
         coordinatesystem={
             "axes": [
                 {
