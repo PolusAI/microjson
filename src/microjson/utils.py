@@ -425,7 +425,6 @@ class MicrojsonBinaryModel(CustomValidation):
     out_dir:Union[str, Path]
     file_path:Union[str, Path]
 
-
     def microjson_to_binary(self) -> None:
         """Convert polygon coordinates (series of points, rectangle) of all objects to binary mask"""
 
