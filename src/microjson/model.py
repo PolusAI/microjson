@@ -178,7 +178,7 @@ class MicroFeatureCollection(FeatureCollection):
     coordinatesystem: Optional[CoordinateSystem] = None
     value_range: Optional[Dict[str, ValueRange]] = None
     descriptive_fields: Optional[List[str]] = None
-    propertie: Optional[Properties] = None
+    properties: Optional[Properties] = None
 
 
 class MicroJSON(RootModel):

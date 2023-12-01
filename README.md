@@ -14,7 +14,7 @@ MicroJSON offers a range of features designed to meet the needs of microscopy da
 
 ## Additional Functions
 There are two additional functionalities added which supports binary images.
-**BinaryMicrojsonModel:** Converts objects in a binary image into polygon coordinates (rectangle, encoding) and save them in json file format using microjson package.
+**OmeMicrojsonModel:** Converts objects in a binary or label images into polygon coordinates (rectangle, encoding) and save them in json file format using microjson package.
 **MicrojsonBinaryModel:** Reconstruct binary images using polygon coordinates from json file.
 
 ## Usage

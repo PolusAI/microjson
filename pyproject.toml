@@ -16,6 +16,9 @@ classifiers = [
 ]
 keywords = ["json", "microscopy", "microjson"]
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.27.1"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
@@ -24,6 +27,8 @@ where = ["src"]
 
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
+bfio = {version = "2.3.2", extras = ["all"]}
+scyjava = "^1.9.1"
 typer = "^0.7.0"
 scipy = ">=1.8,<1.9.2"
 filepattern = "^2.0.1"
