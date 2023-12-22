@@ -201,10 +201,10 @@ class MicroFeatureCollection(FeatureCollection):
     descriptive_fields: Optional[List[str]] = None
     properties: Optional[Properties] = None
     id: Optional[Union[StrictStr, StrictInt]] = None
-    provenance: Union[Workflow,
-                      WorkflowCollection,
-                      Artifact,
-                      ArtifactCollection]
+    provenance: Optional[Union[Workflow,
+                               WorkflowCollection,
+                               Artifact,
+                               ArtifactCollection]] = None
 
 
 class MicroJSON(RootModel):
