@@ -2,8 +2,10 @@
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, RootModel
-from provenance import Workflow, WorkflowCollection, Artifact, ArtifactCollection
-
+from provenance import Workflow
+from provenance import WorkflowCollection
+from provenance import Artifact
+from provenance import ArtifactCollection
 
 Coordinates = conlist(float, min_length=2, max_length=3)
 
