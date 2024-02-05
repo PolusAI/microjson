@@ -2,7 +2,10 @@
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, RootModel
-
+from microjson.provenance import Workflow
+from microjson.provenance import WorkflowCollection
+from microjson.provenance import Artifact
+from microjson.provenance import ArtifactCollection
 
 Coordinates = conlist(float, min_length=2, max_length=3)
 
@@ -186,7 +189,7 @@ class MicroFeature(Feature):
 
     coordinatesystem: Optional[List[Axis]] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
-    properties: Properties
+    properties: Properties  # type: ignore
 
 
 class MicroFeatureCollection(FeatureCollection):
@@ -197,9 +200,16 @@ class MicroFeatureCollection(FeatureCollection):
     value_range: Optional[Dict[str, ValueRange]] = None
     descriptive_fields: Optional[List[str]] = None
     properties: Optional[Properties] = None
+    id: Optional[Union[StrictStr, StrictInt]] = None
+    provenance: Optional[Union[Workflow,
+                               WorkflowCollection,
+                               Artifact,
+                               ArtifactCollection]] = None
 
 
 class MicroJSON(RootModel):
     """The root object of a MicroJSON file"""
 
-    root: Union[MicroFeature, MicroFeatureCollection, GeometryType]  # type: ignore
+    root: Union[MicroFeature,  # type: ignore
+                MicroFeatureCollection,
+                GeometryType]
