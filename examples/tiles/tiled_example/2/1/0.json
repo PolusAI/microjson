@@ -32,8 +32,7 @@
       },
       "properties": {
         "numeric": {
-          "Label": 15.0,
-          "Encoding_length": 3690.0
+          "Label": 10
         }
       }
     }
@@ -56,12 +55,8 @@
   },
   "value_range": {
     "Label": {
-      "min": 1.0,
-      "max": 35.0
-    },
-    "Encoding_length": {
-      "min": 3690.0,
-      "max": 3690.0
+      "min": 10,
+      "max": 10
     }
   },
   "properties": {
@@ -70,8 +65,6 @@
       "Image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Y": 1080.0,
-      "X": 1080.0,
       "Channel": 1.0
     }
   }

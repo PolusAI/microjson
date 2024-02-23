@@ -1,6 +1,6 @@
 # Integration of TileJSON with MicroJSON
 ## Purpose
-This specification outlines how to use TileJSON to integrate tiled MicroJSON data. It provides examples of how TileJSON can be used to specify the tiling scheme and zoom levels for MicroJSON data. It is based on the [TileJSON 3.0.0 specification](https://github.com/mapbox/tilejson-spec/blob/master/3.0.0/README.md), but extends it by recommending additional properties include the integration of MicroJSON data and fit purposes of microscopy data visualization. Recommendations made here are NOT part of the original TileJSON specification, but are made to fit the purposes of microscopy data visualization and integration with MicroJSON, although all recommendations are made to be compatible with the original TileJSON specification.
+This specification outlines how to use TileJSON to integrate tiled MicroJSON data. It provides examples of how TileJSON can be used to specify the tiling scheme and zoom levels for MicroJSON data. It is based on the [TileJSON 3.0.0 specification](https://github.com/mapbox/tilejson-spec/blob/master/3.0.0/README.md), but extends it by recommending additional properties include the integration of MicroJSON data and fit purposes of microscopy data visualization. The recommendations provided here are not intrinsic to the original TileJSON specification but have been tailored to suit the needs of microscopy data visualization and integration with MicroJSON. However, all suggestions are designed to maintain compatibility with the original TileJSON specification.
 
 ## Background of TileJSON
 
@@ -16,7 +16,7 @@ This specification outlines how to use TileJSON to integrate tiled MicroJSON dat
 - **`attribution`:** A link to the data source or other attribution information, e.g. organisational origin. Optional but recommended.
 - **`tiles`:** Required. The URL pattern for accessing the vector tiles. The  `urlbase/{zlvl}/{t}/{c}/{z}/{x}/{y}` is the recommended default naming pattern for the tiles, in this order, where `urlbase` is the base URL (e.g. `http://example.com/tiles`), `{zlvl}` is the zoom level, `{t}` is the tileset timestamp, `{c}` is the channel, `{z}` is the z coordinate, and `{x}` and `{y}` are the x and y coordinates, respectively. 
 - **`minzoom` and `maxzoom`:** Defines the range of zoom levels for which the tiles are available. 
-- **`bounds`:** Optional. Specifies the geomoetrical bounds covered by the tileset. Specified as an array of four numbers in the order `[minX, minY, maxX, maxY]`.
+- **`bounds`:** Optional. Specifies the geometrical bounds included in the tileset. Specified as an array of four numbers in the order `[minX, minY, maxX, maxY]`.
 - **`center`:** Optional. Indicates the center and suggested default view of the tileset.
 - **`format`:** Required. The format of the tiles, for the purpose of this specification, we are currently using `json`, but are planning to extend this to binary vector format in the future.
 - **`vector_layers`:**  Required. Describes each layer within the vector tiles, and has the following structure:
@@ -44,24 +44,25 @@ The following fields of TileJSON may be used if the use case requires it, and ar
 ::: microjson.tile.TileLayer
 
 ## TileJSON for MicroJSON example with Vector Layers
-The below example shows a TileJSON object for a MicroJSON tileset with multiple layers of detail. The tileset has a single vector layer, `image_layer` id of `vector_layers`, which contains a single vector layer describing images. The `fields` property of the this layer specifies the attributes of the layer, including the data types of the attributes. The `tiles` property specifies the URL pattern for accessing the vector tiles, which in this case is a 2D data set (no channels, time or z-axis) with zoom level. The `fillzoom` property specifies the zoom level from which to generate overzoomed tiles, which in this case starts at level 3, after the last specified layer.
+The below example illustrates a TileJSON for a MicroJSON tileset multiple layers of detail. The tileset has a single vector layer, `image_layer` id of `vector_layers`, which contains a single vector layer describing images. The `fields` property of the this layer specifies the attributes of the layer, including the data types of the attributes. The `tiles` property specifies the URL pattern for accessing the vector tiles, which in this case is a 2D data set (no channels, time or z-axis) with zoom level. The `fillzoom` property specifies the zoom level from which to generate overzoomed tiles, which in this case starts at level 3, after the last specified layer.
 
 This file is located in the `examples/tiles` directory of the repository, and is named `tiled_example.json`. It has a corresponding MicroJSON file for each tile, located in the `examples/tiles/tiled_example` directory of the repository. The MicroJSON files are organized according to the tiling scheme, with the directory structure `zlvl/x/y.json` where `zlvl` is the zoom level, `x` is the x coordinate, and `y` is the y coordinate. The MicroJSON files contain the MicroJSON objects for the corresponding tiles, and are named according to the tiling scheme. For example, the MicroJSON object for the tile at zoom level 1, tile at (0,1) in the tiling scheme is located at `examples/tiles/tiled_example/1/0/1.json`. Examples for MicroJSON objects at zoom levels 0, 1, and 2 are provided below.
 
 ```json
 {
+    {
     "tilejson": "3.0.0",
     "name": "2D Data Example",
     "description": "A tileset showing 2D data with multiple layers of detail.",
     "version": "1.0.0",
     "attribution": "<a href='http://example.com'>Example</a>",
     "tiles": [
-        "http://example.com/tiles/{zlvl}/{x}/{y}.json"
+        "http://example.com/tiled_example/{zlvl}/{x}/{y}.json"
     ],
     "minzoom": 0,
     "maxzoom": 10,
     "bounds": [0, 0, 24000, 24000],
-    "center": [12000, 12000, 10],
+    "center": [12000, 12000, 0],
     "format": "json",
     "vector_layers": [
         {
@@ -75,8 +76,7 @@ This file is located in the `examples/tiles` directory of the repository, and is
                     "Image": "Image URI"
                 },
                 "numerical": {
-                    "X": "X coordinate",
-                    "Y": "Y coordinate",
+                    "Label": "Label ID",
                     "Channel": "Channel ID"
                 }
             }
@@ -91,82 +91,38 @@ This file is located in the `examples/tiles` directory of the repository, and is
 The following is an example of a MicroJSON object at zoom level 0, tile at (0,0) in the tiling scheme. Example URL: `http://example.com/tiles/0/0/0.json`
 ```json
 {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              0,
-              0
-            ],
-            [
-              20000,
-              0
-            ],
-            [
-              20000,
-              20000
-            ],
-            [
-              0,
-              20000
-            ],
-            [
-              0,
-              0
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "numeric": {
-          "Label": 15.0,
-          "Encoding_length": 3690.0
+    "tilejson": "3.0.0",
+    "name": "2D Data Example",
+    "description": "A tileset showing 2D data with multiple layers of detail.",
+    "version": "1.0.0",
+    "attribution": "<a href='http://example.com'>Example</a>",
+    "tiles": [
+        "http://example.com/tiled_example/{zlvl}/{x}/{y}.json"
+    ],
+    "minzoom": 0,
+    "maxzoom": 10,
+    "bounds": [0, 0, 24000, 24000],
+    "center": [12000, 12000, 0],
+    "format": "json",
+    "vector_layers": [
+        {
+            "id": "image_layer",
+            "description": "Image layer",
+            "minzoom": 0,
+            "maxzoom": 10,
+            "fields": {
+                "string": {
+                    "Plate": "Plate ID",
+                    "Image": "Image URI"
+                },
+                "numerical": {
+                    "Label": "Label ID",
+                    "Channel": "Channel ID"
+                }
+            }
         }
-      }
-    }
-  ],
-  "coordinatesystem": {
-    "axes": [
-      {
-        "name": "x",
-        "type": "cartesian",
-        "unit": "micrometer",
-        "description": "x-axis"
-      },
-      {
-        "name": "y",
-        "type": "cartesian",
-        "unit": "micrometer",
-        "description": "y-axis"
-      }
-    ]
-  },
-  "value_range": {
-    "Label": {
-      "min": 1.0,
-      "max": 35.0
-    },
-    "Encoding_length": {
-      "min": 3690.0,
-      "max": 3690.0
-    }
-  },
-  "properties": {
-    "string": {
-      "Plate": "label",
-      "Image": "x00_y01_p01_c1.ome.tif"
-    },
-    "numeric": {
-      "Y": 1080.0,
-      "X": 1080.0,
-      "Channel": 1.0
-    }
-  }
+    ],
+    "fillzoom": 3
 }
 ```
 
@@ -207,8 +163,7 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       },
       "properties": {
         "numeric": {
-          "Label": 10.0,
-          "Encoding_length": 3690.0
+          "Label": 3
         }
       }
     }
@@ -231,12 +186,8 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
   },
   "value_range": {
     "Label": {
-      "min": 1.0,
-      "max": 35.0
-    },
-    "Encoding_length": {
-      "min": 3690.0,
-      "max": 3690.0
+      "min": 3,
+      "max": 3
     }
   },
   "properties": {
@@ -245,8 +196,6 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       "Image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Y": 1080.0,
-      "X": 1080.0,
       "Channel": 1.0
     }
   }
@@ -266,23 +215,23 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
         "coordinates": [
           [
             [
-              15000,
+              5000,
               15000
             ],
             [
-              20000,
+              10000,
               15000
             ],
             [
-              20000,
+              10000,
               20000
             ],
             [
-              15000,
+              5000,
               20000
             ],
             [
-              15000,
+              5000,
               15000
             ]
           ]
@@ -290,8 +239,7 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
       },
       "properties": {
         "numeric": {
-          "Label": 32.0,
-          "Encoding_length": 3690.0
+          "Label": 13
         }
       }
     }
@@ -314,12 +262,8 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
   },
   "value_range": {
     "Label": {
-      "min": 1.0,
-      "max": 35.0
-    },
-    "Encoding_length": {
-      "min": 3690.0,
-      "max": 3690.0
+      "min": 13,
+      "max": 13
     }
   },
   "properties": {
@@ -328,8 +272,6 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
       "Image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Y": 1080.0,
-      "X": 1080.0,
       "Channel": 1.0
     }
   }

@@ -5,32 +5,30 @@
     "version": "1.0.0",
     "attribution": "<a href='http://example.com'>Example</a>",
     "tiles": [
-        "http://example.com/tiles/{zlvl}/{x}/{y}.json"
+        "http://example.com/tiled_example/{zlvl}/{x}/{y}.json"
     ],
     "minzoom": 0,
-    "maxzoom": 18,
+    "maxzoom": 10,
     "bounds": [0, 0, 24000, 24000],
-    "center": [12000, 12000, 10],
+    "center": [12000, 12000, 0],
     "format": "json",
     "vector_layers": [
         {
             "id": "image_layer",
             "description": "Image layer",
             "minzoom": 0,
-            "maxzoom": 18,
+            "maxzoom": 10,
             "fields": {
                 "string": {
                     "Plate": "Plate ID",
                     "Image": "Image URI"
                 },
                 "numerical": {
-                    "X": "X coordinate",
-                    "Y": "Y coordinate",
+                    "Label": "Label ID",
                     "Channel": "Channel ID"
                 }
             }
         }
     ],
-    "fillzoom": 3,
-    "legend": "http://example.com/legend.png"
+    "fillzoom": 3
 }
