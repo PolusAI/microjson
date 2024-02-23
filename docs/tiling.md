@@ -44,6 +44,9 @@ The following fields of TileJSON may be used if the use case requires it, and ar
 ::: microjson.tile.TileLayer
 
 ## TileJSON for MicroJSON example with Vector Layers
+The below example shows a TileJSON object for a MicroJSON tileset with multiple layers of detail. The tileset has a single vector layer, `image_layer` id of `vector_layers`, which contains a single vector layer describing images. The `fields` property of the this layer specifies the attributes of the layer, including the data types of the attributes. The `tiles` property specifies the URL pattern for accessing the vector tiles, which in this case is a 2D data set (no channels, time or z-axis) with zoom level. The `fillzoom` property specifies the zoom level from which to generate overzoomed tiles, which in this case starts at level 3, after the last specified layer.
+
+This file is located in the `examples/tiles` directory of the repository, and is named `tiled_example.json`. It has a corresponding MicroJSON file for each tile, located in the `examples/tiles/tiled_example` directory of the repository. The MicroJSON files are organized according to the tiling scheme, with the directory structure `zlvl/x/y.json` where `zlvl` is the zoom level, `x` is the x coordinate, and `y` is the y coordinate. The MicroJSON files contain the MicroJSON objects for the corresponding tiles, and are named according to the tiling scheme. For example, the MicroJSON object for the tile at zoom level 1, tile at (0,1) in the tiling scheme is located at `examples/tiles/tiled_example/1/0/1.json`. Examples for MicroJSON objects at zoom levels 0, 1, and 2 are provided below.
 
 ```json
 {
@@ -56,7 +59,7 @@ The following fields of TileJSON may be used if the use case requires it, and ar
         "http://example.com/tiles/{zlvl}/{x}/{y}.json"
     ],
     "minzoom": 0,
-    "maxzoom": 18,
+    "maxzoom": 10,
     "bounds": [0, 0, 24000, 24000],
     "center": [12000, 12000, 10],
     "format": "json",
@@ -65,7 +68,7 @@ The following fields of TileJSON may be used if the use case requires it, and ar
             "id": "image_layer",
             "description": "Image layer",
             "minzoom": 0,
-            "maxzoom": 18,
+            "maxzoom": 10,
             "fields": {
                 "string": {
                     "Plate": "Plate ID",
@@ -79,10 +82,7 @@ The following fields of TileJSON may be used if the use case requires it, and ar
             }
         }
     ],
-    "fillzoom": 6,
-    "legend": {
-        "image_layer": "http://example.com/legend.png"
-    }
+    "fillzoom": 3
 }
 ```
 
@@ -91,135 +91,247 @@ The following fields of TileJSON may be used if the use case requires it, and ar
 The following is an example of a MicroJSON object at zoom level 0, tile at (0,0) in the tiling scheme. Example URL: `http://example.com/tiles/0/0/0.json`
 ```json
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [0.0,0.0],
-                        [23000.0,0.0],
-                        [23000.0,23000.0],
-                        [0.0,23000.0],
-                        [0.0,0.0]
-                    ]
-                ]
-            },
-            "properties": {
-                "numeric": {
-                    "Label": 15.0,
-                    "Encoding_length": 3690.0
-                }
-            }
-        }
-    ],
-    "coordinatesystem": {
-        "axes": [
-        {
-            "name": "x",
-            "type": "cartesian",
-            "unit": "micrometer",
-            "description": "x-axis"
-        },
-        {
-            "name": "y",
-            "type": "cartesian",
-            "unit": "micrometer",
-            "description": "y-axis"
-        }
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20000,
+              0
+            ],
+            [
+              20000,
+              20000
+            ],
+            [
+              0,
+              20000
+            ],
+            [
+              0,
+              0
+            ]
+          ]
         ]
-    },
-    "value_range": {
-        "Label": {
-            "min": 1.0,
-            "max": 35.0
-        },
-        "Encoding_length": {
-            "min": 3690.0,
-            "max": 3690.0
-        }
-    },
-    "properties": {
-        "string": {
-            "Plate": "label",
-            "Image": "x00_y01_p01_c1.ome.tif"
-        },
+      },
+      "properties": {
         "numeric": {
-            "Y": 1080.0,
-            "X": 1080.0,
-            "Channel": 1.0
+          "Label": 15.0,
+          "Encoding_length": 3690.0
         }
+      }
     }
+  ],
+  "coordinatesystem": {
+    "axes": [
+      {
+        "name": "x",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "x-axis"
+      },
+      {
+        "name": "y",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "y-axis"
+      }
+    ]
+  },
+  "value_range": {
+    "Label": {
+      "min": 1.0,
+      "max": 35.0
+    },
+    "Encoding_length": {
+      "min": 3690.0,
+      "max": 3690.0
+    }
+  },
+  "properties": {
+    "string": {
+      "Plate": "label",
+      "Image": "x00_y01_p01_c1.ome.tif"
+    },
+    "numeric": {
+      "Y": 1080.0,
+      "X": 1080.0,
+      "Channel": 1.0
+    }
+  }
 }
 ```
 
 ### Level 1 
 The following is an example of a MicroJSON object at zoom level 1, tile at (0,1) in the tiling scheme. Example URL: `http://example.com/tiles/1/0/1.json`
-
 ```json
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [0,11000],
-                        [10000,11000],
-                        [10000,21000],
-                        [0,21000],
-                        [0,11000]
-                    ]
-                ]
-            },
-            "properties": {
-                "numeric": {
-                    "Label": 32.0,
-                    "Encoding_length": 3690.0
-                }
-            }
-        }
-    ],
-    "coordinatesystem": {
-        "axes": [
-        {
-            "name": "x",
-            "type": "cartesian",
-            "unit": "micrometer",
-            "description": "x-axis"
-        },
-        {
-            "name": "y",
-            "type": "cartesian",
-            "unit": "micrometer",
-            "description": "y-axis"
-        }
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              10000
+            ],
+            [
+              10000,
+              10000
+            ],
+            [
+              10000,
+              20000
+            ],
+            [
+              0,
+              20000
+            ],
+            [
+              0,
+              10000
+            ]
+          ]
         ]
-    },
-    "value_range": {
-        "Label": {
-            "min": 1.0,
-            "max": 35.0
-        },
-        "Encoding_length": {
-            "min": 3690.0,
-            "max": 3690.0
-        }
-    },
-    "properties": {
-        "string": {
-            "Plate": "label",
-            "Image": "x00_y01_p01_c1.ome.tif"
-        },
+      },
+      "properties": {
         "numeric": {
-            "Y": 1080.0,
-            "X": 1080.0,
-            "Channel": 1.0
+          "Label": 10.0,
+          "Encoding_length": 3690.0
         }
+      }
     }
+  ],
+  "coordinatesystem": {
+    "axes": [
+      {
+        "name": "x",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "x-axis"
+      },
+      {
+        "name": "y",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "y-axis"
+      }
+    ]
+  },
+  "value_range": {
+    "Label": {
+      "min": 1.0,
+      "max": 35.0
+    },
+    "Encoding_length": {
+      "min": 3690.0,
+      "max": 3690.0
+    }
+  },
+  "properties": {
+    "string": {
+      "Plate": "label",
+      "Image": "x00_y01_p01_c1.ome.tif"
+    },
+    "numeric": {
+      "Y": 1080.0,
+      "X": 1080.0,
+      "Channel": 1.0
+    }
+  }
+}
+```
+
+### Level 2
+The following is an example of a MicroJSON object at zoom level 2, tile at (1,1) in the tiling scheme. Example URL: `http://example.com/tiles/2/1/3.json`
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              15000,
+              15000
+            ],
+            [
+              20000,
+              15000
+            ],
+            [
+              20000,
+              20000
+            ],
+            [
+              15000,
+              20000
+            ],
+            [
+              15000,
+              15000
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "numeric": {
+          "Label": 32.0,
+          "Encoding_length": 3690.0
+        }
+      }
+    }
+  ],
+  "coordinatesystem": {
+    "axes": [
+      {
+        "name": "x",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "x-axis"
+      },
+      {
+        "name": "y",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "y-axis"
+      }
+    ]
+  },
+  "value_range": {
+    "Label": {
+      "min": 1.0,
+      "max": 35.0
+    },
+    "Encoding_length": {
+      "min": 3690.0,
+      "max": 3690.0
+    }
+  },
+  "properties": {
+    "string": {
+      "Plate": "label",
+      "Image": "x00_y01_p01_c1.ome.tif"
+    },
+    "numeric": {
+      "Y": 1080.0,
+      "X": 1080.0,
+      "Channel": 1.0
+    }
+  }
 }
 ```
