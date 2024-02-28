@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "attribution": "<a href='http://example.com'>Example</a>",
     "tiles": [
-        "http://example.com/tiled_example/{zlvl}/{x}/{y}.json"
+        "./tiled_example/{zlvl}/{x}/{y}.json"
     ],
     "minzoom": 0,
     "maxzoom": 10,

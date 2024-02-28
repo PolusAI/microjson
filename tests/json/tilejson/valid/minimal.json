@@ -1,0 +1,14 @@
+{
+    "tilejson": "3.0.0",
+    "tiles": [
+        "http://localhost:8080/tiles/{zlvl}/{x}/{y}.json"
+    ],
+    "vector_layers": [
+        {
+            "id": "cells",
+            "fields": {
+                "name": "string"
+            }
+        }
+    ]
+}

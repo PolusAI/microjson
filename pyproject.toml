@@ -49,6 +49,7 @@ ruff = "^0.0.274"
 mypy = "^1.4.0"
 mkdocs = "^1.5.3"
 mkdocstrings = "^0.23.0"
+bfio = {version = "2.3.6", extras = ["all"]}
 
 
 [tool.pytest.ini_options]

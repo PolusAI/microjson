@@ -16,9 +16,8 @@ This specification outlines how to use TileJSON to integrate tiled MicroJSON dat
 - **`attribution`:** A link to the data source or other attribution information, e.g. organisational origin. Optional but recommended.
 - **`tiles`:** Required. The URL pattern for accessing the vector tiles. The  `urlbase/{zlvl}/{t}/{c}/{z}/{x}/{y}` is the recommended default naming pattern for the tiles, in this order, where `urlbase` is the base URL (e.g. `http://example.com/tiles`), `{zlvl}` is the zoom level, `{t}` is the tileset timestamp, `{c}` is the channel, `{z}` is the z coordinate, and `{x}` and `{y}` are the x and y coordinates, respectively. 
 - **`minzoom` and `maxzoom`:** Defines the range of zoom levels for which the tiles are available. 
-- **`bounds`:** Optional. Specifies the geometrical bounds included in the tileset. Specified as an array of four numbers in the order `[minX, minY, maxX, maxY]`.
-- **`center`:** Optional. Indicates the center and suggested default view of the tileset.
-- **`format`:** Required. The format of the tiles, for the purpose of this specification, we are currently using `json`, but are planning to extend this to binary vector format in the future.
+- **`bounds`:** Optional. Specifies the geometrical bounds included in the tileset. Specified as an array of minimum four numbers in the order `[minX, minY, maxX, maxY]`, but may include up to a further six numbers for a total of ten, `[minT, minC, minZ, minX, minY, maxT, maxC, maxZ, maxX, maxY]`, where `minT` is the minimum tileset timestamp, `minC` is the minimum channel, `minZ` is the minimum z coordinate, `minX` and `minY` are the minimum x and y coordinates, `maxT` is the maximum tileset timestamp, `maxC` is the maximum channel, `maxZ` is the maximum z coordinate, and `maxX` and `maxY` are the maximum x and y coordinates.
+- **`center`:** Optional. Indicates the center and suggested default view of the tileset. Minimum of three numbers in the order `[x, y, zoom]`, but may include up to a further three numbers for a total of six, `[t,c,z,x,y,zoom]`, where `t` is the tileset timestamp, `c` is the channel, `z` is the z coordinate, `x` and `y` are the x and y coordinates, and `zoom` is the zoom level. Zoom level should be last.
 - **`vector_layers`:**  Required. Describes each layer within the vector tiles, and has the following structure:
 
   - **`id`:** Required. A unique identifier for the layer. Required for each layer.
@@ -63,7 +62,6 @@ This file is located in the `examples/tiles` directory of the repository, and is
     "maxzoom": 10,
     "bounds": [0, 0, 24000, 24000],
     "center": [12000, 12000, 0],
-    "format": "json",
     "vector_layers": [
         {
             "id": "image_layer",
