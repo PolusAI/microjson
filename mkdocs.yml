@@ -38,13 +38,20 @@ theme:
       accent: lime
 nav:
   - Home: 'index.md'
-  - JSON Examples: 'example.md'
-  - Pydantic model: 'pydantic.md'
-  - Create model example: 'usage.md'
-  - JSON validation: 'validation.md'
-  - Metadata example: 'metadata_example.md'
-  - Provenance in MicroJSON: 'provenance.md'
-  - MicroJSON tiling: 'tiling.md'
+  - Examples:
+    - JSON Examples: 'example.md'
+    - Create model example: 'usage.md'
+    - JSON validation: 'validation.md'
+    - Metadata example: 'metadata_example.md'
+  - Core Pydantic model: 'pydantic.md'
+  - Extensions:
+    - Provenance in MicroJSON: 'provenance.md'
+    - MicroJSON tiling: 'tiling.md'
+  - About:
+    - About MicroJSON: 'about.md'
+    - License: 'license.md'
+    - Roadmap: 'roadmap.md'
+
   - GitHub: https://github.com/polusai/microjson
   - Pypi: https://pypi.org/project/microjson/
 plugins:
