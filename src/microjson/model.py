@@ -164,7 +164,7 @@ class Axis(BaseModel):
     name: StrictStr
     type: Optional[AxisType] = None
     unit: Optional[Unit] = None
-    pixels_per_unit: Optional[float] = None
+    pixelsPerUnit: Optional[float] = None
     description: Optional[str] = None
 
 
@@ -172,7 +172,7 @@ class CoordinateSystem(BaseModel):
     """A coordinate system for MicroJSON coordinates"""
 
     axes: List[Axis]
-    transformation_matrix: Optional[List[List[float]]] = None
+    transformationMatrix: Optional[List[List[float]]] = None
 
 
 class Properties(BaseModel):
@@ -180,14 +180,14 @@ class Properties(BaseModel):
 
     string: Optional[Dict[str, str]] = None
     numeric: Optional[Dict[str, float]] = None
-    multi_numeric: Optional[Dict[str, List[float]]] = None
+    multiNumeric: Optional[Dict[str, List[float]]] = None
 
 
 class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinatesystem: Optional[List[Axis]] = None
+    coordinateSystem: Optional[List[Axis]] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
     properties: Properties  # type: ignore
 
@@ -196,9 +196,9 @@ class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinatesystem: Optional[CoordinateSystem] = None
-    value_range: Optional[Dict[str, ValueRange]] = None
-    descriptive_fields: Optional[List[str]] = None
+    coordinateSystem: Optional[CoordinateSystem] = None
+    valueRange: Optional[Dict[str, ValueRange]] = None
+    descriptiveFields: Optional[List[str]] = None
     properties: Optional[Properties] = None
     id: Optional[Union[StrictStr, StrictInt]] = None
     provenance: Optional[Union[Workflow,

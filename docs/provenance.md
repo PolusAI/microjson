@@ -27,7 +27,7 @@ Of these, Workflow, WorkflowCollection, Artifact, and ArtifactCollection can fun
 Under each workflow, the `WorkflowProvenance` object includes:
 
 - **Properties** that describe the workflow run, in form of a dictionary, to enable flexible and scalable provenance tracking. Example of properties include run identifier, duration, operator, and input/output parameters.
-- **Output Artifacts:** These artifacts are the result of the workflow run. These in turn has the `microjson_links` field, which is a list of MicroJSON objects that is pertinent to the workflow run:
+- **Output Artifacts:** These artifacts are the result of the workflow run. These in turn has the `microjsonLinks` field, which is a list of MicroJSON objects that is pertinent to the workflow run:
     - **MicroJSON Traceability Links:** These links connect back to specific MicroJSON objects, specifying which parts of the object's properties are pertinent to the workflow run.
 
 **Rationale for Structure**
@@ -86,7 +86,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "numeric": {
                     "cellCount": 5
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -144,7 +144,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "numeric": {
                     "cellCount": 10
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -165,7 +165,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             }
         }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -175,11 +175,11 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             "max": 1
         }
     },
-    "string_fields": [
+    "stringFields": [
         "well",
         "imagename"
     ],
-    "coordinatesystem": {
+    "coordinateSystem": {
         "axes": [
             {
                 "name": "x",
@@ -196,7 +196,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "description": "y-axis"
             }
         ],
-        "transformation_matrix": [
+        "transformationMatrix": [
             [
                 1.0,
                 0.0,
@@ -219,13 +219,13 @@ This enhancement not only increases the utility of MicroJSON in various scientif
         "id": "artifact_1",
         "uri": "file://path/to/image.tif",
         "properties": {
-            "image_type": "TIFF",
-            "analysis_type": "Cell counting"
+            "imageType": "TIFF",
+            "analysisType": "Cell counting"
         },
-        "microjson_links": [
+        "microjsonLinks": [
             {
-                "microjson_id": "1",
-                "microjson_field": "string.well"
+                "microjsonTd": "1",
+                "microjsonField": "string.well"
             }
         ]
     }
@@ -276,7 +276,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "numeric": {
                     "cellCount": 5
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -334,7 +334,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "numeric": {
                     "cellCount": 10
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -355,7 +355,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             }
         }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -365,11 +365,11 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             "max": 1
         }
     },
-    "string_fields": [
+    "descriptiveFields": [
         "well",
         "imagename"
     ],
-    "coordinatesystem": {
+    "coordinateSystem": {
         "axes": [
             {
                 "name": "x",
@@ -386,7 +386,7 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 "description": "y-axis"
             }
         ],
-        "transformation_matrix": [
+        "transformationMatrix": [
             [
                 1.0,
                 0.0,
@@ -421,13 +421,13 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                         "id": "artifact_1",
                         "uri": "file://path/to/image.tif",
                         "properties": {
-                            "image_type": "TIFF",
-                            "analysis_type": "Cell counting"
+                            "imageType": "TIFF",
+                            "analysisType": "Cell counting"
                         },
-                        "microjson_links": [
+                        "microjsonLinks": [
                             {
-                                "microjson_id": "1",
-                                "microjson_field": "string.well"
+                                "microjsonId": "1",
+                                "microjsonField": "string.well"
                             }
                         ]
                     }

@@ -94,7 +94,7 @@ class GeometryCollection(BaseModel):
 class Properties(BaseModel):
     descriptive: Optional[Dict[str, str]] = Field(None, title='Descriptive')
     numerical: Optional[Dict[str, float]] = Field(None, title='Numerical')
-    multi_numerical: Optional[Dict[str, List[float]]] = Field(
+    multiNumerical: Optional[Dict[str, List[float]]] = Field(
         None, title='Multi Numerical'
     )
 
@@ -143,7 +143,7 @@ class Axe(Enum):
 class Coordinatesystem(BaseModel):
     axes: List[Axe] = Field(..., title='Axes')
     units: Optional[List[Unit]] = None
-    pixels_per_unit: Optional[List[float]] = Field(
+    pixelsPerUnit: Optional[List[float]] = Field(
         None, alias='pixelsPerUnit', title='Pixelsperunit'
     )
 
@@ -170,7 +170,7 @@ class MicroFeature(BaseModel):
     )
     properties: Properties
     id: Optional[Union[str, int]] = Field(None, title='Id')
-    coordinatesystem: Optional[Coordinatesystem] = None
+    coordinateSystem: Optional[Coordinatesystem] = None
     ref: Optional[Union[str, int]] = Field(None, title='Ref')
 
 
@@ -211,11 +211,11 @@ class MicroFeatureCollection(BaseModel):
     bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type9 = Field(..., title='Type')
     features: List[Feature] = Field(..., title='Features')
-    value_range: Optional[Dict[str, ValueRange]] = Field(None,
+    valueRange: Optional[Dict[str, ValueRange]] = Field(None,
                                                          title='Value Range')
     descriptive_fields: Optional[List[str]] = Field(None,
                                                     title='Descriptive Fields')
-    coordinatesystem: Optional[Coordinatesystem] = None
+    coordinateSystem: Optional[Coordinatesystem] = None
 
 
 class MicroJSON(BaseModel):

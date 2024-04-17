@@ -32,12 +32,12 @@
       },
       "properties": {
         "numeric": {
-          "Label": 16
+          "label": 16
         }
       }
     }
   ],
-  "coordinatesystem": {
+  "coordinateSystem": {
     "axes": [
       {
         "name": "x",
@@ -53,19 +53,19 @@
       }
     ]
   },
-  "value_range": {
-    "Label": {
+  "valueRange": {
+    "label": {
       "min": 16,
       "max": 16
     }
   },
   "properties": {
     "string": {
-      "Plate": "label",
-      "Image": "x00_y01_p01_c1.ome.tif"
+      "plate": "label",
+      "image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Channel": 1.0
+      "channel": 1.0
     }
   }
 }

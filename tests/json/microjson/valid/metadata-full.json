@@ -15,7 +15,7 @@
             "numeric": {
                 "cellCount": 5 
             },
-            "multi-numeric": {
+            "multiNumeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
@@ -34,13 +34,13 @@
             "numeric": {
                 "cellCount": 10 
             },
-            "multi-numeric": {
+            "multiNumeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
       }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -50,8 +50,8 @@
             "max": 1
         }
     },
-    "string_fields": ["well","imagename"],
-    "coordinatesystem": {
+    "descriptiveFields": ["well","imagename"],
+    "coordinateSystem": {
       "axes": [
           {
               "name": "x",
@@ -68,7 +68,7 @@
               "description": "y-axis"
           }
       ],
-      "transformation_matrix": [
+      "transformationMatrix": [
           [
               1.0,
               0.0,

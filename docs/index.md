@@ -8,9 +8,9 @@ MicroJSON is a format, inspired by [GeoJSON](https://geojson.org), for encoding 
 
 ### MicroJSON Object
 
-A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it MAY have a member `"coordinatesystem"` in a Feature or FeatureCollection object:  
+A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it MAY have a member `"coordinateSystem"` in a Feature or FeatureCollection object:  
 
-- `"coordinatesystem"`: (Optional) A coordinate system object as defined in the section [Coordinates object](#coordinates-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it MAY also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
+- `"coordinateSystem"`: (Optional) A coordinate system object as defined in the section [Coordinates object](#coordinates-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it MAY also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
 
 A MicroJSON object MAY have a `"bbox"` property":
 
@@ -35,8 +35,6 @@ Each geometry object MUST have a `"coordinates"` member with an array value. The
 
     - A subtype of “Polygon” is the “Rectangle” geometry: A polygon with an array of four 2D point coordinates representing the corners of the rectangle in a counterclockwise order. It has the property subtype with the value `“Rectangle”`.
 
-    - A subtype of “Polygon” is the “Cuboid”: A polygon with an array of eight 3D point coordinates representing the corners of the rectangle in a counterclockwise order in the X-Y plane, starting with the plane with the lowest Z value. It has the property subtype with the value `“Cuboid”`.
-
 - **MultiPolygon**: The coordinates array must be an array of Polygon coordinate arrays.
 
 ### GeometryCollection
@@ -52,7 +50,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"properties"`: (Optional) A JSON object containing properties and metadata specific to the feature, or a JSON null value. It MAY have the following sub-properties:
     - `"string"`: (Optional) A list with key-value pairs, with string keys and string values, e.g. `{"color": "red", "size": "large"}`.
     - `"numeric"`: (Optional) A list with key-value pairs, with string keys and numerical values, e.g. `{"area": 123.45, "volume": 678.90}`.
-    - `"multi-numeric"`: (Optional) A list with key-value pairs, with string keys and list of numerical values, e.g. `{"area": [123.45, 234.56], "volume": [678.90, 789.01]}`.
+    - `"multiNumeric"`: (Optional) A list with key-value pairs, with string keys and list of numerical values, e.g. `{"area": [123.45, 234.56], "volume": [678.90, 789.01]}`.
 - `"id"`: (Optional) A unique identifier for this feature.
 - `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
 
@@ -71,9 +69,9 @@ A feature object represents a spatially bounded entity associated with propertie
 ### FeatureCollection Object
 
 A FeatureCollection object is a JSON object representing a collection of feature objects. A FeatureCollection object has a member with the name `"features"`. The value of `"features"` is a JSON array. Each element of the array is a Feature object as defined above. It is possible for this array to be empty. Additionally, it MAY have the following members:
-- `"string_fields"`: (Optional) A list of strings, indicating the descriptive fields of the features in the collection, e.g. `["color", "size"]`.
-- `"value_range"`: (Optional) A list of key-value pairs, with string keys and as keys another object with the fields:
-    * `"min"`: The minimum value of the field in the key (both `"numeric"` and `"multi-numeric"`) of the features in the collection, e.g. `{"area": 123.45, "volume": 678.90}`.
+- `"stringFields"`: (Optional) A list of strings, indicating the descriptive fields of the features in the collection, e.g. `["color", "size"]`.
+- `"valueRange"`: (Optional) A list of key-value pairs, with string keys and as keys another object with the fields:
+    * `"min"`: The minimum value of the field in the key (both `"numeric"` and `"multiNumeric"`) of the features in the collection, e.g. `{"area": 123.45, "volume": 678.90}`.
     * `"max"`: The maximum value as above.
 - `"properties"`: (Optional) A JSON object containing properties and metadata specific to the feature collection, and which apply to all features of the collection, or a JSON null value. It has the same structure as the `"properties"` member of a Feature object.
 
@@ -92,7 +90,7 @@ A coordinates object represents the choice of axes (2D or 3D) and potentially th
 - `"axes"`: Representing the choice of axes as an Axis object.
 
 It MAY contain the following properties:
-- `"transformation_matrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
+- `"transformationMatrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
 
 
 ### Axis Object
@@ -101,7 +99,7 @@ An axis object represents the choice of axes (2D or 3D). It MUST have the follow
 - `"name"`: Representing the name of the axis. It MUST be a string.
 It MAY contain the following properties:
 - `"unit"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
-- `"pixels_per_unit"`: A decimal value, except for angles, where it SHOULD have the value “0”.
+- `"pixelsPerUnit"`: A decimal value, except for angles, where it SHOULD have the value “0”.
 - `"description"`: A string describing the axis.
 
 
