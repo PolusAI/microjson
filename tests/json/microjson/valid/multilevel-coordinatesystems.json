@@ -46,7 +46,7 @@
             "ref": "s3://mybucket/myfile.tif"
         }
     ],
-    "coordinatesystem": {
+    "coordinateSystem": {
         "axes": [
             {
                 "name": "x",
@@ -63,7 +63,7 @@
                 "description": "y-axis"
             }
         ],
-        "tranformation_matrix": [
+        "tranformationMatrix": [
             [
                 1.0,
                 0.0,

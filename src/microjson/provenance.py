@@ -4,8 +4,8 @@ from typing import List, Optional, Dict, Union, Literal
 
 class MicroJSONLink(BaseModel):
     """A link to a MicroJSON object"""
-    microjson_id: Union[str, List[str]]
-    microjson_field: Optional[str] = None
+    microjsonId: Union[str, List[str]]
+    microjsonField: Optional[str] = None
 
 
 class Artifact(BaseModel):
@@ -14,7 +14,7 @@ class Artifact(BaseModel):
     type: Literal["Artifact"]
     uri: str
     properties: Optional[Dict[str, Union[str, float, int]]] = None
-    microjson_links: List['MicroJSONLink']
+    microjsonLinks: List['MicroJSONLink']
 
 
 class ArtifactCollection(BaseModel):
@@ -29,15 +29,15 @@ class Workflow(BaseModel):
     id: Optional[str] = None
     type: Literal["Workflow"]
     properties: Optional[Dict[str, Union[str, float, int]]] = None
-    sub_workflows: Optional[List['Workflow']] = None
-    workflow_provenance: Optional['WorkflowProvenance'] = None
+    subWorkflows: Optional[List['Workflow']] = None
+    workflowProvenance: Optional['WorkflowProvenance'] = None
 
 
 class WorkflowProvenance(BaseModel):
     """WorkflowProvenance object representing an execution of a workflow"""
     type: Literal["WorkflowProvenance"]
     properties: Optional[Dict[str, Union[str, float, int]]] = None
-    output_artifacts: Optional[Union[Artifact, ArtifactCollection]] = None
+    outputArtifacts: Optional[Union[Artifact, ArtifactCollection]] = None
 
 
 class WorkflowCollection(BaseModel):

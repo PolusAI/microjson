@@ -21,7 +21,7 @@ This specification outlines how to use TileJSON to integrate tiled MicroJSON dat
 - **`vector_layers`:**  Required. Describes each layer within the vector tiles, and has the following structure:
 
   - **`id`:** Required. A unique identifier for the layer. Required for each layer.
-  - **`fields`:** Required. A list of fields (attributes) and their data types. For MicroJSON, this can either be an empty list, or any combination of `string`, `numerical`, and `multi-numeric`, attributes with their sub-attributes, as described in the MicroJSON specification. Required for each layer.
+  - **`fields`:** Required. A list of fields (attributes) and their data types. For MicroJSON, this can either be an empty list, or any combination of `string`, `numerical`, and `multiNumeric`, attributes with their sub-attributes, as described in the MicroJSON specification. Required for each layer.
   - **`description`:** Optional. A brief description of the layer.
   - **`minzoom` and `maxzoom`:** Optional. The range of zoom levels at which the layer is visible.
 - **`fillzoom`:** Optional. An integer specifying the zoom level from which to generate overzoomed tiles.
@@ -70,12 +70,12 @@ This file is located in the `examples/tiles` directory of the repository, and is
             "maxzoom": 10,
             "fields": {
                 "string": {
-                    "Plate": "Plate ID",
-                    "Image": "Image URI"
+                    "plate": "Plate ID",
+                    "image": "Image URI"
                 },
                 "numerical": {
-                    "Label": "Label ID",
-                    "Channel": "Channel ID"
+                    "label": "Label ID",
+                    "channel": "Channel ID"
                 }
             }
         }
@@ -110,12 +110,12 @@ The following is an example of a MicroJSON object at zoom level 0, tile at (0,0)
             "maxzoom": 10,
             "fields": {
                 "string": {
-                    "Plate": "Plate ID",
-                    "Image": "Image URI"
+                    "plate": "Plate ID",
+                    "image": "Image URI"
                 },
                 "numerical": {
-                    "Label": "Label ID",
-                    "Channel": "Channel ID"
+                    "label": "Label ID",
+                    "channel": "Channel ID"
                 }
             }
         }
@@ -161,12 +161,12 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       },
       "properties": {
         "numeric": {
-          "Label": 3
+          "label": 3
         }
       }
     }
   ],
-  "coordinatesystem": {
+  "coordinateSystem": {
     "axes": [
       {
         "name": "x",
@@ -182,19 +182,19 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       }
     ]
   },
-  "value_range": {
-    "Label": {
+  "valueRange": {
+    "label": {
       "min": 3,
       "max": 3
     }
   },
   "properties": {
     "string": {
-      "Plate": "label",
-      "Image": "x00_y01_p01_c1.ome.tif"
+      "plate": "label",
+      "image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Channel": 1.0
+      "channel": 1.0
     }
   }
 }
@@ -237,12 +237,12 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
       },
       "properties": {
         "numeric": {
-          "Label": 13
+          "label": 13
         }
       }
     }
   ],
-  "coordinatesystem": {
+  "coordinateSystem": {
     "axes": [
       {
         "name": "x",
@@ -258,19 +258,19 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
       }
     ]
   },
-  "value_range": {
-    "Label": {
+  "valueRange": {
+    "label": {
       "min": 13,
       "max": 13
     }
   },
   "properties": {
     "string": {
-      "Plate": "label",
-      "Image": "x00_y01_p01_c1.ome.tif"
+      "plate": "label",
+      "image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Channel": 1.0
+      "channel": 1.0
     }
   }
 }

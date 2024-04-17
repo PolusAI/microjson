@@ -39,7 +39,7 @@
                 "numeric": {
                     "cellCount": 5
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -97,7 +97,7 @@
                 "numeric": {
                     "cellCount": 10
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -118,7 +118,7 @@
             }
         }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -128,11 +128,11 @@
             "max": 1
         }
     },
-    "string_fields": [
+    "descriptiveFields": [
         "well",
         "imagename"
     ],
-    "coordinatesystem": {
+    "coordinateSystem": {
         "axes": [
             {
                 "name": "x",
@@ -149,7 +149,7 @@
                 "description": "y-axis"
             }
         ],
-        "transformation_matrix": [
+        "transformationMatrix": [
             [
                 1.0,
                 0.0,
@@ -175,21 +175,21 @@
                 "properties": {
                     "description": "Image processing workflow"
                 },
-                "sub_workflows": [],
-                "workflow_provenance": {
+                "subWorkflows": [],
+                "workflowProvenance": {
                     "type": "WorkflowProvenance",
-                    "output_artifacts": {
+                    "outputArtifacts": {
                         "type": "Artifact",
                         "id": "artifact_1",
                         "uri": "file://path/to/image.tif",
                         "properties": {
-                            "image_type": "TIFF",
-                            "analysis_type": "Cell counting"
+                            "imageType": "TIFF",
+                            "analysisType": "Cell counting"
                         },
-                        "microjson_links": [
+                        "microjsonLinks": [
                             {
-                                "microjson_id": "1",
-                                "microjson_field": "string.well"
+                                "microjsonId": "1",
+                                "microjsonField": "string.well"
                             }
                         ]
                     }

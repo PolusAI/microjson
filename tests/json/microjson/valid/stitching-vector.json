@@ -1,6 +1,6 @@
 {
     "type": "FeatureCollection",
-    "coordinatesystem": {
+    "coordinateSystem": {
       "axes": [{
         "name": "x"
       }

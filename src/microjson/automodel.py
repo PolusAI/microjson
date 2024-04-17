@@ -25,7 +25,7 @@ class MicroFeature(GeojsonFeature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinatesystem: Optional[List[Axis]]
+    coordinateSystem: Optional[List[Axis]]
     ref: Optional[Union[StrictStr, StrictInt]]
     properties: Properties
 
@@ -34,9 +34,9 @@ class MicroFeatureCollection(GeojsonFeaturecollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinatesystem: Optional[CoordinateSystem]
-    value_range: Optional[Dict[str, ValueRange]]
-    descriptive_fields: Optional[List[str]]
+    coordinateSystem: Optional[CoordinateSystem]
+    valueRange: Optional[Dict[str, ValueRange]]
+    descriptiveFields: Optional[List[str]]
 
 
 class MicroJSONAuto(BaseModel):

@@ -30,7 +30,7 @@ if __name__ == "__main__":
     data = [
         {
             "type": "Feature",
-            "geometry_type": "Point",
+            "geometryType": "Point",
             "coordinates": [0, 0],
             "name": "Point 1",
             "value": 1,
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         },
         {
             "type": "Feature",
-            "geometry_type": "Polygon",
+            "geometryType": "Polygon",
             "coordinates": [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
             "name": "Polygon 1",
             "value": 2,
