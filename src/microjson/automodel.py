@@ -6,7 +6,7 @@ from geojson.Feature import GeojsonFeature
 from geojson.FeatureCollection import GeojsonFeaturecollection
 from geojson.Geometry import GeojsonGeometry
 from geojson.GeometryCollection import GeojsonGeometrycollection
-from microjson.model import Axis, CoordinateSystem
+from microjson.model import Axis, Multiscale
 from microjson.model import Properties, ValueRange
 
 
@@ -25,7 +25,7 @@ class MicroFeature(GeojsonFeature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinateSystem: Optional[List[Axis]]
+    multiscale: Optional[Multiscale]
     ref: Optional[Union[StrictStr, StrictInt]]
     properties: Properties
 
@@ -34,7 +34,7 @@ class MicroFeatureCollection(GeojsonFeaturecollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinateSystem: Optional[CoordinateSystem]
+    multiscale: Optional[Multiscale]
     valueRange: Optional[Dict[str, ValueRange]]
     descriptiveFields: Optional[List[str]]
 

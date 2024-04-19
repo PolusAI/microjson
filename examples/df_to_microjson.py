@@ -64,20 +64,18 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         valueRange=valueRange,
         descriptiveFields=descriptiveFields,
         properties=mj.Properties(string={"plate": "Example Plate"}),
-        coordinateSystem={
+        multiscale={
             "axes": [
                 {
                     "name": "x",
-                    "type": "cartesian",
+                    "type": "space",
                     "unit": "meter",
-                    "pixelsPerUnit": 1,
                     "description": "The x-coordinate",
                 },
                 {
                     "name": "y",
-                    "type": "cartesian",
+                    "type": "space",
                     "unit": "meter",
-                    "pixelsPerUnit": 1,
                     "description": "The y-coordinate",
                 },
             ],

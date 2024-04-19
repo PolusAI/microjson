@@ -166,17 +166,17 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       }
     }
   ],
-  "coordinateSystem": {
+  "multiscale": {
     "axes": [
       {
         "name": "x",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "x-axis"
       },
       {
         "name": "y",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "y-axis"
       }
@@ -242,17 +242,17 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
       }
     }
   ],
-  "coordinateSystem": {
+  "multiscale": {
     "axes": [
       {
         "name": "x",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "x-axis"
       },
       {
         "name": "y",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "y-axis"
       }

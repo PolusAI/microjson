@@ -180,7 +180,7 @@ class OmeMicrojsonModel:
                     file = fl[1][0]
                     line_number = self.get_line_number(
                         file,
-                        "coordinateSystem")
+                        "multiscale")
                     total_lines = len([line for line in open(file, 'r')])
                     index = (total_lines - line_number) + 3
                     outname = re.split(r"[_\.]+", file.name)[:-2]
@@ -362,20 +362,18 @@ class OmeMicrojsonModel:
             properties=properties,
             features=features,
             valueRange=valrange_dict,
-            coordinateSystem={
+            multiscale={
                 "axes": [
                     {
                         "name": "x",
                         "unit": "micrometer",
-                        "type": "cartesian",
-                        "pixelsPerUnit": 1,
+                        "type": "space",
                         "description": "x-axis",
                     },
                     {
                         "name": "y",
                         "unit": "micrometer",
-                        "type": "cartesian",
-                        "pixelsPerUnit": 1,
+                        "type": "space",
                         "description": "y-axis",
                     },
                 ],

@@ -140,7 +140,7 @@ class Axe(Enum):
     phi = 'phi'
 
 
-class Coordinatesystem(BaseModel):
+class Multiscale(BaseModel):
     axes: List[Axe] = Field(..., title='Axes')
     units: Optional[List[Unit]] = None
     pixelsPerUnit: Optional[List[float]] = Field(
@@ -170,7 +170,7 @@ class MicroFeature(BaseModel):
     )
     properties: Properties
     id: Optional[Union[str, int]] = Field(None, title='Id')
-    coordinateSystem: Optional[Coordinatesystem] = None
+    multiscale: Optional[Multiscale] = None
     ref: Optional[Union[str, int]] = Field(None, title='Ref')
 
 
@@ -211,11 +211,12 @@ class MicroFeatureCollection(BaseModel):
     bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type9 = Field(..., title='Type')
     features: List[Feature] = Field(..., title='Features')
-    valueRange: Optional[Dict[str, ValueRange]] = Field(None,
-                                                         title='Value Range')
+    valueRange: Optional[Dict[str, ValueRange]] = Field(
+        None,
+        title='Value Range')
     descriptive_fields: Optional[List[str]] = Field(None,
                                                     title='Descriptive Fields')
-    coordinateSystem: Optional[Coordinatesystem] = None
+    multiscale: Optional[Multiscale] = None
 
 
 class MicroJSON(BaseModel):

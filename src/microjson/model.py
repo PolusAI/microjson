@@ -152,10 +152,9 @@ class Unit(Enum):
 class AxisType(Enum):
     """The type of an axis"""
 
-    CARTESIAN = "cartesian"
-    ANGULAR = "angular"
-    TEMPORAL = "temporal"
-    SPECTRAL = "spectral"
+    SPACE = "space"
+    TIME = "time"
+    CHANNEL = "channel"
 
 
 class Axis(BaseModel):
@@ -164,14 +163,39 @@ class Axis(BaseModel):
     name: StrictStr
     type: Optional[AxisType] = None
     unit: Optional[Unit] = None
-    pixelsPerUnit: Optional[float] = None
     description: Optional[str] = None
 
 
-class CoordinateSystem(BaseModel):
+class CoordinateTransformation(BaseModel):
+    """Coordinate transformation abstract class
+    harmonized with the OME model"""
+
+
+class Identity(CoordinateTransformation):
+    """Identity transformation"""
+
+    type: Literal["identity"] = "identity"
+
+
+class Translation(CoordinateTransformation):
+    """Translation transformation"""
+
+    type: Literal["translation"] = "translation"
+    translation: List[float]
+
+
+class Scale(CoordinateTransformation):
+    """Scale transformation"""
+
+    type: Literal["scale"] = "scale"
+    scale: List[float]
+
+
+class Multiscale(BaseModel):
     """A coordinate system for MicroJSON coordinates"""
 
     axes: List[Axis]
+    coordinateTransformations: Optional[List[CoordinateTransformation]] = None
     transformationMatrix: Optional[List[List[float]]] = None
 
 
@@ -187,7 +211,7 @@ class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinateSystem: Optional[List[Axis]] = None
+    multiscale: Optional[Multiscale] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
     properties: Properties  # type: ignore
 
@@ -196,7 +220,7 @@ class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinateSystem: Optional[CoordinateSystem] = None
+    multiscale: Optional[Multiscale] = None
     valueRange: Optional[Dict[str, ValueRange]] = None
     descriptiveFields: Optional[List[str]] = None
     properties: Optional[Properties] = None

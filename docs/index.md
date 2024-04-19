@@ -8,9 +8,9 @@ MicroJSON is a format, inspired by [GeoJSON](https://geojson.org), for encoding 
 
 ### MicroJSON Object
 
-A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it MAY have a member `"coordinateSystem"` in a Feature or FeatureCollection object:  
+A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it MAY have a member `"multiscale"` in a Feature or FeatureCollection object:  
 
-- `"coordinateSystem"`: (Optional) A coordinate system object as defined in the section [Coordinates object](#coordinates-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it MAY also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
+- `"multiscale"`: (Optional) A multiscale object as defined in the section [Multiscale object](#multiscale-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it MAY also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
 
 A MicroJSON object MAY have a `"bbox"` property":
 
@@ -83,13 +83,15 @@ A FeatureCollection object is a JSON object representing a collection of feature
 
     Any object of a StitchingVector “features” array MUST be an “Image” special type of features object.
 
-### Coordinates Object
+### Multiscale Object
 
-A coordinates object represents the choice of axes (2D or 3D) and potentially their scale. It MUST have the following properties:
+A multiscale object represents the choice of axes (2-5D) and potentially their transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST have the following properties:
 
 - `"axes"`: Representing the choice of axes as an Axis object.
 
-It MAY contain the following properties:
+It MAY contain either of, but NOT both of the following properties:
+- `"coordinateTransformations"`: Representing the set of coordinate transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST be an array of objects, each object representing a coordinate transformation. Each object MUST have properties as follows:
+    - `"type"`: Representing the type of the coordinate transformation. Currently supported types are `"identity"`, `"scale"`, and `"translate"`. If the type is `"scale"`, the object MUST have the property `"scale"`, representing the scaling factor. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"translate"`, the object MUST have the property `"translate"`, representing the translation vector. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"identity"`, the object MUST NOT have any other properties.
 - `"transformationMatrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
 
 
@@ -99,7 +101,6 @@ An axis object represents the choice of axes (2D or 3D). It MUST have the follow
 - `"name"`: Representing the name of the axis. It MUST be a string.
 It MAY contain the following properties:
 - `"unit"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
-- `"pixelsPerUnit"`: A decimal value, except for angles, where it SHOULD have the value “0”.
 - `"description"`: A string describing the axis.
 
 
