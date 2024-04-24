@@ -455,8 +455,8 @@ class MicrojsonBinaryModel(CustomValidation):
             image = fmask.copy()
             pol = np.array(poly[i][0])
             mask = sk.draw.polygon2mask((x, y), pol)
-            image[not mask] = 0
-            image[mask] = 1
+            image[mask == False] = 0
+            image[mask == True] = 1
             fmask += image 
         fmask = np.rot90(fmask)
         fmask = np.flipud(fmask)
