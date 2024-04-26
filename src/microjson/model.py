@@ -214,6 +214,11 @@ class MicroFeature(Feature):
     multiscale: Optional[Multiscale] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
     properties: Properties  # type: ignore
+    # reference to the parent feature
+    parentId: Optional[Union[StrictStr, StrictInt]] = None
+    # for now, only string feature class is supported
+    # in the future, it may be expanded with a class registry
+    featureClass: Optional[str] = None
 
 
 class MicroFeatureCollection(FeatureCollection):
