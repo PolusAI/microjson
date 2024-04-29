@@ -25,16 +25,16 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
     for _, row in df.iterrows():
         # Dynamically generate a Geometry object based on the row's
         # geometry type
-        GeometryClass = getattr(mj, row["geometry_type"])
+        GeometryClass = getattr(mj, row["geometryType"])
         geometry = GeometryClass(
-            type=row["geometry_type"], coordinates=row["coordinates"]
+            type=row["geometryType"], coordinates=row["coordinates"]
         )
 
         # Create a Properties object to hold metadata about the feature
         properties = mj.Properties(
             string={"name": row["name"]},
             numeric={"value": row["value"]},
-            multi_numeric={"values": row["values"]},
+            multiNumeric={"values": row["values"]},
         )
 
         # Generate a Feature object that combines geometry and properties
@@ -46,7 +46,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         features.append(feature)
 
     # Compute value ranges for numerical attributes
-    value_range = {
+    valueRange = {
         "value": {"min": df["value"].min(), "max": df["value"].max()},
         "values": {
             "min": df["values"].apply(min).min(),
@@ -55,33 +55,31 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
     }
 
     # Define which fields are to be considered as descriptive
-    string_fields = ["name"]
+    descriptiveFields = ["name"]
 
     # Generate a FeatureCollection object to aggregate all features
     feature_collection = mj.MicroFeatureCollection(
         type="FeatureCollection",
         features=features,
-        value_range=value_range,
-        string_fields=string_fields,
+        valueRange=valueRange,
+        descriptiveFields=descriptiveFields,
         properties=mj.Properties(string={"plate": "Example Plate"}),
-        coordinatesystem={
+        multiscale={
             "axes": [
                 {
                     "name": "x",
-                    "type": "cartesian",
+                    "type": "space",
                     "unit": "meter",
-                    "pixels_per_unit": 1,
                     "description": "The x-coordinate",
                 },
                 {
                     "name": "y",
-                    "type": "cartesian",
+                    "type": "space",
                     "unit": "meter",
-                    "pixels_per_unit": 1,
                     "description": "The y-coordinate",
                 },
             ],
-            "transformation_matrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+            "transformationMatrix": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
         },
     )
 
@@ -93,7 +91,7 @@ if __name__ == "__main__":
     data = [
         {
             "type": "Feature",
-            "geometry_type": "Point",
+            "geometryType": "Point",
             "coordinates": [0, 0],
             "name": "Point 1",
             "value": 1,
@@ -101,7 +99,7 @@ if __name__ == "__main__":
         },
         {
             "type": "Feature",
-            "geometry_type": "Polygon",
+            "geometryType": "Polygon",
             "coordinates": [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
             "name": "Polygon 1",
             "value": 2,
@@ -116,4 +114,5 @@ if __name__ == "__main__":
     feature_collection_model = df_to_microjson(df)
 
     # Serialize the FeatureCollection model to a JSON string
-    print(feature_collection_model.model_dump_json(indent=2, exclude_unset=True))
+    print(feature_collection_model.model_dump_json(
+        indent=2, exclude_unset=True))

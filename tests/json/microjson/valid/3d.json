@@ -16,11 +16,26 @@
       [100.8, 0.8, 1]
     ]
   ],
-  "coordinatesystem": {
+  "multiscale": {
     "axes": [
-        "x",
-        "y",
-        "z"
-    ]
+      {
+          "name": "x",
+          "unit": "micrometer",
+          "type": "space",
+          "description": "x-axis"
+      },
+      {
+          "name": "y",
+          "unit": "micrometer",
+          "type": "space",
+          "description": "y-axis"
+      },
+      {
+          "name": "z",
+          "unit": "micrometer",
+          "type": "space",
+          "description": "z-axis"
+      }
+  ]
   }
 }

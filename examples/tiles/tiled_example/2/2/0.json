@@ -32,40 +32,40 @@
       },
       "properties": {
         "numeric": {
-          "Label": 14
+          "label": 14
         }
       }
     }
   ],
-  "coordinatesystem": {
+  "multiscale": {
     "axes": [
       {
         "name": "x",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "x-axis"
       },
       {
         "name": "y",
-        "type": "cartesian",
+        "type": "space",
         "unit": "micrometer",
         "description": "y-axis"
       }
     ]
   },
-  "value_range": {
-    "Label": {
+  "valueRange": {
+    "label": {
       "min": 14,
       "max": 14
     }
   },
   "properties": {
     "string": {
-      "Plate": "label",
-      "Image": "x00_y01_p01_c1.ome.tif"
+      "plate": "label",
+      "image": "x00_y01_p01_c1.ome.tif"
     },
     "numeric": {
-      "Channel": 1.0
+      "channel": 1.0
     }
   }
 }

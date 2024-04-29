@@ -39,7 +39,7 @@
                 "numeric": {
                     "cellCount": 5
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -97,7 +97,7 @@
                 "numeric": {
                     "cellCount": 10
                 },
-                "multi-numeric": {
+                "multiNumeric": {
                     "ratioInfectivity": [
                         [
                             0.1,
@@ -118,7 +118,7 @@
             }
         }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -128,28 +128,26 @@
             "max": 1
         }
     },
-    "string_fields": [
+    "descriptiveFields": [
         "well",
         "imagename"
     ],
-    "coordinatesystem": {
+    "multiscale": {
         "axes": [
             {
                 "name": "x",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "x-axis"
             },
             {
                 "name": "y",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "y-axis"
             }
         ],
-        "transformation_matrix": [
+        "transformationMatrix": [
             [
                 1.0,
                 0.0,
@@ -172,12 +170,12 @@
         "id": "artifact_1",
         "uri": "file://path/to/image.tif",
         "properties": {
-            "image_type": "TIFF",
-            "analysis_type": "Cell counting"
+            "imageType": "TIFF",
+            "analysisType": "Cell counting"
         },
-        "microjson_links": [
+        "microjsonLinks": [
             {
-                "microjson_field": "string.well"
+                "microjsonField": "string.well"
             }
         ]
     }

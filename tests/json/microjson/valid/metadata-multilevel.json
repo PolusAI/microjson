@@ -38,7 +38,7 @@
         "numeric": {
           "cellCount": 5
         },
-        "multi-numeric": {
+        "multiNumeric": {
           "ratioInfectivity": [
             [
               0.1,
@@ -95,7 +95,7 @@
         "numeric": {
           "cellCount": 10
         },
-        "multi-numeric": {
+        "multiNumeric": {
           "ratioInfectivity": [
             [
               0.1,
@@ -121,7 +121,7 @@
       "plate": "plate1"
     }
   },
-  "value_range": {
+  "valueRange": {
     "cellCount": {
       "min": 0,
       "max": 10
@@ -131,28 +131,26 @@
       "max": 1
     }
   },
-  "string_fields": [
+  "stringFields": [
     "well",
     "plate"
   ],
-  "coordinatesystem": {
+  "multiscale": {
     "axes": [
       {
         "name": "x",
         "unit": "micrometer",
-        "type": "cartesian",
-        "pixelsPerUnit": 1,
+        "type": "space",
         "description": "x-axis"
       },
       {
         "name": "y",
         "unit": "micrometer",
-        "type": "cartesian",
-        "pixelsPerUnit": 1,
+        "type": "space",
         "description": "y-axis"
       }
     ],
-    "transformation_matrix": [
+    "transformationMatrix": [
       [
         1.0,
         0.0,

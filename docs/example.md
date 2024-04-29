@@ -10,7 +10,6 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
         "type": "Feature",
         "geometry": {
           "type": "Polygon",
-          "subtype": "Rectangle",
           "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
         },
         "properties": {
@@ -20,7 +19,7 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
             "numeric": {
                 "cellCount": 5 
             },
-            "multi-numeric": {
+            "multiNumeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
@@ -29,7 +28,6 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
         "type": "Feature",
         "geometry": {
           "type": "Polygon",
-          "subtype": "Rectangle",
           "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
         },
         "properties": {
@@ -39,13 +37,13 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
             "numeric": {
                 "cellCount": 10 
             },
-            "multi-numeric": {
+            "multiNumeric": {
                 "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
             }
         }
       }
     ],
-    "value_range": {
+    "valueRange": {
         "cellCount": {
             "min": 0,
             "max": 10
@@ -55,25 +53,23 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
             "max": 1
         }
     },
-    "string_fields": ["well","imagename"],
-    "coordinatesystem": {
+    "descriptiveFields": ["well","imagename"],
+    "multiscale": {
       "axes": [
           {
               "name": "x",
               "unit": "micrometer",
-              "type": "cartesian",
-              "pixelsPerUnit": 1,
+              "type": "space",
               "description": "x-axis"
           },
           {
               "name": "y",
               "unit": "micrometer",
-              "type": "cartesian",
-              "pixelsPerUnit": 1,
+              "type": "space",
               "description": "y-axis"
           }
       ],
-      "transformation_matrix": [
+      "transformationMatrix": [
           [
               1.0,
               0.0,
@@ -92,53 +88,5 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
       ]
     }
   }
-
-```
-
-## Stitching Vector MicroJSON
-This JSON file demonstrates how MicroJSON can be used to define and describe a stitching vector, which is used to describe the spatial relationship between multiple images that may be stitched together.
-```json
-{
-    "type": "FeatureCollection",
-    "coordinatesystem": {
-      "axes": [
-        {
-          "name": "x"
-        },
-        {
-          "name": "y"
-        }
-      ],
-    },
-    "features": [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "subtype": "Rectangle",
-          "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
-        },
-        "properties": {
-          "type": "Image",
-          "URI": "./image_1.tif"
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "subtype": "Rectangle",
-          "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
-        },
-        "properties": {
-          "type": "Image",
-          "URI": "./image_2.tif"
-        }
-      }
-    ],
-    "properties": {
-      "type": "StitchingVector"
-    }
-}
   
 ```

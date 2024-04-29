@@ -149,7 +149,7 @@ export interface MicroFeature {
   geometry: Geometry;
   properties: Properties;
   id?: Id;
-  coordinatesystem?: Coordinatesystem;
+  coordinateSystem?: Coordinatesystem;
   ref?: Ref;
   [k: string]: unknown;
 }
@@ -222,7 +222,7 @@ export interface GeometryCollection {
 export interface Properties {
   string?: String;
   numeric?: Numeric;
-  multi_numeric?: MultiNumeric;
+  multiNumeric?: MultiNumeric;
   [k: string]: unknown;
 }
 /**
@@ -232,7 +232,7 @@ export interface Axis {
   name: Name;
   type?: AxisType | null;
   unit?: Unit | null;
-  pixels_per_unit?: PixelsPerUnit;
+  pixelsPerUnit?: PixelsPerUnit;
   description?: Description;
   [k: string]: unknown;
 }
@@ -244,8 +244,8 @@ export interface MicroFeatureCollection {
   bbox?: Bbox8;
   type: Type8;
   features: Features;
-  coordinatesystem?: CoordinateSystem | null;
-  value_range?: ValueRange;
+  coordinateSystem?: CoordinateSystem | null;
+  valueRange?: ValueRange;
   descriptive_fields?: DescriptiveFields;
   propertie?: Properties | null;
   [k: string]: unknown;
@@ -272,7 +272,7 @@ export interface Properties1 {
  */
 export interface CoordinateSystem {
   axes: Axes;
-  transformation_matrix?: TransformationMatrix;
+  transformationMatrix?: TransformationMatrix;
   [k: string]: unknown;
 }
 /**

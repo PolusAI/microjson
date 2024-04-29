@@ -152,10 +152,9 @@ class Unit(Enum):
 class AxisType(Enum):
     """The type of an axis"""
 
-    CARTESIAN = "cartesian"
-    ANGULAR = "angular"
-    TEMPORAL = "temporal"
-    SPECTRAL = "spectral"
+    SPACE = "space"
+    TIME = "time"
+    CHANNEL = "channel"
 
 
 class Axis(BaseModel):
@@ -164,15 +163,40 @@ class Axis(BaseModel):
     name: StrictStr
     type: Optional[AxisType] = None
     unit: Optional[Unit] = None
-    pixels_per_unit: Optional[float] = None
     description: Optional[str] = None
 
 
-class CoordinateSystem(BaseModel):
+class CoordinateTransformation(BaseModel):
+    """Coordinate transformation abstract class
+    harmonized with the OME model"""
+
+
+class Identity(CoordinateTransformation):
+    """Identity transformation"""
+
+    type: Literal["identity"] = "identity"
+
+
+class Translation(CoordinateTransformation):
+    """Translation transformation"""
+
+    type: Literal["translation"] = "translation"
+    translation: List[float]
+
+
+class Scale(CoordinateTransformation):
+    """Scale transformation"""
+
+    type: Literal["scale"] = "scale"
+    scale: List[float]
+
+
+class Multiscale(BaseModel):
     """A coordinate system for MicroJSON coordinates"""
 
     axes: List[Axis]
-    transformation_matrix: Optional[List[List[float]]] = None
+    coordinateTransformations: Optional[List[CoordinateTransformation]] = None
+    transformationMatrix: Optional[List[List[float]]] = None
 
 
 class Properties(BaseModel):
@@ -180,25 +204,30 @@ class Properties(BaseModel):
 
     string: Optional[Dict[str, str]] = None
     numeric: Optional[Dict[str, float]] = None
-    multi_numeric: Optional[Dict[str, List[float]]] = None
+    multiNumeric: Optional[Dict[str, List[float]]] = None
 
 
 class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinatesystem: Optional[List[Axis]] = None
+    multiscale: Optional[Multiscale] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
     properties: Properties  # type: ignore
+    # reference to the parent feature
+    parentId: Optional[Union[StrictStr, StrictInt]] = None
+    # for now, only string feature class is supported
+    # in the future, it may be expanded with a class registry
+    featureClass: Optional[str] = None
 
 
 class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinatesystem: Optional[CoordinateSystem] = None
-    value_range: Optional[Dict[str, ValueRange]] = None
-    descriptive_fields: Optional[List[str]] = None
+    multiscale: Optional[Multiscale] = None
+    valueRange: Optional[Dict[str, ValueRange]] = None
+    descriptiveFields: Optional[List[str]] = None
     properties: Optional[Properties] = None
     id: Optional[Union[StrictStr, StrictInt]] = None
     provenance: Optional[Union[Workflow,

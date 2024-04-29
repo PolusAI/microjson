@@ -6,8 +6,8 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    200.0,
-                    150.0
+                    100.0,
+                    100.0
                 ]
             },
             "properties": {
@@ -16,7 +16,8 @@
                 "color": "red",
                 "property1": "value1"
             },
-            "id": "1"
+            "id": "1",
+            "parentId": "2"
         },
         {
             "type": "Feature",
@@ -43,7 +44,8 @@
                 "color": "blue"
             },
             "id": "2",
-            "ref": "s3://mybucket/myfile.tif"
+            "ref": "s3://mybucket/myfile.tif",
+            "featureClass": "cellpath"
         }
     ],
     "multiscale": {
@@ -61,7 +63,7 @@
                 "description": "y-axis"
             }
         ],
-        "tranformationMatrix": [
+        "transformationMatrix": [
             [
                 1.0,
                 0.0,
