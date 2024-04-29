@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Union
 import numpy as np
 import pytest
-import microjson.utils as ut
+from microjson.utils import OmeMicrojsonModel, MicrojsonBinaryModel
 import skimage as sk
 
 def clean_directories() -> None:
@@ -29,7 +29,7 @@ def output_directory() -> Union[str, Path]:
     """Create output directory."""
     return Path(tempfile.mkdtemp(dir=Path.cwd()))
 
-@pytest.fixture(params=[512, 1024])
+@pytest.fixture(params=[512, 1024, 2048])
 def image_sizes(request: pytest.FixtureRequest) -> pytest.FixtureRequest:
     """To get the parameter of the fixture."""
     return request.param
@@ -54,26 +54,26 @@ def synthetic_images(
     return inp_dir
 
 @pytest.fixture(params=["rectangle", "encoding"])
-def get_params(request: pytest.FixtureRequest) -> list[str]:
-    """To get the parameter of the fixture."""
+def get_params(request: pytest.FixtureRequest) -> pytest.FixtureRequest:
+    """To get the parameter of the ome to json."""
     return request.param
 
 
-def test_BinaryMicrojsonModel(synthetic_images: Path, output_directory: Path, get_params) -> None:
+def test_OmeMicrojsonModel(synthetic_images: Path, output_directory: Path, get_params) -> None:
     """Testing of converting binary images to microjson of objects polygon coordinates."""
     
     inp_dir = synthetic_images
     for file in Path(inp_dir).iterdir():
-        model = ut.BinaryMicrojsonModel(
+        model = OmeMicrojsonModel(
             out_dir=output_directory,
             file_path=file,
             polygon_type=get_params,
         )
-        model.polygons_to_microjson()
+        model.write_single_json()
     if get_params == "encoding":
-        assert len(list(output_directory.rglob('*_encoding.json'))) == 5
+        assert len(list(output_directory.rglob('*encoding*.json'))) == 5
     else:
-        assert len(list(output_directory.rglob('*_rectangle.json'))) == 5
+        assert len(list(output_directory.rglob('*rectangle*.json'))) == 5
 
     clean_directories()
 
@@ -82,20 +82,19 @@ def test_MicrojsonBinaryModel(synthetic_images: Path, output_directory: Path, ge
     
     inp_dir = synthetic_images
     for file in Path(inp_dir).iterdir():
-        model = ut.BinaryMicrojsonModel(
+        model = OmeMicrojsonModel(
             out_dir=output_directory,
             file_path=file,
             polygon_type=get_params,
         )
-        model.polygons_to_microjson()
+        model.write_single_json()
 
     for file in Path(output_directory).iterdir():
-        model = ut.MicrojsonBinaryModel(
+        model = MicrojsonBinaryModel(
             out_dir=output_directory,
-            file_path=file,
-            polygon_type=get_params,
+            file_path=file
         )
-        model.convert_microjson_to_binary()
+        model.microjson_to_binary()
 
     assert len(list(output_directory.rglob('*tif'))) == 5
     assert len(np.unique(sk.io.imread(list(output_directory.rglob('*tif'))[0]))) == 2
@@ -109,20 +108,19 @@ def test_roundtrip(synthetic_images: Path, output_directory: Path) -> None:
     
     inp_dir = synthetic_images
     for file in Path(inp_dir).iterdir():
-        model = ut.BinaryMicrojsonModel(
+        model = OmeMicrojsonModel(
             out_dir=output_directory,
             file_path=file,
             polygon_type="encoding",
         )
-        model.polygons_to_microjson()
+        model.write_single_json()
 
     for file in Path(output_directory).iterdir():
-        model = ut.MicrojsonBinaryModel(
+        model = MicrojsonBinaryModel(
             out_dir=output_directory,
             file_path=file,
-            polygon_type="encoding",
         )
-        model.convert_microjson_to_binary()
+        model.microjson_to_binary()
 
     for inp, rec in zip(inp_dir.iterdir(), output_directory.iterdir()):
         if inp.name == rec.name:

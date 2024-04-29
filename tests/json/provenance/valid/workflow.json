@@ -1,0 +1,196 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {
+                "type": "Polygon",
+                "subtype": "Rectangle",
+                "coordinates": [
+                    [
+                        [
+                            0.0,
+                            0.0
+                        ],
+                        [
+                            0.0,
+                            50.0
+                        ],
+                        [
+                            50.0,
+                            50.0
+                        ],
+                        [
+                            50.0,
+                            0.0
+                        ],
+                        [
+                            0.0,
+                            0.0
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "string": {
+                    "well": "A1"
+                },
+                "numeric": {
+                    "cellCount": 5
+                },
+                "multi-numeric": {
+                    "ratioInfectivity": [
+                        [
+                            0.1,
+                            0.2,
+                            0.3,
+                            0.4,
+                            0.5
+                        ],
+                        [
+                            0.2,
+                            0.3,
+                            0.4,
+                            0.5,
+                            0.6
+                        ]
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "2",
+            "geometry": {
+                "type": "Polygon",
+                "subtype": "Rectangle",
+                "coordinates": [
+                    [
+                        [
+                            50.0,
+                            0.0
+                        ],
+                        [
+                            50.0,
+                            50.0
+                        ],
+                        [
+                            100.0,
+                            50.0
+                        ],
+                        [
+                            100.0,
+                            0.0
+                        ],
+                        [
+                            50.0,
+                            0.0
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "string": {
+                    "well": "A2"
+                },
+                "numeric": {
+                    "cellCount": 10
+                },
+                "multi-numeric": {
+                    "ratioInfectivity": [
+                        [
+                            0.1,
+                            0.2,
+                            0.3,
+                            0.4,
+                            0.5
+                        ],
+                        [
+                            0.2,
+                            0.3,
+                            0.4,
+                            0.5,
+                            0.6
+                        ]
+                    ]
+                }
+            }
+        }
+    ],
+    "value_range": {
+        "cellCount": {
+            "min": 0,
+            "max": 10
+        },
+        "ratioInfectivity": {
+            "min": 0,
+            "max": 1
+        }
+    },
+    "string_fields": [
+        "well",
+        "imagename"
+    ],
+    "coordinatesystem": {
+        "axes": [
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "cartesian",
+                "pixelsPerUnit": 1,
+                "description": "y-axis"
+            }
+        ],
+        "transformation_matrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    },
+    "provenance": {
+        "type": "Workflow",
+        "id": "workflow_1",
+        "properties": {
+            "description": "Image processing workflow"
+        },
+        "sub_workflows": [],
+        "workflow_provenance": {
+            "type": "WorkflowProvenance",
+            "output_artifacts": {
+                "type": "Artifact",
+                "id": "artifact_1",
+                "uri": "file://path/to/image.tif",
+                "properties": {
+                    "image_type": "TIFF",
+                    "analysis_type": "Cell counting"
+                },
+                "microjson_links": [
+                    {
+                        "microjson_id": "1",
+                        "microjson_field": "string.well"
+                    }
+                ]
+            }
+        }
+    }
+}
