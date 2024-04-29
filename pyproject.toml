@@ -27,7 +27,7 @@ where = ["src"]
 
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
-bfio = {version = "0.1.11", extras = ["all"]}
+bfio = {version = "2.3.6", extras = ["all"]}
 scyjava = "^1.9.1"
 typer = "^0.7.0"
 scipy = ">=1.8,<1.9.2"
