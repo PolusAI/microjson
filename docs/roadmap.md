@@ -1,3 +1,6 @@
+Below is a high-level roadmap for the development of MicroJSON. The roadmap is divided into four phases, each focusing on different aspects of the project. The goal is to gradually expand the capabilities of MicroJSON, engage with the community, and establish a sustainable development model. The below roadmap is subject to change based on feedback and evolving requirements.
+
+
 ### Phase 1: Consolidation and Documentation
 
 1. **Refinement of Core Model**:
@@ -35,22 +38,12 @@
     * Investigate tilings for scalable 3D data representation.
 
 
-### Phase 4: Community Building and Adoption
-1. **Community Engagement and Contributions**:
-    * Foster a community around MicroJSON, encouraging contributions and feedback.
-    * Set up a forum or platform for discussions, feature requests, and support.
+### Phase 4: Adoptopm amd long-term sustainability
+1. **Case Studies and How-To Guides**:
+    * Document and publish case studies demonstrating the use of MicroJSON in key applications.
+    * Encourage the development of real-world applications utilizing MicroJSON by providing how-to guides and tutorials.
 
-3. **Case Studies and How-To Guides**:
-    * Document and publish case studies demonstrating the use of MicroJSON in various domains.
-    * Encourage the development of real-world applications utilizing MicroJSON.
-
-
-### Phase 5: Long-Term Sustainability
-1. **Establish Governance and Standards Process**:
+2. **Establish Governance and Standards Process**:
     * Set up a governance model for the ongoing development and maintenance of MicroJSON.
     * Establish a process for standardizing and accepting new features or extensions.
-    * Set up user meetings with regular intervals to gather feedback and discuss future directions.
-
-2. **Continuous Improvement and Adaptation**:
-      * Continuously adapt and improve MicroJSON based on technological advancements and user feedback.
-      * Ensure long-term sustainability and relevance of the MicroJSON standard.
+    * Set up user meetings with regular intervals to gather feedback and discuss future directions, based on technological advancements and user feedback.
