@@ -1,0 +1,71 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              15000,
+              5000
+            ],
+            [
+              20000,
+              5000
+            ],
+            [
+              20000,
+              10000
+            ],
+            [
+              15000,
+              10000
+            ],
+            [
+              15000,
+              5000
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "numeric": {
+          "label": 19
+        }
+      }
+    }
+  ],
+  "multiscale": {
+    "axes": [
+      {
+        "name": "x",
+        "type": "space",
+        "unit": "micrometer",
+        "description": "x-axis"
+      },
+      {
+        "name": "y",
+        "type": "space",
+        "unit": "micrometer",
+        "description": "y-axis"
+      }
+    ]
+  },
+  "valueRange": {
+    "label": {
+      "min": 19,
+      "max": 19
+    }
+  },
+  "properties": {
+    "string": {
+      "plate": "label",
+      "image": "x00_y01_p01_c1.ome.tif"
+    },
+    "numeric": {
+      "channel": 1.0
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "tilejson": "3.0.0",
+  "name": "2D Data Example",
+  "description": "A tileset showing 2D data with multiple layers of detail.",
+  "version": "1.0.0",
+  "attribution": "<a href='http://example.com'>Example</a>",
+  "tiles": [
+    "http://example.com/tiled_example/{zlvl}/{x}/{y}.json"
+  ],
+  "minzoom": 0,
+  "maxzoom": 10,
+  "bounds": [
+    0,
+    0,
+    24000,
+    24000
+  ],
+  "center": [
+    12000,
+    12000,
+    0
+  ],
+  "vector_layers": [
+    {
+      "id": "image_layer",
+      "description": "Image layer",
+      "minzoom": 0,
+      "maxzoom": 10,
+      "fields": {
+        "string": {
+          "plate": "Plate ID",
+          "image": "Image URI"
+        },
+        "numerical": {
+          "label": "Label ID",
+          "channel": "Channel ID"
+        }
+      }
+    }
+  ],
+  "fillzoom": 3
+}
