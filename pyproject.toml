@@ -37,6 +37,7 @@ llvmlite = "^0.40.1"
 vaex = "^4.17.0"
 pydantic = "^2.3.0"
 scikit-image = "0.20.0"
+geojson-pydantic = "^1.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
