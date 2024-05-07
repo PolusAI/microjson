@@ -19,7 +19,7 @@
       ]
     ]
   },
-  "coordinateSystem": {
+  "multiscale": {
     "units": [
       "micrometer",
       "micrometer"

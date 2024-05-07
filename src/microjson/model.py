@@ -1,73 +1,14 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, RootModel
+from pydantic import BaseModel, StrictInt, StrictStr, RootModel
 from microjson.provenance import Workflow
 from microjson.provenance import WorkflowCollection
 from microjson.provenance import Artifact
 from microjson.provenance import ArtifactCollection
-
-Coordinates = conlist(float, min_length=2, max_length=3)
-
-
-class GeoAbstract(BaseModel):
-    """Abstract base class for all GeoJSON objects"""
-
-    bbox: Optional[List[float]] = Field(None, min_length=4)
-
-
-class Point(GeoAbstract):
-    """A GeoJSON Point object"""
-
-    type: Literal["Point"]
-    coordinates: Coordinates  # type: ignore
-
-
-class MultiPoint(GeoAbstract):
-    """A GeoJSON MultiPoint object"""
-
-    type: Literal["MultiPoint"]
-    coordinates: List[Coordinates]  # type: ignore
-
-
-class LineString(GeoAbstract):
-    """A GeoJSON LineString object"""
-
-    type: Literal["LineString"]
-    coordinates: List[Coordinates]  # type: ignore
-
-
-class MultiLineString(GeoAbstract):
-    """A GeoJSON MultiLineString object"""
-
-    type: Literal["MultiLineString"]
-    coordinates: List[List[Coordinates]]  # type: ignore
-
-
-class Polygon(GeoAbstract):
-    """A GeoJSON Polygon object"""
-
-    type: Literal["Polygon"]
-    coordinates: List[List[Coordinates]]  # type: ignore
-
-
-class MultiPolygon(GeoAbstract):
-    """A GeoJSON MultiPolygon object"""
-
-    type: Literal["MultiPolygon"]
-    coordinates: List[List[List[Coordinates]]]  # type: ignore
-
-
-GeometryBaseType = Union[
-    Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon
-]
-
-
-class GeometryCollection(GeoAbstract):
-    """A GeoJSON GeometryCollection object"""
-
-    type: Literal["GeometryCollection"]
-    geometries: List[GeometryBaseType]
+from geojson_pydantic import Feature, FeatureCollection, GeometryCollection
+from geojson_pydantic import Point, MultiPoint, LineString, MultiLineString
+from geojson_pydantic import Polygon, MultiPolygon
 
 
 GeometryType = Union[  # type: ignore
@@ -82,31 +23,11 @@ GeometryType = Union[  # type: ignore
 ]
 
 
-class Feature(GeoAbstract):
-    """A GeoJSON Feature object"""
-
-    type: Literal["Feature"]
-    geometry: GeometryType = Field(  # type: ignore
-        ...,
-        description="""The geometry of the
-                                   feature""",
-    )  # type: ignore
-    properties: Dict = Field(..., description="""Properties of the feature""")
-    id: Optional[Union[StrictStr, StrictInt]] = None
-
-
 class ValueRange(BaseModel):
     """A range of values for MicroJSON quantitative properties"""
 
     min: float
     max: float
-
-
-class FeatureCollection(GeoAbstract):
-    """A GeoJSON FeatureCollection object"""
-
-    type: Literal["FeatureCollection"]
-    features: List[Feature]
 
 
 class GeoJSON(RootModel):
@@ -152,10 +73,9 @@ class Unit(Enum):
 class AxisType(Enum):
     """The type of an axis"""
 
-    CARTESIAN = "cartesian"
-    ANGULAR = "angular"
-    TEMPORAL = "temporal"
-    SPECTRAL = "spectral"
+    SPACE = "space"
+    TIME = "time"
+    CHANNEL = "channel"
 
 
 class Axis(BaseModel):
@@ -164,14 +84,39 @@ class Axis(BaseModel):
     name: StrictStr
     type: Optional[AxisType] = None
     unit: Optional[Unit] = None
-    pixelsPerUnit: Optional[float] = None
     description: Optional[str] = None
 
 
-class CoordinateSystem(BaseModel):
+class CoordinateTransformation(BaseModel):
+    """Coordinate transformation abstract class
+    harmonized with the OME model"""
+
+
+class Identity(CoordinateTransformation):
+    """Identity transformation"""
+
+    type: Literal["identity"] = "identity"
+
+
+class Translation(CoordinateTransformation):
+    """Translation transformation"""
+
+    type: Literal["translation"] = "translation"
+    translation: List[float]
+
+
+class Scale(CoordinateTransformation):
+    """Scale transformation"""
+
+    type: Literal["scale"] = "scale"
+    scale: List[float]
+
+
+class Multiscale(BaseModel):
     """A coordinate system for MicroJSON coordinates"""
 
     axes: List[Axis]
+    coordinateTransformations: Optional[List[CoordinateTransformation]] = None
     transformationMatrix: Optional[List[List[float]]] = None
 
 
@@ -187,16 +132,21 @@ class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
-    coordinateSystem: Optional[List[Axis]] = None
+    multiscale: Optional[Multiscale] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
     properties: Properties  # type: ignore
+    # reference to the parent feature
+    parentId: Optional[Union[StrictStr, StrictInt]] = None
+    # for now, only string feature class is supported
+    # in the future, it may be expanded with a class registry
+    featureClass: Optional[str] = None
 
 
 class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    coordinateSystem: Optional[CoordinateSystem] = None
+    multiscale: Optional[Multiscale] = None
     valueRange: Optional[Dict[str, ValueRange]] = None
     descriptiveFields: Optional[List[str]] = None
     properties: Optional[Properties] = None

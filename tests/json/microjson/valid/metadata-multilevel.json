@@ -135,20 +135,18 @@
     "well",
     "plate"
   ],
-  "coordinateSystem": {
+  "multiscale": {
     "axes": [
       {
         "name": "x",
         "unit": "micrometer",
-        "type": "cartesian",
-        "pixelsPerUnit": 1,
+        "type": "space",
         "description": "x-axis"
       },
       {
         "name": "y",
         "unit": "micrometer",
-        "type": "cartesian",
-        "pixelsPerUnit": 1,
+        "type": "space",
         "description": "y-axis"
       }
     ],

@@ -54,20 +54,18 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
         }
     },
     "descriptiveFields": ["well","imagename"],
-    "coordinateSystem": {
+    "multiscale": {
       "axes": [
           {
               "name": "x",
               "unit": "micrometer",
-              "type": "cartesian",
-              "pixelsPerUnit": 1,
+              "type": "space",
               "description": "x-axis"
           },
           {
               "name": "y",
               "unit": "micrometer",
-              "type": "cartesian",
-              "pixelsPerUnit": 1,
+              "type": "space",
               "description": "y-axis"
           }
       ],

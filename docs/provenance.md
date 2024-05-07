@@ -179,20 +179,18 @@ This enhancement not only increases the utility of MicroJSON in various scientif
         "well",
         "imagename"
     ],
-    "coordinateSystem": {
+    "multiscale": {
         "axes": [
             {
                 "name": "x",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "x-axis"
             },
             {
                 "name": "y",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "y-axis"
             }
         ],
@@ -369,20 +367,18 @@ This enhancement not only increases the utility of MicroJSON in various scientif
         "well",
         "imagename"
     ],
-    "coordinateSystem": {
+    "multiscale": {
         "axes": [
             {
                 "name": "x",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "x-axis"
             },
             {
                 "name": "y",
                 "unit": "micrometer",
-                "type": "cartesian",
-                "pixelsPerUnit": 1,
+                "type": "space",
                 "description": "y-axis"
             }
         ],
