@@ -16,6 +16,7 @@ A range of values for MicroJSON quantitative properties.
 
 ::: microjson.model.ValueRange
 
+
 #### Properties
 
 Metadata properties of a MicroJSON feature.
@@ -54,6 +55,12 @@ Represents a GeoJSON MultiPolygon object.
 ### Compound Objects
 
 #### Multiscale
+
+A coordinate system for MicroJSON features or feature collections.
+
+::: microjson.model.Multiscale
+
+#### GeometryCollection
 
 A coordinate system for MicroJSON features or feature collections.
 
