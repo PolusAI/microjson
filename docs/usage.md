@@ -3,7 +3,7 @@
 In this tutorial, we explain how a Python script is used to convert a pandas DataFrame into a MicroJSON FeatureCollection object.
 
 ## Example dataframe to MicroJSON conversion
-::: examples.df_to_microjson.df_to_microjson
+::: microjson.examples.df_to_microjson.df_to_microjson
     :docstring:
 
 Here's a breakdown of the steps involved:
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     data = [
         {
             "type": "Feature",
-            "geometry_type": "Point",
+            "geometryType": "Point",
             "coordinates": [0, 0],
             "name": "Point 1",
             "value": 1,
@@ -38,7 +38,7 @@ if __name__ == "__main__":
         },
         {
             "type": "Feature",
-            "geometry_type": "Polygon",
+            "geometryType": "Polygon",
             "coordinates": [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]],
             "name": "Polygon 1",
             "value": 2,

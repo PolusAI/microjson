@@ -1,6 +1,6 @@
 {
     "type": "FeatureCollection",
-    "coordinatesystem": {
+    "multiscale": {
       "axes": [{
         "name": "x"
       }

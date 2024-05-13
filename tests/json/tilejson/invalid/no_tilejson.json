@@ -19,13 +19,13 @@
             "maxzoom": 18,
             "fields": {
                 "string": {
-                    "Plate": "Plate ID",
-                    "Image": "Image URI"
+                    "plate": "Plate ID",
+                    "image": "Image URI"
                 },
                 "numerical": {
                     "X": "X coordinate",
                     "Y": "Y coordinate",
-                    "Channel": "Channel ID"
+                    "channel": "Channel ID"
                 }
             }
         }

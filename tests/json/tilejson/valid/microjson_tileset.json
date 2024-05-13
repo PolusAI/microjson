@@ -19,12 +19,12 @@
             "maxzoom": 10,
             "fields": {
                 "string": {
-                    "Plate": "Plate ID",
-                    "Image": "Image URI"
+                    "plate": "Plate ID",
+                    "image": "Image URI"
                 },
                 "numerical": {
-                    "Label": "Label ID",
-                    "Channel": "Channel ID"
+                    "label": "Label ID",
+                    "channel": "Channel ID"
                 }
             }
         }
