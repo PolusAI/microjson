@@ -1,73 +1,14 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
 from typing import List, Optional, Union, Dict, Literal
 from enum import Enum
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, RootModel
+from pydantic import BaseModel, StrictInt, StrictStr, RootModel
 from microjson.provenance import Workflow
 from microjson.provenance import WorkflowCollection
 from microjson.provenance import Artifact
 from microjson.provenance import ArtifactCollection
-
-Coordinates = conlist(float, min_length=2, max_length=3)
-
-
-class GeoAbstract(BaseModel):
-    """Abstract base class for all GeoJSON objects"""
-
-    bbox: Optional[List[float]] = Field(None, min_length=4)
-
-
-class Point(GeoAbstract):
-    """A GeoJSON Point object"""
-
-    type: Literal["Point"]
-    coordinates: Coordinates  # type: ignore
-
-
-class MultiPoint(GeoAbstract):
-    """A GeoJSON MultiPoint object"""
-
-    type: Literal["MultiPoint"]
-    coordinates: List[Coordinates]  # type: ignore
-
-
-class LineString(GeoAbstract):
-    """A GeoJSON LineString object"""
-
-    type: Literal["LineString"]
-    coordinates: List[Coordinates]  # type: ignore
-
-
-class MultiLineString(GeoAbstract):
-    """A GeoJSON MultiLineString object"""
-
-    type: Literal["MultiLineString"]
-    coordinates: List[List[Coordinates]]  # type: ignore
-
-
-class Polygon(GeoAbstract):
-    """A GeoJSON Polygon object"""
-
-    type: Literal["Polygon"]
-    coordinates: List[List[Coordinates]]  # type: ignore
-
-
-class MultiPolygon(GeoAbstract):
-    """A GeoJSON MultiPolygon object"""
-
-    type: Literal["MultiPolygon"]
-    coordinates: List[List[List[Coordinates]]]  # type: ignore
-
-
-GeometryBaseType = Union[
-    Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon
-]
-
-
-class GeometryCollection(GeoAbstract):
-    """A GeoJSON GeometryCollection object"""
-
-    type: Literal["GeometryCollection"]
-    geometries: List[GeometryBaseType]
+from geojson_pydantic import Feature, FeatureCollection, GeometryCollection
+from geojson_pydantic import Point, MultiPoint, LineString, MultiLineString
+from geojson_pydantic import Polygon, MultiPolygon
 
 
 GeometryType = Union[  # type: ignore
@@ -82,31 +23,11 @@ GeometryType = Union[  # type: ignore
 ]
 
 
-class Feature(GeoAbstract):
-    """A GeoJSON Feature object"""
-
-    type: Literal["Feature"]
-    geometry: GeometryType = Field(  # type: ignore
-        ...,
-        description="""The geometry of the
-                                   feature""",
-    )  # type: ignore
-    properties: Dict = Field(..., description="""Properties of the feature""")
-    id: Optional[Union[StrictStr, StrictInt]] = None
-
-
 class ValueRange(BaseModel):
     """A range of values for MicroJSON quantitative properties"""
 
     min: float
     max: float
-
-
-class FeatureCollection(GeoAbstract):
-    """A GeoJSON FeatureCollection object"""
-
-    type: Literal["FeatureCollection"]
-    features: List[Feature]
 
 
 class GeoJSON(RootModel):

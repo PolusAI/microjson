@@ -8,11 +8,7 @@ This document describes the Pydantic models used for GeoJSON and MicroJSON objec
 
 ::: microjson.model
 
-### Base Models
-
-#### GeoAbstract
-
-::: microjson.model.GeoAbstract
+### Base Objects
 
 #### ValueRange
 
@@ -27,43 +23,34 @@ Metadata properties of a MicroJSON feature.
 
 ::: microjson.model.Properties
 
+
 ### Geometry Types
+Uses geojson-pydantic models for GeoJSON geometry types, included here for reference. Please refer to the [geojson-pydantic documentation](https://developmentseed.org/geojson-pydantic/) for more information.
 
 #### Point
 
 Represents a GeoJSON Point object.
 
-::: microjson.model.Point
-
 #### MultiPoint
 
 Represents a GeoJSON MultiPoint object.
-
-::: microjson.model.MultiPoint
 
 #### LineString
 
 Represents a GeoJSON LineString object.
 
-::: microjson.model.LineString
-
 #### MultiLineString
 
 Represents a GeoJSON MultiLineString object.
-
-::: microjson.model.MultiLineString
 
 #### Polygon
 
 Represents a GeoJSON Polygon object.
 
-::: microjson.model.Polygon
-
 #### MultiPolygon
 
 Represents a GeoJSON MultiPolygon object.
 
-::: microjson.model.MultiPolygon
 
 ### Compound Objects
 
@@ -75,21 +62,21 @@ A coordinate system for MicroJSON features or feature collections.
 
 #### GeometryCollection
 
-A collection of multiple geometries.
+A coordinate system for MicroJSON features or feature collections.
 
-::: microjson.model.GeometryCollection
+::: microjson.model.Multiscale
+
+#### GeometryCollection
+
+A collection of multiple geometries. From geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### Feature
 
-Represents a GeoJSON feature object.
-
-::: microjson.model.Feature
+Represents a GeoJSON feature object, from geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### FeatureCollection
 
-Represents a GeoJSON feature collection.
-
-::: microjson.model.FeatureCollection
+Represents a GeoJSON feature collection, from geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### GeoJSON
 
