@@ -27,17 +27,35 @@ where = ["src"]
 
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
-bfio = {version = "2.3.6", extras = ["all"]}
-scyjava = "^1.9.1"
-typer = "^0.7.0"
-scipy = ">=1.8,<1.9.2"
-filepattern = "^2.0.1"
-fastapi = "^0.103.1"
-llvmlite = "^0.40.1"
-vaex = "^4.17.0"
 pydantic = "^2.3.0"
 scikit-image = "0.20.0"
 geojson-pydantic = "^1.0.2"
+
+
+[tool.poetry.dependencies.bfio]     
+version = "2.3.6"
+extras = ["all"]   
+optional = true
+
+[tool.poetry.dependencies.scipy]     
+version = ">=1.8,<1.9.2"
+optional = true
+
+[tool.poetry.dependencies.filepattern] 
+version = "^2.0.1"
+optional = true
+
+[tool.poetry.dependencies.vaex]      
+version = "^4.17.0"
+optional = true
+
+[tool.poetry.extras]
+all = [
+    "bfio", 
+    "scipy", 
+    "filepattern", 
+    "vaex"
+]
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

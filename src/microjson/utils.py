@@ -4,30 +4,42 @@ import ast
 import json
 import logging
 import numpy as np
-import vaex
+
 import re
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
 from itertools import product
-from scipy import ndimage
+
 import skimage as sk
 from skimage import measure
 from skimage import morphology
-from bfio import BioReader
+
 from sys import platform
 from pathlib import Path
 from typing import Any
 from typing import Union
 import microjson.model as mj
 from multiprocessing import cpu_count
-import filepattern as fp
+
 import warnings
 from microjson import MicroJSON
 from pydantic import ValidationError
 from microjson.model import Feature, Properties
 from typing import Union
 import pydantic
+
+#define conditional imports
+try:
+    from bfio import BioReader
+    import filepattern as fp
+    from scipy import ndimage
+    import vaex
+except ImportError as e:
+    print("""Packages bfio, filepattern, scipy, vaex not installed
+          please install using pip install microjson[all]""")
+    raise e
+
 
 warnings.filterwarnings("ignore")
 
@@ -39,21 +51,6 @@ if platform == "linux" or platform == "linux2":
     NUM_THREADS = len(os.sched_getaffinity(0))  # type: ignore
 else:
     NUM_THREADS = max(cpu_count() // 2, 2)
-
-
-def gather_example_files(directory) -> list:
-    """
-    Gather all the .json files in a directory and its subdirectories.
-    """
-    files = []
-    # Walk through the directory
-    for dirpath, _, filenames in os.walk(directory):
-        # Filter to just the .json files
-        example_files = [
-            os.path.join(dirpath, f) for f in filenames if f.endswith(".json")
-        ]
-        files.extend(example_files)
-    return files
 
 
 class OmeMicrojsonModel:

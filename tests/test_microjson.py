@@ -2,7 +2,7 @@ import json
 import pytest
 from pydantic import ValidationError
 from microjson.model import MicroJSON, GeoJSON
-from microjson.utils import gather_example_files
+from microjson.fileutils import gather_example_files
 
 
 # Define the directories containing the example JSON files
