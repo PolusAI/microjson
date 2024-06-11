@@ -1,0 +1,4 @@
+.venv
+tests/__pycache__/
+src/microjson/__pycache__/
+poetry.lock

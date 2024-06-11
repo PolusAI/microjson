@@ -8,14 +8,34 @@ from pathlib import Path
 from typing import Union
 import numpy as np
 import pytest
-from microjson.utils import OmeMicrojsonModel, MicrojsonBinaryModel
 import skimage as sk
+HAS_BFIO = False
+try:
+    import bfio
+    HAS_BFIO = True
+except ImportError:
+    pass
+
+# Marker registration
+def pytest_configure(config):  # Function to register marker
+    config.addinivalue_line("markers", "requires_extra(name): mark test as needing an extra")
+
 
 def clean_directories() -> None:
     """Remove all temporary directories."""
     for d in Path(".").cwd().iterdir():
         if d.is_dir() and d.name.startswith("tmp"):
             shutil.rmtree(d)
+
+@pytest.fixture(autouse=True)
+def skip_if_extra_not_installed(request):
+    marker = request.node.get_closest_marker("requires_extra")
+    if marker:
+        extra_name = marker.args[0]
+        try:
+            __import__(extra_name)
+        except ImportError:
+            pytest.skip(f"Skipping test because '{extra_name}' extra is not installed.")
 
 
 @pytest.fixture()
@@ -58,8 +78,9 @@ def get_params(request: pytest.FixtureRequest) -> pytest.FixtureRequest:
     """To get the parameter of the ome to json."""
     return request.param
 
-
+@pytest.mark.skipif(not HAS_BFIO, reason="Skipping test because 'bfio' extra is not installed.")
 def test_OmeMicrojsonModel(synthetic_images: Path, output_directory: Path, get_params) -> None:
+    from microjson.utils import OmeMicrojsonModel
     """Testing of converting binary images to microjson of objects polygon coordinates."""
     
     inp_dir = synthetic_images
@@ -77,7 +98,9 @@ def test_OmeMicrojsonModel(synthetic_images: Path, output_directory: Path, get_p
 
     clean_directories()
 
+@pytest.mark.skipif(not HAS_BFIO, reason="Skipping test because 'bfio' extra is not installed.")
 def test_MicrojsonBinaryModel(synthetic_images: Path, output_directory: Path, get_params:list[str]) -> None:
+    from microjson.utils import OmeMicrojsonModel, MicrojsonBinaryModel
     """Testing of converting microjson of polygon coordinates of objects back to binary images."""
     
     inp_dir = synthetic_images
@@ -103,7 +126,9 @@ def test_MicrojsonBinaryModel(synthetic_images: Path, output_directory: Path, ge
 def XOR(x, y):
     return x ^ y
 
+@pytest.mark.skipif(not HAS_BFIO, reason="Skipping test because 'bfio' extra is not installed.")
 def test_roundtrip(synthetic_images: Path, output_directory: Path) -> None:
+    from microjson.utils import OmeMicrojsonModel, MicrojsonBinaryModel
     """Testing of reconstructed images from polygon coordinates with original images."""
     
     inp_dir = synthetic_images
