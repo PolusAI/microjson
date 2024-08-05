@@ -28,6 +28,19 @@ from pydantic import ValidationError
 from microjson.model import Feature, Properties
 from typing import Union
 import pydantic
+import matplotlib.pyplot as plt
+
+#define conditional imports
+try:
+    from bfio import BioReader
+    import filepattern as fp
+    from scipy import ndimage
+    import vaex
+except ImportError as e:
+    print("""Packages bfio, filepattern, scipy, vaex not installed
+          please install using pip install microjson[all]""")
+    raise e
+
 
 #define conditional imports
 try:
@@ -94,6 +107,7 @@ class OmeMicrojsonModel:
                 image = self.br[y:y_max, x:x_max, z : z + 1]
 
                 unique_labels = len(np.unique(image))
+
                 if unique_labels >= self.max_unique_labels:
                     if unique_labels == self.max_unique_labels:
                         msg = f"Binary image detected : tile {i}"
@@ -113,6 +127,7 @@ class OmeMicrojsonModel:
                         )
                         if as_completed(future):  # type: ignore
                             label, coordinates = future.result()
+            
                             if len(label) and len(coordinates) > 0:
                                 label = [i + idx for i in range(
                                     1, len(label) + 1)]
@@ -328,9 +343,10 @@ class OmeMicrojsonModel:
             if self.polygon_type == "rectangle":
                 cor_value = list(ast.literal_eval(cor))
             else:
-                cor_value = cor
+                cor_value = cor + [cor[0]]
 
             geometry = GeometryClass(type=row["geometry_type"], coordinates=[cor_value])
+       
 
             # create a new properties object dynamically
             properties = mj.Properties(numeric=numeric_dict)
