@@ -38,6 +38,10 @@ vaex = "^4.17.0"
 pydantic = "^2.3.0"
 scikit-image = "0.20.0"
 geojson-pydantic = "^1.0.2"
+geojson2vt = "^1.0.1"
+vt2pbf = "^0.1.5"
+protobuf = "^4.25.3"
+
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
