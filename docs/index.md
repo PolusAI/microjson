@@ -102,8 +102,11 @@ It may contain either of, but NOT both of the following properties:
 ### Axis Object
 
 An axis object represents the choice of axes (2D or 3D). It MUST have the following properties:
+
 - `"name"`: Representing the name of the axis. It MUST be a string.
+
 It may contain the following properties:
+
 - `"unit"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
 - `"description"`: A string describing the axis.
 
