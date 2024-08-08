@@ -2,6 +2,9 @@
 
 MicroJSON is a JSON-based format inspired by [GeoJSON](https://geojson.org), designed to encode a variety of data structures related to microscopy images. It can handle representations of reference points, regions of interest, and other annotations, making it an ideal solution for conveying complex microscopy data in a straightforward, easy-to-use format.
 
+For more extensive documentation, please refer to the [online documentation](https://polusai.github.io/microjson/).
+
+
 ## Features
 
 MicroJSON offers a range of features designed to meet the needs of microscopy data representation:
@@ -18,6 +21,16 @@ There are two additional functionalities added which supports binary and label i
 - **OmeMicrojsonModel:** Converts objects in a binary or label images into polygon coordinates (rectangle, encoding) and save them in json file format using microjson package.
 
 - **MicrojsonBinaryModel:** Reconstruct binary images using polygon coordinates from json file.
+
+## Installation
+
+To install MicroJSON, you can use the following command:
+
+```pip install microjson```
+This will install the default version of MicroJSON with the basic functionalities and minimal dependencies. If you want to use the additional functionalities, such as provided by the ```utils``` module, you can install the package with the following command:
+
+```pip install microjson[all]```
+
 
 ## Usage
 
