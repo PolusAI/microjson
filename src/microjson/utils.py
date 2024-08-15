@@ -30,6 +30,7 @@ from typing import Union
 import pydantic
 import matplotlib.pyplot as plt
 
+
 #define conditional imports
 try:
     from bfio import BioReader
