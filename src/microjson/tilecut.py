@@ -1,16 +1,13 @@
 import os
-from geojson2vt.geojson2vt import geojson2vt
-from geojson2vt import utils as g2vt_utils
-from tile import TileJSON
-from model import MicroJSON
+from .microjson2vt.microjson2vt import microjson2vt
+from microjson.tilemodel import TileJSON
+from microjson import MicroJSON
 import json
 from pydantic import ValidationError
 
-from typing import List, Dict, Union
-import json
+from typing import List, Union
 from pathlib import Path
 import logging
-from shapely.geometry import shape
 from vt2pbf import vt2pbf
 # import mapbox_vector_tile
 
@@ -18,7 +15,8 @@ from vt2pbf import vt2pbf
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-def getbounds(microjson_file : str) -> List[int]:
+
+def getbounds(microjson_file: str) -> List[float]:
     """
     Get the max and min bounds for coordinates of the MicroJSON file
     :param microjson_file: Path to the MicroJSON file
@@ -53,20 +51,21 @@ def getbounds(microjson_file : str) -> List[int]:
 
 class TileHandler:
     tile_json: TileJSON
-    pbf: bool = False
-    id_counter = 10001
-    id_set = set()
+    pbf: bool
+    id_counter: int
+    id_set: set
 
     def __init__(self, tileobj: TileJSON, pbf: bool = False):
         """
         Initialize the TileHandler with a TileJSON configuration and optional PBF flag
-        :param tilejson_path: Path to the TileJSON configuration file
-        :param pbf: Flag to indicate whether to generate PBF files
-        :param tilefolder: Path to the folder where the generated tiles should be saved"""
+        :param tileobj: TileJSON configuration
+        :param pbf: Flag to indicate whether to generate PBF files  (default: False)
+        """
         # read the tilejson file to string
         self.tile_json = TileJSON.model_validate(tileobj).root
         self.pbf = pbf
-
+        self.id_counter = 0
+        self.id_set = set()
 
     def microjson2tiles(self,
                         microjson_data_path: Union[str, Path],
@@ -91,42 +90,8 @@ class TileHandler:
             
             # return the path to the saved tile
             return tile_path
-        
-        def convert_geometry_to_shape(data):
-            # Helper function to convert all geometry to shape
-            type_mapping = {
-                    1: "Point",
-                    2: "LineString",
-                    3: "Polygon",
-                    4: "MultiPoint",
-                    5: "MultiLineString",
-                    6: "MultiPolygon",
-                    7: "GeometryCollection"
-                }
-
-            # loop over features
-            if 'features' in data:
-                for feature in data['features']:
-                    # check number of coordinates
-                    if len(feature['geometry'][0]) <4 and feature['geometry']['type'] == 'Polygon':
-                        # mark for deletion
-                        feature['geometry'] = None
-                        continue                    
-
-                    geodict = {
-                        "type": type_mapping[feature['type']],
-                        "coordinates": feature['geometry']
-                    }
-                    feature['geometry'] = shape(geodict)
-                
-                # remove all features with None geometry
-                data['features'] = [feature for feature in data['features'] if feature['geometry'] is not None]
-
-            return data
-        
 
         def convert_id_to_int(data):
-            # Helper function to convert all id to int
 
             # check if data is a list
             if isinstance(data, list):
@@ -171,16 +136,17 @@ class TileHandler:
                 return
         
 
-        # Options for geojson2vt might come from the TileJSON or can be set statically here
+        # Options for geojson2vt might come from the TileJSON or can be set
+        # statically here
         options = {
             'maxZoom': self.tile_json.maxzoom,
-            'indexMaxZoom': self.tile_json.maxzoom, # max zoom in the initial tile index
-            'indexMaxPoints': 0 # max number of points per tile, set to 0 for no restriction
-            
+            'indexMaxZoom': self.tile_json.maxzoom,  # max zoom in the initial tile index
+            'indexMaxPoints': 0,  # max number of points per tile, set to 0 for no restriction
+            'bounds': self.tile_json.bounds
         }
 
         # Convert GeoJSON to intermediate vector tiles
-        tile_index = geojson2vt(microjson_data, options)
+        tile_index = microjson2vt(microjson_data, options)
 
         # Placeholder for the tile paths
         generated_tiles = []
@@ -197,16 +163,11 @@ class TileHandler:
             # convert all id to int, as there is a bug in the geojson2vt library
             tile_data = convert_id_to_int(tile_data)
 
-            # convert all geometry to shape
-            #tile_data = convert_geometry_to_shape(tile_data)
-
             # add name to the tile_data
             tile_data["name"] = "tile"
             if self.pbf:
                 # Using mapbox_vector_tile to encode tile data to PBF
-                # encoded_data = mapbox_vector_tile.encode(tile_data)
                 encoded_data = vt2pbf(tile_data)
-                # encoded_data = mapbox_vector_tile.encode(tile_data)
             else:
                 encoded_data = json.dumps(tile_data)
 
@@ -215,27 +176,3 @@ class TileHandler:
 
         return generated_tiles
         
-
-    def save_tiles(self, tiles: List[Dict], zoom: int):
-        for tile in tiles:
-            tile_data = tile["data"]
-            if self.pbf:
-                tile_data = self.microjson2pbf(tile_data)
-            # Save to file or database as needed
-            # Example file saving
-            with open(f"tile_{zoom}.json", "w") if not self.pbf else open(f"tile_{zoom}.pbf", "wb") as file:
-                file.write(json.dumps(tile_data) if not self.pbf else tile_data)
-
-    def pbf2json(self, pbf_data: bytes) -> Dict:
-        """
-        Convert a PBF binary to JSON
-        :param pbf_data: PBF binary data
-        :return: JSON data
-        """
-        tile = mapbox_vector_tile.decode(pbf_data)
-
-        return tile
-
-        # vt-json to geojson
-        
-

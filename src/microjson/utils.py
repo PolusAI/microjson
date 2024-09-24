@@ -25,7 +25,7 @@ import filepattern as fp
 import warnings
 from microjson import MicroJSON
 from pydantic import ValidationError
-from microjson.model import Feature, Properties
+from microjson.model import Feature
 from typing import Union
 import pydantic
 
@@ -335,14 +335,12 @@ class OmeMicrojsonModel:
 
             geometry = GeometryClass(type=row["geometry_type"], coordinates=[cor_value])
 
-            # create a new properties object dynamically
-            properties = mj.Properties(numeric=numeric_dict)
 
             # Create a new Feature object
             feature = mj.MicroFeature(
                 type=row["type"],
                 geometry=geometry,
-                properties=properties,
+                properties=numeric_dict,
             )
             features.append(feature)
 
@@ -353,13 +351,10 @@ class OmeMicrojsonModel:
 
         desc_meta = {key: f"{data[key].values[0]}" for key in str_columns}
 
-        # create a new properties for each image
-        properties = mj.Properties(string=desc_meta)
-
         # Create a new FeatureCollection object
         feature_collection = mj.MicroFeatureCollection(
             type="FeatureCollection",
-            properties=properties,
+            properties=desc_meta,
             features=features,
             valueRange=valrange_dict,
             multiscale={
@@ -446,7 +441,7 @@ class MicrojsonBinaryModel(CustomValidation):
         data = json.load(Path.open(Path(self.file_path)))
         items = [Feature(**item) for item in data['features']]
         poly = [i.geometry.coordinates for i in items]
-        meta = Properties(**data['properties'])
+        meta = data['properties']
         image_name = meta.string.get("Image")
         x = int(meta.string.get("X"))
         y = int(meta.string.get("Y"))

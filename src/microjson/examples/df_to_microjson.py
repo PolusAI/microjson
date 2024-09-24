@@ -30,12 +30,10 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
             type=row["geometryType"], coordinates=row["coordinates"]
         )
 
-        # Create a Properties object to hold metadata about the feature
-        properties = mj.Properties(
-            string={"name": row["name"]},
-            numeric={"value": row["value"]},
-            multiNumeric={"values": row["values"]},
-        )
+        # create a dictionary of properties using the columns name, value and values
+        properties = {}
+        for key in ["name", "value", "values"]:
+            properties[key] = row[key]
 
         # Generate a Feature object that combines geometry and properties
         feature = mj.MicroFeature(
@@ -63,7 +61,7 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         features=features,
         valueRange=valueRange,
         descriptiveFields=descriptiveFields,
-        properties=mj.Properties(string={"plate": "Example Plate"}),
+        properties={"plate": "Example Plate"},
         multiscale={
             "axes": [
                 {
