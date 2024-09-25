@@ -57,9 +57,11 @@ class TileHandler:
 
     def __init__(self, tileobj: TileJSON, pbf: bool = False):
         """
-        Initialize the TileHandler with a TileJSON configuration and optional PBF flag
+        Initialize the TileHandler with a TileJSON configuration and optional
+        PBF flag
         :param tileobj: TileJSON configuration
-        :param pbf: Flag to indicate whether to generate PBF files  (default: False)
+        :param pbf: Flag to indicate whether to generate PBF files  (default:
+        False)
         """
         # read the tilejson file to string
         self.tile_json = TileJSON.model_validate(tileobj).root
@@ -84,7 +86,8 @@ class TileHandler:
             tile_path = str(tiles_path_template).format(z=z, x=x, y=y)
             os.makedirs(os.path.dirname(tile_path), exist_ok=True)
 
-            # Save the tile data (this assumes tile_data is already in the correct format, e.g., PBF or JSON)
+            # Save the tile data (this assumes tile_data is already in the
+            # correct format, e.g., PBF or JSON)
             with open(tile_path, 'wb' if tile_path.endswith('.pbf') else 'w') as f:
                 f.write(tile_data)
             
@@ -100,7 +103,6 @@ class TileHandler:
                 return data
             # check if data is a dict
             elif isinstance(data, dict):
-            # helper function to convert all id to int
                 for key, value in data.items():
                     if key == 'id':
                         if value is None:
@@ -136,8 +138,7 @@ class TileHandler:
                 return
         
 
-        # Options for geojson2vt might come from the TileJSON or can be set
-        # statically here
+        # Options for geojson2vt from TileJSON
         options = {
             'maxZoom': self.tile_json.maxzoom,
             'indexMaxZoom': self.tile_json.maxzoom,  # max zoom in the initial tile index
@@ -151,7 +152,8 @@ class TileHandler:
         # Placeholder for the tile paths
         generated_tiles = []
 
-        # get tilepath from tilejson self.tile_json.tiles, extract the folder from the filepath
+        # get tilepath from tilejson self.tile_json.tiles
+        # extract the folder from the filepath
         tilefolder = Path(self.tile_json.tiles[0]).parent
 
 
@@ -160,7 +162,8 @@ class TileHandler:
             x, y, z = atile["x"], atile["y"], atile["z"]
             tile_data = tile_index.get_tile(z, x, y)
 
-            # convert all id to int, as there is a bug in the geojson2vt library
+            # convert all id to int, as there is a bug in the geojson2vt
+            # library
             tile_data = convert_id_to_int(tile_data)
 
             # add name to the tile_data

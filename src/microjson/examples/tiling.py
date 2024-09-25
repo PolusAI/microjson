@@ -4,7 +4,8 @@ from microjson.tilemodel import TileJSON, TileModel, TileLayer
 import os
 from microjson.polygen import generate_polygons
 
-if __name__ == "__main__":
+
+def main():
     # clear the tiles directory
     os.system("rm -rf tiles")
 
@@ -35,7 +36,7 @@ if __name__ == "__main__":
         "description": ["polygon", "square", "rectangle", "triangle"]
     }
     microjson_data_path = "tiles/microjson_data.json"
-    feature_collection = generate_polygons(
+    generate_polygons(
         GRID_SIZE,
         CELL_SIZE,
         MIN_VERTICES,
@@ -80,12 +81,8 @@ if __name__ == "__main__":
 
     # Initialize the TileHandler
     handler = TileHandler(tileobj, pbf=True)
-    geojson2vt_options = {
-        'extent': 4096,
-        'debug': 0,
-        'indexMaxZoom': 0,
-        'indexMaxPoints': 100000,
-        'indexMaxTiles': 100000,
-        'tolerance': 3,
-    }
     handler.microjson2tiles(microjson_data_path, validate=False)
+
+
+if __name__ == "__main__":
+    main()
