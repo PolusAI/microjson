@@ -142,7 +142,7 @@ class MicroFeatureCollection(FeatureCollection):
     multiscale: Optional[Multiscale] = None
     valueRange: Optional[Dict[str, ValueRange]] = None
     descriptiveFields: Optional[List[str]] = None
-    properties: Dict[str, Any]
+    properties: Optional[Union[Props, None]] = None  # type: ignore
     id: Optional[Union[StrictStr, StrictInt]] = None
     provenance: Optional[Union[Workflow,
                                WorkflowCollection,

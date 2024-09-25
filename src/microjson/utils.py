@@ -28,19 +28,6 @@ from pydantic import ValidationError
 from microjson.model import Feature
 from typing import Union
 import pydantic
-import matplotlib.pyplot as plt
-
-#define conditional imports
-try:
-    from bfio import BioReader
-    import filepattern as fp
-    from scipy import ndimage
-    import vaex
-except ImportError as e:
-    print("""Packages bfio, filepattern, scipy, vaex not installed
-          please install using pip install microjson[all]""")
-    raise e
-
 
 #define conditional imports
 try:
@@ -314,10 +301,10 @@ class OmeMicrojsonModel:
         if data.shape[0] == 0:
             msg = "Invalid vaex dataframe!! Please do check path again"
             raise ValueError(msg)
-        
+
         str_columns = list(
             filter(
-                lambda feature: feature in ["Image","X","Y","Channel"],
+                lambda feature: feature in ["Image", "X", "Y", "Channel"],
                 data.get_column_names(),
             ),
         )
@@ -345,9 +332,8 @@ class OmeMicrojsonModel:
             else:
                 cor_value = cor + [cor[0]]
 
-            geometry = GeometryClass(type=row["geometry_type"], coordinates=[cor_value])
-       
-
+            geometry = GeometryClass(type=row["geometry_type"],
+                                     coordinates=[cor_value])
 
             # Create a new Feature object
             feature = mj.MicroFeature(
@@ -455,9 +441,9 @@ class MicrojsonBinaryModel(CustomValidation):
         items = [Feature(**item) for item in data['features']]
         poly = [i.geometry.coordinates for i in items]
         meta = data['properties']
-        image_name = meta.string.get("Image")
-        x = int(meta.string.get("X"))
-        y = int(meta.string.get("Y"))
+        image_name = meta.get("Image")
+        x = int(meta.get("X"))
+        y = int(meta.get("Y"))
         fmask = np.zeros((x, y), dtype=np.uint8)
         for i, _ in enumerate(poly):
             image = fmask.copy()

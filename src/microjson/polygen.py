@@ -1,9 +1,10 @@
+# Model for generating a sample MicroJSON file with polygons
+
 import geojson
 import random
 import math
 import string
 from shapely.geometry import MultiPoint
-from tqdm import tqdm
 from typing import List
 import microjson.model as mj
 
@@ -55,8 +56,10 @@ def assign_meta_types_and_values(n_keys, n_variants):
     : param n_variants: Number of possible values for each meta key
 
     Returns:
-        meta_types: A dictionary where keys are 'meta1' to 'meta50' and values are the assigned data types.
-        meta_values_options: A dictionary where keys are 'meta1' to 'meta50' and values are lists of 4 possible values.
+        meta_types: A dictionary where keys are 'meta1' to 'meta50' and values
+        are the assigned data types.
+        meta_values_options: A dictionary where keys are 'meta1' to 'meta50'
+        and values are lists of 4 possible values.
     """
     meta_types = {}
     meta_values_options = {}
@@ -74,7 +77,8 @@ def assign_meta_types_and_values(n_keys, n_variants):
             elif value_type == 'float':
                 value = round(random.uniform(0, 1000), 2)
             elif value_type == 'string':
-                value = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+                value = ''.join(random.choices(
+                    string.ascii_letters + string.digits, k=8))
             elif value_type == 'bool':
                 value = random.choice([True, False])
             values.append(value)
@@ -101,11 +105,12 @@ def generate_meta_values(meta_values_options):
     return meta_values
 
 
-def generate_polygons(grid_size, cell_size, min_vertices, max_vertices, meta_types, meta_values_options):
+def generate_polygons(grid_size, cell_size, min_vertices, max_vertices,
+                      meta_types, meta_values_options,
+                      microjson_data_path):
     features = []
     num_cells = grid_size // cell_size
-    # Initiate tqdm for progress bar
-    for i in tqdm(range(num_cells)):
+    for i in range(num_cells):
         for j in range(num_cells):
             # Cell boundaries
             x0 = i * cell_size
@@ -121,7 +126,8 @@ def generate_polygons(grid_size, cell_size, min_vertices, max_vertices, meta_typ
             # Generate a convex polygon within the cell
             while not hasmin:
                 # Generate a convex polygon
-                coordinates = [generate_convex_polygon(x0, y0, x1, y1, num_vertices+dvx)]
+                coordinates = [generate_convex_polygon(
+                    x0, y0, x1, y1, num_vertices+dvx)]
                 # Check if the polygon has the minimum number of vertices
                 hasmin = len(coordinates[0]) >= min_vertices
                 dvx += 1
@@ -139,36 +145,28 @@ def generate_polygons(grid_size, cell_size, min_vertices, max_vertices, meta_typ
             properties = {**base_properties, **meta_properties}
 
             feature = mj.MicroFeature(
+                type="Feature",
                 geometry=mj.Polygon(
+                    type="Polygon",
                     coordinates=coordinates
                 ),
                 properties=properties
             )
             features.append(feature)
+    #
+    # Write the feature collection to a new file
+    #
+    with open(microjson_data_path, "w") as f:
+        geojson.dump(
+            mj.MicroFeatureCollection(
+                properties={},
+                type="FeatureCollection",
+                features=features
+            ),
+            f
+        )
+
     return mj.MicroFeatureCollection(
+        properties={},
+        type="FeatureCollection",
         features=features)
-
-# Parameters
-GRID_SIZE = 200000      # Total size of the grid
-CELL_SIZE = 500        # Size of each cell
-MIN_VERTICES = 5       # Minimum number of vertices per polygon
-MAX_VERTICES = 32      # Maximum number of vertices per polygon
-N_VARIANTS = 40         # Number of possible values for each meta key
-N_KEYS = 10            # Number of meta keys
-
-# Assign data types and generate 4 values for each meta key
-meta_types, meta_values_options = assign_meta_types_and_values(N_KEYS, N_VARIANTS)
-
-# Generate the feature collection
-feature_collection = generate_polygons(
-    GRID_SIZE,
-    CELL_SIZE,
-    MIN_VERTICES,
-    MAX_VERTICES,
-    meta_types,
-    meta_values_options
-)
-
-# Save to a GeoJSON file
-with open('non_overlapping_polygons.geojson', 'w') as f:
-    geojson.dump(feature_collection, f)

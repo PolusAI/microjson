@@ -1,5 +1,5 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.3"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
@@ -34,11 +34,12 @@ geojson2vt = "^1.0.1"
 vt2pbf = "^0.1.5"
 protobuf = "^4.25.3"
 geojson = "^3.1.0"
+shapely = "^2.0.6"
 
 
 
 [tool.poetry.dependencies.bfio]     
-version = "2.3.6"
+version = "2.4.3"
 extras = ["all"]   
 optional = true
 
