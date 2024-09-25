@@ -1,14 +1,10 @@
 # Metadata Usage in MicroJSON Example
 
-This guide demonstrates how to populate the `string`, `numeric`, and `multiNumeric` fields under the 'properties' field as per the MicroJSON specification using a rectangular polygon as the geometry.
+This guide demonstrates how to designate metadata in MicroJSON using the `properties` field in the `Feature` class. The `properties` field is used to store metadata related to a feature. This guide provides examples of how to populate these fields in both JSON and Python.
 
 ## Properties Class Overview
 
-In MicroJSON, metadata related to a feature is stored in the `Properties` class. This class encompasses three fields:
-
-- `string`: A dictionary containing string metadata. This can include textual information such as the name and description of the feature.
-- `numeric`: A dictionary containing numeric metadata. This field can be used to store quantifiable data related to the feature, like the cell count in a microscopic image.
-- `multiNumeric`: A dictionary where each entry is a list of numeric values. This can be useful for storing data with multiple numeric values under a single key, such as ratio of infectivity over time.
+In MicroJSON, metadata related to a feature is stored in the `Properties` class. This class has 
 
 Now, let's explore an example to understand how these fields can be populated in both JSON and Python.
 
@@ -50,11 +46,12 @@ Now, let's explore an example to understand how these fields can be populated in
 from microjson.model import MicroFeature, Properties
 
 # Usage
-example_properties = Properties(
-    string={"name": "Sample Polygon", "description": "This is a sample rectangular polygon."},
-    numeric={"cellCount": 5000},
-    multiNumeric={"ratioInfectivity": [0.2, 0.5, 0.8]}
-)
+example_properties = {
+  "name": "Sample Polygon",
+  "description": "This is a sample rectangular polygon.",
+  "cellCount": 5000,
+  "ratioInfectivity": [0.2, 0.5, 0.8]
+}
 
 example_feature = MicroFeature(
     type="Feature",

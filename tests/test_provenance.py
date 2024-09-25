@@ -1,15 +1,13 @@
 import json
 import pytest
 from pydantic import ValidationError
-from microjson.model import MicroJSON, GeoJSON
+from microjson.model import MicroJSON
 from microjson.fileutils import gather_example_files
 
 
 # Define the directories containing the example JSON files
 VALID_PROVENANCE_DIR = "tests/json/provenance/valid"
 INVALID_PROVENANCE_DIR = "tests/json/provenance/invalid"
-
-
 
 valid_examples = gather_example_files(VALID_PROVENANCE_DIR)
 invalid_examples = gather_example_files(INVALID_PROVENANCE_DIR)

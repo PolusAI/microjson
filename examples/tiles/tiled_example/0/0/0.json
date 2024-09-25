@@ -1,0 +1,71 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              20000,
+              0
+            ],
+            [
+              20000,
+              20000
+            ],
+            [
+              0,
+              20000
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "numeric": {
+          "Label": 1
+        }
+      }
+    }
+  ],
+  "coordinatesystem": {
+    "axes": [
+      {
+        "name": "x",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "x-axis"
+      },
+      {
+        "name": "y",
+        "type": "cartesian",
+        "unit": "micrometer",
+        "description": "y-axis"
+      }
+    ]
+  },
+  "value_range": {
+    "Label": {
+      "min": 1,
+      "max": 1
+    }
+  },
+  "properties": {
+    "string": {
+      "Plate": "label",
+      "Image": "x00_y01_p01_c1.ome.tif"
+    },
+    "numeric": {
+      "Channel": 1.0
+    }
+  }
+}

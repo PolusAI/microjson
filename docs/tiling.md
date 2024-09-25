@@ -36,11 +36,11 @@ The following fields of TileJSON may be used if the use case requires it, and ar
 
 ## Pydantic Model for TileJSON for MicroJSON
 ### TileJSON
-::: microjson.tile.TileJSON
+::: microjson.tilemodel.TileJSON
 ### TileModel
-::: microjson.tile.TileModel
+::: microjson.tilemodel.TileModel
 ### TileLayer
-::: microjson.tile.TileLayer
+::: microjson.tilemodel.TileLayer
 
 ## TileJSON for MicroJSON example with Vector Layers
 The below example illustrates a TileJSON for a MicroJSON tileset multiple layers of detail. The tileset has a single vector layer, `image_layer` id of `vector_layers`, which contains a single vector layer describing images. The `fields` property of the this layer specifies the attributes of the layer, including the data types of the attributes. The `tiles` property specifies the URL pattern for accessing the vector tiles, which in this case is a 2D data set (no channels, time or z-axis) with zoom level. The `fillzoom` property specifies the zoom level from which to generate overzoomed tiles, which in this case starts at level 3, after the last specified layer.
@@ -64,25 +64,67 @@ This file is located in the `examples/tiles` directory of the repository, and is
     "center": [12000, 12000, 0],
     "vector_layers": [
         {
-            "id": "image_layer",
-            "description": "Image layer",
+            "id": "Tile_layer",
+            "description": "Tile layer",
             "minzoom": 0,
             "maxzoom": 10,
             "fields": {
-                "string": {
-                    "plate": "Plate ID",
-                    "image": "Image URI"
-                },
-                "numerical": {
-                    "label": "Label ID",
-                    "channel": "Channel ID"
-                }
+              "plate": "String",
+              "image": "String",
+              "label": "Number",
+              "channel": "Number"
             }
         }
     ],
     "fillzoom": 3
 }
 ```
+
+## Tiled binary TileJSON
+Tiles may be encoded in a binary protobuf format as well. Below follows a similar example to the one above, but with binary tiles. The `tiles` property specifies the URL pattern for accessing the binary tiles, which in this case is a 2D data set (no channels, time or z-axis) with zoom level. The `fillzoom` property specifies the zoom level from which to generate overzoomed tiles, which in this case starts at level 3, after the last specified layer.
+
+```json
+{
+    {
+    "tilejson": "3.0.0",
+    "name": "2D Data Example",
+    "description": "A tileset showing 2D data with multiple layers of detail.",
+    "version": "1.0.0",
+    "attribution": "<a href='http://example.com'>Example</a>",
+    "tiles": [
+        "http://example.com/tiled_example/{zlvl}/{x}/{y}.pbf"
+    ],
+    "minzoom": 0,
+    "maxzoom": 10,
+    "bounds": [0, 0, 24000, 24000],
+    "center": [12000, 12000, 0],
+    "vector_layers": [
+        {
+            "id": "tile_layer",
+            "description": "Tile layer",
+            "minzoom": 0,
+            "maxzoom": 10,
+            "fields": {
+              "plate": "String",
+              "image": "String",
+              "label": "Number",
+              "channel": "Number"
+            }
+        }
+    ],
+    "fillzoom": 3
+}
+```
+
+## Tiled binary example
+The examples folder contains an example of how to generate binary tiles from one large MicroJSON file. It uses a helper module that generates a large random polygon grid, as could be expected in an imaging setting, using typical imaging coordinates. It is also included below for reference.
+
+### Example of creating binary tiles from a large MicroJSON file
+::: microjson.examples.tiling.main
+    :docstring:
+
+
+
 
 ## Tiled MicroJSON Example
 ### Level 0
@@ -109,14 +151,10 @@ The following is an example of a MicroJSON object at zoom level 0, tile at (0,0)
             "minzoom": 0,
             "maxzoom": 10,
             "fields": {
-                "string": {
-                    "plate": "Plate ID",
-                    "image": "Image URI"
-                },
-                "numerical": {
-                    "label": "Label ID",
-                    "channel": "Channel ID"
-                }
+              "plate": "String",
+              "image": "String",
+              "label": "Number",
+              "channel": "Number"
             }
         }
     ],
@@ -160,9 +198,7 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
         ]
       },
       "properties": {
-        "numeric": {
-          "label": 3
-        }
+        "label": 3
       }
     }
   ],
@@ -189,13 +225,9 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
     }
   },
   "properties": {
-    "string": {
-      "plate": "label",
-      "image": "x00_y01_p01_c1.ome.tif"
-    },
-    "numeric": {
-      "channel": 1.0
-    }
+    "plate": "label",
+    "image": "x00_y01_p01_c1.ome.tif",
+    "channel": 1.0
   }
 }
 ```
@@ -236,9 +268,7 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
         ]
       },
       "properties": {
-        "numeric": {
-          "label": 13
-        }
+        "label": 13
       }
     }
   ],
@@ -265,13 +295,9 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
     }
   },
   "properties": {
-    "string": {
-      "plate": "label",
-      "image": "x00_y01_p01_c1.ome.tif"
-    },
-    "numeric": {
-      "channel": 1.0
-    }
+    "plate": "label",
+    "image": "x00_y01_p01_c1.ome.tif",
+    "channel": 1.0
   }
 }
 ```

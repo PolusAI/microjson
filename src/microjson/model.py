@@ -1,5 +1,5 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
-from typing import List, Optional, Union, Dict, Literal
+from typing import Any, List, Optional, Union, Dict, Literal, TypeVar
 from enum import Enum
 from pydantic import BaseModel, StrictInt, StrictStr, RootModel
 from microjson.provenance import Workflow
@@ -21,6 +21,8 @@ GeometryType = Union[  # type: ignore
     GeometryCollection,
     type(None),
 ]
+
+Props = TypeVar("Props", bound=Union[Dict[str, Any], BaseModel])
 
 
 class ValueRange(BaseModel):
@@ -120,21 +122,12 @@ class Multiscale(BaseModel):
     transformationMatrix: Optional[List[List[float]]] = None
 
 
-class Properties(BaseModel):
-    """Metadata properties of a MicroJSON feature"""
-
-    string: Optional[Dict[str, str]] = None
-    numeric: Optional[Dict[str, float]] = None
-    multiNumeric: Optional[Dict[str, List[float]]] = None
-
-
 class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata"""
 
     multiscale: Optional[Multiscale] = None
     ref: Optional[Union[StrictStr, StrictInt]] = None
-    properties: Properties  # type: ignore
     # reference to the parent feature
     parentId: Optional[Union[StrictStr, StrictInt]] = None
     # for now, only string feature class is supported
@@ -149,7 +142,7 @@ class MicroFeatureCollection(FeatureCollection):
     multiscale: Optional[Multiscale] = None
     valueRange: Optional[Dict[str, ValueRange]] = None
     descriptiveFields: Optional[List[str]] = None
-    properties: Optional[Properties] = None
+    properties: Optional[Union[Props, None]] = None  # type: ignore
     id: Optional[Union[StrictStr, StrictInt]] = None
     provenance: Optional[Union[Workflow,
                                WorkflowCollection,

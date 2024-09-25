@@ -1,7 +1,7 @@
 import json
 import pytest
 from pydantic import ValidationError
-from microjson.tile import TileJSON
+from microjson.tilemodel import TileJSON
 from microjson.fileutils import gather_example_files
 
 

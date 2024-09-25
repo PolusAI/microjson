@@ -17,13 +17,6 @@ A range of values for MicroJSON quantitative properties.
 ::: microjson.model.ValueRange
 
 
-#### Properties
-
-Metadata properties of a MicroJSON feature.
-
-::: microjson.model.Properties
-
-
 ### Geometry Types
 Uses geojson-pydantic models for GeoJSON geometry types, included here for reference. Please refer to the [geojson-pydantic documentation](https://developmentseed.org/geojson-pydantic/) for more information.
 
