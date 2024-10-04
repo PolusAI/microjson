@@ -30,17 +30,6 @@ from typing import Union
 import pydantic
 import matplotlib.pyplot as plt
 
-#define conditional imports
-try:
-    from bfio import BioReader
-    import filepattern as fp
-    from scipy import ndimage
-    import vaex
-except ImportError as e:
-    print("""Packages bfio, filepattern, scipy, vaex not installed
-          please install using pip install microjson[all]""")
-    raise e
-
 
 #define conditional imports
 try:

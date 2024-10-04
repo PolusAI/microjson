@@ -17,6 +17,15 @@ There are two additional functionalities added which supports binary images.
 **BinaryMicrojsonModel:** Converts objects in a binary image into polygon coordinates (rectangle, encoding) and save them in json file format using microjson package.
 **MicrojsonBinaryModel:** Reconstruct binary images using polygon coordinates from json file.
 
+## Installation
+
+To install MicroJSON, you can use the following command:
+
+```pip install microjson```
+This will install the default version of MicroJSON with the basic functionalities and minimal dependencies. If you want to use the additional functionalities, such as provided by the ```utils``` module, you can install the package with the following command:
+
+```pip install microjson[all]```
+
 ## Usage
 
 MicroJSON can be used with any application or tool that can process JSON data. Due to its design, it is particularly suited to applications related to the analysis, visualization, and manipulation of microscopy images.
@@ -31,10 +40,7 @@ We welcome contributions to the development and enhancement of MicroJSON. Whethe
 
 ## License
 
-MicroJSON is licensed under MIT License, (c) 2023 Polus AI & Nextonic Solutions LLC.
-
-## Authors
-Bengt Ljungquist [bengt.ljungquist@nextonicsolutions.com](bengt.ljungquist@nextonicsolutions.com)
+MicroJSON is licensed under MIT License.
 
 
 ---
