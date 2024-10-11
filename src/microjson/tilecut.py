@@ -1,6 +1,6 @@
 import os
 from .microjson2vt.microjson2vt import microjson2vt
-from microjson.tilemodel import TileJSON
+from microjson.tilemodel import TileModel
 from microjson import MicroJSON
 import json
 from pydantic import ValidationError
@@ -27,7 +27,8 @@ def getbounds(microjson_file: str) -> List[float]:
         data = json.load(file)
     
     # get the bounds
-    minx, miny, maxx, maxy = float('inf'), float('inf'), float('-inf'), float('-inf')
+    minx = miny = float('inf')
+    maxx = maxy = float('-inf')
     if 'features' in data:
         for feature in data['features']:
             if 'geometry' in feature:
@@ -47,15 +48,15 @@ def getbounds(microjson_file: str) -> List[float]:
                                 maxx = max(maxx, coord[0])
                                 maxy = max(maxy, coord[1])
     return [minx, miny, maxx, maxy]
-    
+
 
 class TileHandler:
-    tile_json: TileJSON
+    tile_json: TileModel
     pbf: bool
     id_counter: int
     id_set: set
 
-    def __init__(self, tileobj: TileJSON, pbf: bool = False):
+    def __init__(self, tileobj: TileModel, pbf: bool = False):
         """
         Initialize the TileHandler with a TileJSON configuration and optional
         PBF flag
@@ -64,7 +65,7 @@ class TileHandler:
         False)
         """
         # read the tilejson file to string
-        self.tile_json = TileJSON.model_validate(tileobj).root
+        self.tile_json = tileobj
         self.pbf = pbf
         self.id_counter = 0
         self.id_set = set()
@@ -88,7 +89,9 @@ class TileHandler:
 
             # Save the tile data (this assumes tile_data is already in the
             # correct format, e.g., PBF or JSON)
-            with open(tile_path, 'wb' if tile_path.endswith('.pbf') else 'w') as f:
+            with open(
+                tile_path,
+                'wb' if tile_path.endswith('.pbf') else 'w') as f:
                 f.write(tile_data)
             
             # return the path to the saved tile
@@ -123,24 +126,29 @@ class TileHandler:
             else:
                 return int(data)
             
-
         # Load the MicroJSON data
         with open(microjson_data_path, 'r') as file:
             microjson_data = json.load(file)
         
-
         # Validate the MicroJSON data
         if validate:
             try:
-                mjmodel = MicroJSON.model_validate(microjson_data)
+                MicroJSON.model_validate(microjson_data)
             except ValidationError as e:
                 logger.error(f"MicroJSON data validation failed: {e}")
-                return
+                return []
         
+        # TODO currently only supports one tile layer
+        # calculate maxzoom and minzoom from layer and global tilejson
+
+        maxzoom = min(self.tile_json.maxzoom, 
+                      self.tile_json.vector_layers[0].maxzoom)
+        minzoom = max(self.tile_json.minzoom,
+                      self.tile_json.vector_layers[0].minzoom)
 
         # Options for geojson2vt from TileJSON
         options = {
-            'maxZoom': self.tile_json.maxzoom,
+            'maxZoom': maxzoom,  # max zoom in the final tileset
             'indexMaxZoom': self.tile_json.maxzoom,  # max zoom in the initial tile index
             'indexMaxPoints': 0,  # max number of points per tile, set to 0 for no restriction
             'bounds': self.tile_json.bounds
@@ -160,6 +168,9 @@ class TileHandler:
         for tileno in tile_index.tiles:
             atile = tile_index.tiles[tileno]
             x, y, z = atile["x"], atile["y"], atile["z"]
+            # if z is less than minzoom, or greater than maxzoom, skip the tile
+            if z < minzoom or z > maxzoom:
+                continue
             tile_data = tile_index.get_tile(z, x, y)
 
             # convert all id to int, as there is a bug in the geojson2vt

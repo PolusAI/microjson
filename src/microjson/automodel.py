@@ -7,7 +7,7 @@ from geojson.FeatureCollection import GeojsonFeaturecollection
 from geojson.Geometry import GeojsonGeometry
 from geojson.GeometryCollection import GeojsonGeometrycollection
 from microjson.model import Axis, Multiscale
-from microjson.model import Properties, ValueRange
+from microjson.model import Properties
 
 
 class GeoJSONAuto(BaseModel):
@@ -35,8 +35,6 @@ class MicroFeatureCollection(GeojsonFeaturecollection):
     collection with additional metadata"""
 
     multiscale: Optional[Multiscale]
-    valueRange: Optional[Dict[str, ValueRange]]
-    descriptiveFields: Optional[List[str]]
 
 
 class MicroJSONAuto(BaseModel):

@@ -9,7 +9,8 @@ from abc import ABC, abstractmethod
 from .simplify import simplify
 from .feature import Slice, create_feature
 
-# converts Microjson feature into an intermediate projected JSON vector format with simplification data
+# converts Microjson feature into an intermediate projected JSON vector format
+# with simplification data
 
 
 def convert(data, options):
@@ -19,10 +20,10 @@ def convert(data, options):
     projector = options.get('projector')
     bounds = options.get('bounds')
     if projector is None:
-        projector = CartesianProjector(options.get('bounds')) if bounds is not None else MercatorProjector()
+        projector = CartesianProjector(
+            options.get('bounds')) if bounds is not None else MercatorProjector()
         
     return projector.convert(data, options)
-
 
 
 class AbstractProjector(ABC):
@@ -46,12 +47,15 @@ class AbstractProjector(ABC):
         features = []
         if data.get('type') == 'FeatureCollection':
             for i in range(len(data.get('features'))):
-                self.convert_feature(features, data.get('features')[i], options, i)
+                self.convert_feature(
+                    features,
+                    data.get('features')[i],
+                    options, i)
         elif data.get('type') == 'Feature':
             self.convert_feature(features, data, options)
         else:
             # single geometry or a geometry collection
-            convert_feature(features, {"geometry": data}, options)
+            self.convert_feature(features, {"geometry": data}, options)
         return features
 
     def convert_feature(self, features, geojson, options, index=None):
@@ -86,8 +90,12 @@ class AbstractProjector(ABC):
                 for line in coords:
                     geometry = Slice([])
                     self.convert_line(line, geometry, tolerance, False)
-                    features.append(create_feature(id_, 'LineString',
-                                                geometry, geojson.get('properties')))
+                    features.append(
+                        create_feature(
+                            id_,
+                            'LineString',
+                            geometry,
+                            geojson.get('properties')))
                 return
             else:
                 self.convert_lines(coords, geometry, tolerance, False)
@@ -133,19 +141,25 @@ class AbstractProjector(ABC):
                 if isPolygon:
                     size += (x0 * y - x * y0) / 2  # area
                 else:
-                    size += math.sqrt(math.pow(x - x0, 2) +
-                                    math.pow(y - y0, 2))  # length
+                    size += math.sqrt(
+                        math.pow(x - x0, 2) + math.pow(y - y0, 2))  # length
             x0 = x
             y0 = y
 
-        last = len(out) - 3
-        out[2] = 1
-        simplify(out, 0, last, tolerance)
-        out[last + 2] = 1.
-
-        out.size = abs(size)
-        out.start = 0.
-        out.end = out.size
+        # last = len(out) - 3
+        dosimplify = False
+        if dosimplify:
+            simplified_line = simplify(
+                [[x, y] for x, y in zip(out[0::3], out[1::3])],
+                tolerance)  # New call
+            out.clear()  # clear existing data
+            # check if simplified_line has at least 3 points
+            if len(simplified_line) < 3:
+                return
+            for x, y in simplified_line:
+                out.append(x)
+                out.append(y)
+                out.append(0)
 
     def convert_lines(self, rings, out, tolerance, isPolygon):
         for i in range(len(rings)):
@@ -174,4 +188,3 @@ class MercatorProjector(AbstractProjector):
             return 1.
         y2 = 0.5 - 0.25 * math.log((1. + sin) / (1. - sin)) / math.pi
         return 0 if y2 < 0. else (1. if y2 > 1. else y2)
-

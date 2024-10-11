@@ -85,7 +85,6 @@ Tiles may be encoded in a binary protobuf format as well. Below follows a simila
 
 ```json
 {
-    {
     "tilejson": "3.0.0",
     "name": "2D Data Example",
     "description": "A tileset showing 2D data with multiple layers of detail.",
@@ -108,7 +107,21 @@ Tiles may be encoded in a binary protobuf format as well. Below follows a simila
               "plate": "String",
               "image": "String",
               "label": "Number",
-              "channel": "Number"
+              "channel": "Number",
+            },
+            "fieldranges": {
+              "label": [0,100],
+              "channel": [0,10]
+            },
+            "fieldenums": {
+              "plate": ["A1", "A2", "B1", "B2"],
+              "image": ["image1.tif", "image2.tif", "image3.tif"],
+            }
+            "fielddescriptions": {
+              "plate": "Well plate identifier",
+              "image": "Image filename",
+              "label": "Label identifier",
+              "channel": "Channel identifier"
             }
         }
     ],
@@ -218,12 +231,6 @@ The following is an example of a MicroJSON object at zoom level 1, tile at (0,1)
       }
     ]
   },
-  "valueRange": {
-    "label": {
-      "min": 3,
-      "max": 3
-    }
-  },
   "properties": {
     "plate": "label",
     "image": "x00_y01_p01_c1.ome.tif",
@@ -287,12 +294,6 @@ The following is an example of a MicroJSON object at zoom level 2, tile at (1,1)
         "description": "y-axis"
       }
     ]
-  },
-  "valueRange": {
-    "label": {
-      "min": 13,
-      "max": 13
-    }
   },
   "properties": {
     "plate": "label",

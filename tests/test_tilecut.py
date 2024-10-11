@@ -71,7 +71,7 @@ def test_tilecut(tempfolder):
               (maxbounds[0] + maxbounds[2]) / 2,
               (maxbounds[1] + maxbounds[3]) / 2]
 
-    tileobj = mj.tilemodel.TileJSON(
+    tileobj = mj.tilemodel.TileModel(
         tilejson="3.0.0",
         tiles=[tempfolder + "/tiles/{z}/{x}/{y}.pbf"],
         name="Example Tile Layer",

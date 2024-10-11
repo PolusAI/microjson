@@ -4,9 +4,14 @@
 
 # Modifications by PolusAI, 2024
 
+from .simplify import simplify
+
+
 def create_tile(features, z, tx, ty, options):
     features = features if features is not None else []
-    tolerance = 0 if z == options.get('maxZoom') else options.get('tolerance') / \
+    tolerance = 0 if z == options.get(
+        'maxZoom') else options.get(
+            'tolerance') / \
         ((1 << z) * options.get('extent'))
     tile = {
         "features": [],
@@ -51,7 +56,7 @@ def add_feature(tile, feature, tolerance, options):
     elif type_ == 'MultiLineString' or type_ == 'Polygon':
         for i in range(len(geom)):
             add_line(simplified, geom[i], tile,
-                    tolerance, type_ == 'Polygon', i == 0)
+                     tolerance, type_ == 'Polygon', i == 0)
 
     elif type_ == 'MultiPolygon':
         for k in range(len(geom)):
@@ -71,7 +76,8 @@ def add_feature(tile, feature, tolerance, options):
 
         tileFeature = {
             "geometry": simplified,
-            "type": 3 if type_ == 'Polygon' or type_ == 'MultiPolygon' else (2 if type_ == 'LineString' or type_ == 'MultiLineString' else 1),
+            "type": 3 if type_ == 'Polygon' or type_ == 'MultiPolygon' else (
+                2 if type_ == 'LineString' or type_ == 'MultiLineString' else 1),
             "tags": tags
         }
         current_id = feature.get('id', None)
@@ -82,26 +88,24 @@ def add_feature(tile, feature, tolerance, options):
 
 def add_line(result, geom, tile, tolerance, is_polygon, is_outer):
     sq_tolerance = tolerance * tolerance
-    ring = []
+    # Convert geom to list of [x, y] pairs
+    coords = [[geom[i], geom[i+1]] for i in range(0, len(geom), 3)]
 
-    if tolerance > 0 and (geom.size < (sq_tolerance if is_polygon else tolerance)):
-        tile['numPoints'] += len(geom) / 3
-        for i in range(0, len(geom), 3):
-            ring.append(geom[i])
-            ring.append(geom[i + 1])
-
+    if tolerance > 0:
+        simplified_coords = simplify(coords, sq_tolerance)
     else:
-        for i in range(0, len(geom), 3):
-            if tolerance == 0 or geom[i + 2] > sq_tolerance:
-                tile['numSimplified'] += 1
-                ring.append(geom[i])
-                ring.append(geom[i + 1])
-            tile['numPoints'] += 1
+        simplified_coords = coords
 
+    # flatten the simplified coords to a 1D list of x, y, 0 values
+    ring = []
+    for i in range(len(simplified_coords)):
+        ring.append(simplified_coords[i][0])
+        ring.append(simplified_coords[i][1])
+        tile["numPoints"] += 1
 
     if is_polygon:
         rewind(ring, is_outer)
-
+    
     result.append(ring)
 
 

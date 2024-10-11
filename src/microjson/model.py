@@ -25,13 +25,6 @@ GeometryType = Union[  # type: ignore
 Props = TypeVar("Props", bound=Union[Dict[str, Any], BaseModel])
 
 
-class ValueRange(BaseModel):
-    """A range of values for MicroJSON quantitative properties"""
-
-    min: float
-    max: float
-
-
 class GeoJSON(RootModel):
     """The root object of a GeoJSON file"""
 
@@ -139,9 +132,6 @@ class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata"""
 
-    multiscale: Optional[Multiscale] = None
-    valueRange: Optional[Dict[str, ValueRange]] = None
-    descriptiveFields: Optional[List[str]] = None
     properties: Optional[Union[Props, None]] = None  # type: ignore
     id: Optional[Union[StrictStr, StrictInt]] = None
     provenance: Optional[Union[Workflow,

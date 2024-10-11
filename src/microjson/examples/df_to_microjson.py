@@ -43,24 +43,10 @@ def df_to_microjson(df: pd.DataFrame) -> mj.FeatureCollection:
         # Append this feature to the list of features
         features.append(feature)
 
-    # Compute value ranges for numerical attributes
-    valueRange = {
-        "value": {"min": df["value"].min(), "max": df["value"].max()},
-        "values": {
-            "min": df["values"].apply(min).min(),
-            "max": df["values"].apply(max).max(),
-        },
-    }
-
-    # Define which fields are to be considered as descriptive
-    descriptiveFields = ["name"]
-
     # Generate a FeatureCollection object to aggregate all features
     feature_collection = mj.MicroFeatureCollection(
         type="FeatureCollection",
         features=features,
-        valueRange=valueRange,
-        descriptiveFields=descriptiveFields,
         properties={"plate": "Example Plate"},
         multiscale={
             "axes": [

@@ -9,6 +9,7 @@ from .feature import Slice, create_feature
 
 
 def wrap(features, options):
+    # wrap not needed for cartesian coordinates
     buffer = options.get('buffer') / options.get('extent')
     merged = features
     left = clip(features, 1, -1 - buffer, buffer,

@@ -5,10 +5,13 @@ from pathlib import Path
 
 class TileLayer(BaseModel):
     id: str
-    fields: Union[None, Dict[str, str], Dict[str, Dict]]
-    minzoom: Optional[int] = None
-    maxzoom: Optional[int] = None
+    fields: Union[None, Dict[str, str]] = None
+    minzoom: Optional[int] = 0
+    maxzoom: Optional[int] = 22
     description: Optional[str] = None
+    fieldranges: Optional[Dict[str, List[Union[int, float, str]]]] = None
+    fieldenums: Optional[Dict[str, List[str]]] = None
+    fielddescriptions: Optional[Dict[str, str]] = None
 
 
 class TileModel(BaseModel):
@@ -23,8 +26,8 @@ class TileModel(BaseModel):
     scheme: Optional[str] = None
     grids: Optional[Union[Path, AnyUrl]] = None
     data: Optional[Union[Path, AnyUrl]] = None
-    minzoom: Optional[int] = None
-    maxzoom: Optional[int] = None
+    minzoom: Optional[int] = 0
+    maxzoom: Optional[int] = 22
     bounds: Optional[conlist(  # type: ignore
         float,
         min_length=4,

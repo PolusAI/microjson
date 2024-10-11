@@ -9,7 +9,6 @@ from datetime import datetime
 
 from .convert import convert
 from .clip import clip
-from .wrap import wrap
 from .transform import transform_tile
 from .tile import create_tile
 
@@ -18,14 +17,13 @@ def get_default_options():
     return {
         "maxZoom": 14,            # max zoom to preserve detail on
         "indexMaxZoom": 5,        # max zoom in the tile index
-        "indexMaxPoints": 100000,  # max number of points per tile in the tile index
-        # simplification tolerance (higher means simpler)
-        "tolerance": 1000,
+        "indexMaxPoints": 100000,  # max number of points per tile in the index
+        "tolerance": 50,          # simplification tolerance (higher - simpler)
         "extent": 4096,           # tile extent
         "buffer": 64,             # tile buffer on each side
         "lineMetrics": False,     # whether to calculate line metrics
-        "promoteId": None,        # name of a feature property to be promoted to feature.id
-        "generateId": False,      # whether to generate feature ids. Cannot be used with promoteId
+        "promoteId": None,        # name of a feature property to be promoted
+        "generateId": False,      # whether to generate feature ids.
         "projector": None,        # which projection to use
         "bounds": None            # [west, south, east, north]
     }
@@ -41,7 +39,9 @@ class MicroJsonVt:
 
         if options.get('maxZoom') < 0 or options.get('maxZoom') > 24:
             raise Exception('maxZoom should be in the 0-24 range')
-        if options.get('promoteId', None) is not None and options.get('generateId', False):
+        if options.get(
+            'promoteId', None) is not None and options.get(
+                'generateId', False):
             raise Exception(
                 'promoteId and generateId cannot be used together.')
 
@@ -54,7 +54,7 @@ class MicroJsonVt:
         self.tiles = {}
         self.tile_coords = []
 
-        logging.debug(f'preprocess data end')
+        logging.debug('preprocess data end')
         logging.debug(
             f'index: maxZoom: {options.get("indexMaxZoom")}, maxPoints: {options.get("indexMaxPoints")}')
         self.stats = {}
@@ -71,7 +71,7 @@ class MicroJsonVt:
             logging.debug(
                 f'features: {self.tiles[0].get("numFeatures")}, points: {self.tiles[0].get("numPoints")}')
             stop = datetime.now()
-        logging.debug(f'generate tiles end')
+        logging.debug(f'generate tiles end: {stop}')
         logging.debug('tiles generated:', self.total, self.stats)
 
     # splits features from a parent tile to sub-tiles.
@@ -109,13 +109,17 @@ class MicroJsonVt:
                 self.stats[key] = self.stats.get(key, 0) + 1
                 self.total += 1
 
-            # save reference to original geometry in tile so that we can drill down later if we stop now
+            # save reference to original geometry in tile so that we can drill
+            # down later if we stop now
             tile['source'] = features
 
             # if it's the first-pass tiling
             if cz is None:
-                # stop tiling if we reached max zoom, or if the tile is too simple
-                if z == options.get('indexMaxZoom') or tile.get('numPoints') <= options.get('indexMaxPoints'):
+                # stop tiling if we reached max zoom, or if the tile is too
+                # simple
+                if z == options.get(
+                    'indexMaxZoom') or tile.get(
+                        'numPoints') <= options.get('indexMaxPoints'):
                     continue  # if a drilldown to a specific tile
             elif z == options.get('maxZoom') or z == cz:
                 # stop tiling if we reached base zoom or our target tile zoom
@@ -165,27 +169,23 @@ class MicroJsonVt:
                           tile['minY'], tile['maxY'], options)
                 right = None
 
-            logging.debug(f'clipping took end')
+            logging.debug('clipping ended')
 
-            #stack.push(tl or [], z + 1, x * 2,     y * 2)
             stack.append(tl if tl is not None else [])
             stack.append(z + 1)
             stack.append(x * 2)
             stack.append(y * 2)
 
-            #stack.push(bl or [], z + 1, x * 2,     y * 2 + 1)
             stack.append(bl if bl is not None else [])
             stack.append(z + 1)
             stack.append(x * 2)
             stack.append(y * 2 + 1)
 
-            #stack.push(tr or [], z + 1, x * 2 + 1, y * 2)
             stack.append(tr if tr is not None else [])
             stack.append(z + 1)
             stack.append(x * 2 + 1)
             stack.append(y * 2)
 
-            #stack.push(br or [], z + 1, x * 2 + 1, y * 2 + 1)
             stack.append(br if br is not None else [])
             stack.append(z + 1)
             stack.append(x * 2 + 1)
@@ -226,7 +226,8 @@ class MicroJsonVt:
         if parent is None or parent.get('source', None) is None:
             return None
 
-        # if we found a parent tile containing the original geometry, we can drill down from it
+        # if we found a parent tile containing the original geometry, we can 
+        # drill down from it
         logging.debug(f'found parent tile z{z0}-{x0}-{y0}')
         logging.debug('drilling down start')
 
@@ -234,8 +235,9 @@ class MicroJsonVt:
 
         logging.debug(f'drilling down end')
 
-        transformed = transform_tile(self.tiles[id_], extent) if self.tiles.get(
-            id_, None) is not None else None
+        transformed = transform_tile(
+            self.tiles[id_], extent) if self.tiles.get(
+                id_, None) is not None else None
         return transformed
 
 

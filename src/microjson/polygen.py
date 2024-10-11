@@ -5,8 +5,10 @@ import random
 import math
 import string
 from shapely.geometry import MultiPoint
+from shapely.geometry.polygon import orient
 from typing import List
 import microjson.model as mj
+import json
 
 
 def generate_convex_polygon(x0, y0, x1, y1, num_vertices) -> List[float]:
@@ -44,8 +46,9 @@ def generate_convex_polygon(x0, y0, x1, y1, num_vertices) -> List[float]:
 
     # ensure the polygon is convex
     multipoint = MultiPoint(points)
+    convex_hull = orient(multipoint.convex_hull, sign=1.0)
 
-    return multipoint.convex_hull.exterior.coords[:]
+    return list(convex_hull.exterior.coords)
 
 
 def assign_meta_types_and_values(n_keys, n_variants):
@@ -107,7 +110,7 @@ def generate_meta_values(meta_values_options):
 
 def generate_polygons(grid_size, cell_size, min_vertices, max_vertices,
                       meta_types, meta_values_options,
-                      microjson_data_path):
+                      microjson_data_path) -> mj.MicroFeatureCollection:
     features = []
     num_cells = grid_size // cell_size
     for i in range(num_cells):
@@ -156,17 +159,17 @@ def generate_polygons(grid_size, cell_size, min_vertices, max_vertices,
     #
     # Write the feature collection to a new file
     #
-    with open(microjson_data_path, "w") as f:
-        geojson.dump(
-            mj.MicroFeatureCollection(
-                properties={},
-                type="FeatureCollection",
-                features=features
-            ),
-            f
-        )
-
-    return mj.MicroFeatureCollection(
+            
+    # create microjson root object and validate it
+    mjfc = mj.MicroFeatureCollection(
         properties={},
         type="FeatureCollection",
-        features=features)
+        features=features
+    )
+    mjfc.model_validate(mjfc)
+    # write the microjson data to a file
+
+    with open(microjson_data_path, "w") as f:
+        f.write(mjfc.model_dump_json(indent=2))
+
+    return mjfc

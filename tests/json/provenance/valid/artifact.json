@@ -88,20 +88,6 @@
             }
         }
     ],
-    "valueRange": {
-        "cellCount": {
-            "min": 0,
-            "max": 10
-        },
-        "ratioInfectivity": {
-            "min": 0,
-            "max": 1
-        }
-    },
-    "descriptiveFields": [
-        "well",
-        "imagename"
-    ],
     "multiscale": {
         "axes": [
             {

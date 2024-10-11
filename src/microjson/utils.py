@@ -146,14 +146,14 @@ class OmeMicrojsonModel:
                                 self.polygons_to_microjson(
                                     i, label, coordinates)
 
-    def get_line_number(self, filename, target_string) -> Union[int, None]:
+    def get_line_number(self, filename, target_string) -> int:
         line_number = 0
         with open(filename, 'r') as file:
             for line in file:
                 line_number += 1
                 if target_string in line:
                     return line_number
-        return None
+        return line_number
     
     def cleaning_directories(self):
         out_combined = Path(self.out_dir, "tmp")
@@ -343,10 +343,6 @@ class OmeMicrojsonModel:
             )
             features.append(feature)
 
-        valrange = [{i: {"min": 1.0, "max": data[i].max()}} for i in int_columns]
-        valrange_dict = {}
-        for sub_dict in valrange:
-            valrange_dict.update(sub_dict)
 
         desc_meta = {key: f"{data[key].values[0]}" for key in str_columns}
 
@@ -355,7 +351,6 @@ class OmeMicrojsonModel:
             type="FeatureCollection",
             properties=desc_meta,
             features=features,
-            valueRange=valrange_dict,
             multiscale={
                 "axes": [
                     {
@@ -436,6 +431,7 @@ class MicrojsonBinaryModel(CustomValidation):
     def microjson_to_binary(self) -> None:
         """Convert polygon coordinates (series of points, rectangle) of all
         objects to binary mask"""
+        logger.info(f"Converting microjson to binary mask: {self.file_path}")
 
         data = json.load(Path.open(Path(self.file_path)))
         items = [Feature(**item) for item in data['features']]

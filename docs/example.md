@@ -31,17 +31,6 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
         }
       }
     ],
-    "valueRange": {
-        "cellCount": {
-            "min": 0,
-            "max": 10
-        },
-        "ratioInfectivity": {
-            "min": 0,
-            "max": 1
-        }
-    },
-    "descriptiveFields": ["well","imagename"],
     "multiscale": {
       "axes": [
           {

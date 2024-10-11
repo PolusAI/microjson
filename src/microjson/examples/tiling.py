@@ -1,6 +1,7 @@
 from microjson.tilecut import TileHandler, getbounds
 from pathlib import Path
 from microjson.tilemodel import TileJSON, TileModel, TileLayer
+from microjson import MicroJSON
 import os
 from microjson.polygen import generate_polygons
 
@@ -16,24 +17,30 @@ def main():
     vector_layers = [
         TileLayer(
             id="polygon-layer",
-            fields={"id": "str", "description": "str"},
+            fields={"id": "String", "polytype": "String"},
             minzoom=0,
             maxzoom=10,
-            description="Layer containing polygon data"
+            description="Layer containing polygon data",
+            fieldranges= {
+                "id": [1, 99999999]
+            },
+            fieldenums= {
+                "polytype": ["Type1", "Type2", "Type3", "Type4"]
+            },
         )
     ]
 
     # Create a microjson file with random polygons
-    GRID_SIZE = 10000
+    GRID_SIZE = 50000
     CELL_SIZE = 100
-    MIN_VERTICES = 5
-    MAX_VERTICES = 32
+    MIN_VERTICES = 10
+    MAX_VERTICES = 100
     meta_types = {
         "id": "str",
         "num_vertices": "int",
     }
     meta_values_options = {
-        "description": ["polygon", "square", "rectangle", "triangle"]
+        "polytype": ["Type1", "Type2", "Type3", "Type4"]
     }
     microjson_data_path = "tiles/microjson_data.json"
     generate_polygons(
@@ -65,7 +72,7 @@ def main():
         version="1.0.0",
         attribution="Polus AI",
         minzoom=0,
-        maxzoom=7,
+        maxzoom=10,
         bounds=maxbounds,
         center=center,
         vector_layers=vector_layers
@@ -80,7 +87,7 @@ def main():
         f.write(tileobj.model_dump_json(indent=2))
 
     # Initialize the TileHandler
-    handler = TileHandler(tileobj, pbf=True)
+    handler = TileHandler(tile_model, pbf=True)
     handler.microjson2tiles(microjson_data_path, validate=False)
 
 
