@@ -165,20 +165,6 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             }
         }
     ],
-    "valueRange": {
-        "cellCount": {
-            "min": 0,
-            "max": 10
-        },
-        "ratioInfectivity": {
-            "min": 0,
-            "max": 1
-        }
-    },
-    "stringFields": [
-        "well",
-        "imagename"
-    ],
     "multiscale": {
         "axes": [
             {
@@ -352,20 +338,6 @@ This enhancement not only increases the utility of MicroJSON in various scientif
                 }
             }
         }
-    ],
-    "valueRange": {
-        "cellCount": {
-            "min": 0,
-            "max": 10
-        },
-        "ratioInfectivity": {
-            "min": 0,
-            "max": 1
-        }
-    },
-    "descriptiveFields": [
-        "well",
-        "imagename"
     ],
     "multiscale": {
         "axes": [
