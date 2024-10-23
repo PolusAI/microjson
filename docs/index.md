@@ -21,9 +21,9 @@ A MicroJSON object may have a `"bbox"` property":
 
 A geometry object is a JSON object where the `type` member's value is one of the following strings: `"Point"`, `"MultiPoint"`, `"LineString"`, `"MultiLineString"`, `"Polygon"`, `"Rectangle"`, `"MultiPolygon"`, or `"GeometryCollection"`.
 
-Each geometry object MUST have a `"coordinates"` member with an array value. The structure of the coordinates array depends on the geometry type.
+Each geometry object MUST have a `"coordinates"` member with an array value. The structure of the coordinates array varies with the geometry type.  The innermost point coordinates array MUST contain two or three (if 3D) numbers representing the X and Y (and Z) coordinates of the point in the image. These coordinates follow the same order as the axes in [Multiscale object](#multiscale-object). Please note that these coordinates differ from the GeoJSON specification, where the order is longitude, latitude, and optionally altitude. If no multiscale object is defined, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units, with the origin at the top left corner of the image, and the x-axis pointing to the right and the y-axis pointing down. The z-axis points into the image, with the origin at the top left corner of the image. 
 
-- **Point**: The coordinates array must contain two or three (if 3D) numbers representing the X and Y (and Z) coordinates of the point in the image. A “Point” Geometry may have a radius, if indicating a circular object, with the value in pixels, specified as a member `“radius”` of the Geometry object.
+- **Point**:  Must be a single set of point coordinates. A “Point” Geometry may have a radius, if representing a circular object, with the value in pixels, specified as a member `“radius”` of the Geometry object.
 
 - **MultiPoint**: The coordinates array must be an array of point coordinates.
 
@@ -31,7 +31,7 @@ Each geometry object MUST have a `"coordinates"` member with an array value. The
 
 - **MultiLineString**: The coordinates array must be an array of LineString coordinate arrays.
 
-- **Polygon**: The coordinates array must be an array of linear ring coordinate arrays, where the first linear ring represents the outer boundary and any additional rings represent holes within the polygon.
+- **Polygon**: The coordinates array must be an array of linear ring point coordinate arrays, where the first linear ring represents the outer boundary and any additional rings represent holes within the polygon.
 
     - A subtype of “Polygon” is the “Rectangle” geometry: A polygon with an array of four 2D point coordinates representing the corners of the rectangle in a counterclockwise order. It has the property subtype with the value `“Rectangle”`.
 
@@ -82,7 +82,7 @@ A FeatureCollection object is a JSON object representing a collection of feature
 
 A multiscale object represents the choice of axes (2-5D) and potentially their transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST have the following properties:
 
-- `"axes"`: Representing the choice of axes as an Axis object.
+- `"axes"`: Representing the choice of axes as an array of Axis objects.
 
 It may contain either of, but NOT both of the following properties:
 - `"coordinateTransformations"`: Representing the set of coordinate transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST be an array of objects, each object representing a coordinate transformation. Each object MUST have properties as follows:
@@ -92,10 +92,11 @@ It may contain either of, but NOT both of the following properties:
 
 ### Axis Object
 
-An axis object represents the choice of axes (2D or 3D). It MUST have the following properties:
+Together with the other axes in the axes array, an axis object represents the coordinate system of the MicroJSON object (2D-5D)
+It MUST have the following properties:
 - `"name"`: Representing the name of the axis. It MUST be a string.
 It may contain the following properties:
-- `"unit"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
+- `"unit"`: Representing the units of the corresponding axis of the geometries in the MicroJSON object. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
 - `"description"`: A string describing the axis.
 
 
