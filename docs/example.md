@@ -13,15 +13,9 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
           "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
         },
         "properties": {
-            "string": {
-                "well": "A1"
-            },
-            "numeric": {
-                "cellCount": 5 
-            },
-            "multiNumeric": {
-                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
-            }
+            "well": "A1",
+            "cellCount": 5,
+            "ratioInfectivity": [0.1, 0.2, 0.3, 0.4, 0.5]
         }
       },
       {
@@ -31,29 +25,12 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
           "coordinates": [[[50.0, 0.0], [50.0, 50.0], [100.0, 50.0], [100.0, 0.0], [50.0, 0.0]]]
         },
         "properties": {
-            "string": {
-                "well": "A2"
-            },
-            "numeric": {
-                "cellCount": 10 
-            },
-            "multiNumeric": {
-                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
-            }
+            "well": "A2",
+            "cellCount": 10,
+            "ratioInfectivity": [0.1, 0.2, 0.3, 0.4, 0.5]
         }
       }
     ],
-    "valueRange": {
-        "cellCount": {
-            "min": 0,
-            "max": 10
-        },
-        "ratioInfectivity": {
-            "min": 0,
-            "max": 1
-        }
-    },
-    "descriptiveFields": ["well","imagename"],
     "multiscale": {
       "axes": [
           {

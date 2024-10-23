@@ -1,0 +1,62 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[20, 20.0], [20.0, 50.0], 
+          [50.0, 50.0], [50.0, 20.0], [20.0, 20.0]]]
+        },
+        "properties": {
+            "well": "A1",
+            "cellCount": 5 
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[53.0, 53.0], [53.0, 2000.0], 
+          [2000.0, 2000.0], [2000.0, 53.0], [53.0, 53.0]]]
+        },
+        "properties": {
+            "well": "A2",
+            "cellCount": 10 
+        }
+      }
+    ],
+    "multiscale": {
+      "axes": [
+          {
+              "name": "x",
+              "unit": "micrometer",
+              "type": "space",
+              "description": "x-axis"
+          },
+          {
+              "name": "y",
+              "unit": "micrometer",
+              "type": "space",
+              "description": "y-axis"
+          }
+      ],
+      "transformationMatrix": [
+          [
+              1.0,
+              0.0,
+              0.0
+          ],
+          [
+              0.0,
+              1.0,
+              0.0
+          ],
+          [
+              0.0,
+              0.0,
+              0.0
+          ]
+      ]
+    }
+  }
