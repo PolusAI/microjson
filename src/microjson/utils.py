@@ -28,6 +28,8 @@ from pydantic import ValidationError
 from microjson.model import Feature
 from typing import Union
 import pydantic
+import matplotlib.pyplot as plt
+
 
 #define conditional imports
 try:
