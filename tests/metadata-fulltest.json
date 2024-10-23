@@ -1,0 +1,74 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[0.0, 0.0], [0.0, 50.0], [50.0, 50.0], [50.0, 0.0], [0.0, 0.0]]]
+        },
+        "properties": {
+            "string": {
+                "well": "A1"
+            },
+            "numeric": {
+                "cellCount": 5 
+            },
+            "multiNumeric": {
+                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
+            }
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[53.0, 0.0], [53.0, 80.0], [150, 80.0], [150.0, 0.0], [53.0, 0.0]]]
+        },
+        "properties": {
+            "string": {
+                "well": "A2"
+            },
+            "numeric": {
+                "cellCount": 10 
+            },
+            "multiNumeric": {
+                "ratioInfectivity": [[0.1, 0.2, 0.3, 0.4, 0.5], [0.2, 0.3, 0.4, 0.5, 0.6]]
+            }
+        }
+      }
+    ],
+    "multiscale": {
+      "axes": [
+          {
+              "name": "x",
+              "unit": "micrometer",
+              "type": "space",
+              "description": "x-axis"
+          },
+          {
+              "name": "y",
+              "unit": "micrometer",
+              "type": "space",
+              "description": "y-axis"
+          }
+      ],
+      "transformationMatrix": [
+          [
+              1.0,
+              0.0,
+              0.0
+          ],
+          [
+              0.0,
+              1.0,
+              0.0
+          ],
+          [
+              0.0,
+              0.0,
+              0.0
+          ]
+      ]
+    }
+  }

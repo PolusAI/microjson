@@ -18,15 +18,20 @@
             "minzoom": 0,
             "maxzoom": 10,
             "fields": {
-                "string": {
-                    "plate": "Plate ID",
-                    "image": "Image URI"
-                },
-                "numerical": {
-                    "label": "Label ID",
-                    "channel": "Channel ID"
-                }
-            }
+                "cellCount": "Number",
+                "label": "String"
+            },
+            "fieldranges": {
+                "cellCount": [0, 100]
+            },
+            "fieldenums": {
+                "label": ["A", "B", "C"]
+            },
+            "fielddescriptions": {
+                "cellCount": "Number of cells",
+                "label": "Label"
+            }   
+
         }
     ],
     "fillzoom": 3

@@ -4,30 +4,42 @@ import ast
 import json
 import logging
 import numpy as np
-import vaex
+
 import re
 import shutil
 from concurrent.futures import ThreadPoolExecutor
 from concurrent.futures import as_completed
 from itertools import product
-from scipy import ndimage
+
 import skimage as sk
 from skimage import measure
 from skimage import morphology
-from bfio import BioReader
+
 from sys import platform
 from pathlib import Path
 from typing import Any
 from typing import Union
 import microjson.model as mj
 from multiprocessing import cpu_count
-import filepattern as fp
+
 import warnings
 from microjson import MicroJSON
 from pydantic import ValidationError
-from microjson.model import Feature, Properties
+from microjson.model import Feature
 from typing import Union
 import pydantic
+
+#define conditional imports
+try:
+    from bfio import BioReader
+    import filepattern as fp
+    from scipy import ndimage
+    import vaex
+except ImportError as e:
+    print("""Packages bfio, filepattern, scipy, vaex not installed
+          please install using pip install microjson[all]""")
+    raise e
+
 
 warnings.filterwarnings("ignore")
 
@@ -39,21 +51,6 @@ if platform == "linux" or platform == "linux2":
     NUM_THREADS = len(os.sched_getaffinity(0))  # type: ignore
 else:
     NUM_THREADS = max(cpu_count() // 2, 2)
-
-
-def gather_example_files(directory) -> list:
-    """
-    Gather all the .json files in a directory and its subdirectories.
-    """
-    files = []
-    # Walk through the directory
-    for dirpath, _, filenames in os.walk(directory):
-        # Filter to just the .json files
-        example_files = [
-            os.path.join(dirpath, f) for f in filenames if f.endswith(".json")
-        ]
-        files.extend(example_files)
-    return files
 
 
 class OmeMicrojsonModel:
@@ -97,6 +94,7 @@ class OmeMicrojsonModel:
                 image = self.br[y:y_max, x:x_max, z : z + 1]
 
                 unique_labels = len(np.unique(image))
+
                 if unique_labels >= self.max_unique_labels:
                     if unique_labels == self.max_unique_labels:
                         msg = f"Binary image detected : tile {i}"
@@ -116,6 +114,7 @@ class OmeMicrojsonModel:
                         )
                         if as_completed(future):  # type: ignore
                             label, coordinates = future.result()
+            
                             if len(label) and len(coordinates) > 0:
                                 label = [i + idx for i in range(
                                     1, len(label) + 1)]
@@ -147,14 +146,14 @@ class OmeMicrojsonModel:
                                 self.polygons_to_microjson(
                                     i, label, coordinates)
 
-    def get_line_number(self, filename, target_string) -> Union[int, None]:
+    def get_line_number(self, filename, target_string) -> int:
         line_number = 0
         with open(filename, 'r') as file:
             for line in file:
                 line_number += 1
                 if target_string in line:
                     return line_number
-        return None
+        return line_number
     
     def cleaning_directories(self):
         out_combined = Path(self.out_dir, "tmp")
@@ -302,10 +301,10 @@ class OmeMicrojsonModel:
         if data.shape[0] == 0:
             msg = "Invalid vaex dataframe!! Please do check path again"
             raise ValueError(msg)
-        
+
         str_columns = list(
             filter(
-                lambda feature: feature in ["Image","X","Y","Channel"],
+                lambda feature: feature in ["Image", "X", "Y", "Channel"],
                 data.get_column_names(),
             ),
         )
@@ -331,37 +330,27 @@ class OmeMicrojsonModel:
             if self.polygon_type == "rectangle":
                 cor_value = list(ast.literal_eval(cor))
             else:
-                cor_value = cor
+                cor_value = cor + [cor[0]]
 
-            geometry = GeometryClass(type=row["geometry_type"], coordinates=[cor_value])
-
-            # create a new properties object dynamically
-            properties = mj.Properties(numeric=numeric_dict)
+            geometry = GeometryClass(type=row["geometry_type"],
+                                     coordinates=[cor_value])
 
             # Create a new Feature object
             feature = mj.MicroFeature(
                 type=row["type"],
                 geometry=geometry,
-                properties=properties,
+                properties=numeric_dict,
             )
             features.append(feature)
 
-        valrange = [{i: {"min": 1.0, "max": data[i].max()}} for i in int_columns]
-        valrange_dict = {}
-        for sub_dict in valrange:
-            valrange_dict.update(sub_dict)
 
         desc_meta = {key: f"{data[key].values[0]}" for key in str_columns}
-
-        # create a new properties for each image
-        properties = mj.Properties(string=desc_meta)
 
         # Create a new FeatureCollection object
         feature_collection = mj.MicroFeatureCollection(
             type="FeatureCollection",
-            properties=properties,
+            properties=desc_meta,
             features=features,
-            valueRange=valrange_dict,
             multiscale={
                 "axes": [
                     {
@@ -442,14 +431,15 @@ class MicrojsonBinaryModel(CustomValidation):
     def microjson_to_binary(self) -> None:
         """Convert polygon coordinates (series of points, rectangle) of all
         objects to binary mask"""
+        logger.info(f"Converting microjson to binary mask: {self.file_path}")
 
         data = json.load(Path.open(Path(self.file_path)))
         items = [Feature(**item) for item in data['features']]
         poly = [i.geometry.coordinates for i in items]
-        meta = Properties(**data['properties'])
-        image_name = meta.string.get("Image")
-        x = int(meta.string.get("X"))
-        y = int(meta.string.get("Y"))
+        meta = data['properties']
+        image_name = meta.get("Image")
+        x = int(meta.get("X"))
+        y = int(meta.get("Y"))
         fmask = np.zeros((x, y), dtype=np.uint8)
         for i, _ in enumerate(poly):
             image = fmask.copy()

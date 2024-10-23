@@ -198,11 +198,6 @@ class Feature(BaseModel):
     id: Optional[Union[str, int]] = Field(None, title='Id')
 
 
-class ValueRange(BaseModel):
-    min: float = Field(..., title='Min')
-    max: float = Field(..., title='Max')
-
-
 class Type9(Enum):
     feature_collection = 'FeatureCollection'
 
@@ -211,11 +206,6 @@ class MicroFeatureCollection(BaseModel):
     bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type9 = Field(..., title='Type')
     features: List[Feature] = Field(..., title='Features')
-    valueRange: Optional[Dict[str, ValueRange]] = Field(
-        None,
-        title='Value Range')
-    descriptive_fields: Optional[List[str]] = Field(None,
-                                                    title='Descriptive Fields')
     multiscale: Optional[Multiscale] = None
 
 
