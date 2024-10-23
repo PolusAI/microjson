@@ -1,6 +1,12 @@
-.venv
-tests/__pycache__/
-src/microjson/__pycache__/
 poetry.lock
 tmp*
 dist/*
+src/microjson/__pycache__/
+tests/__pycache__/
+tiles/
+.venv/
+.DS_Store
+*/__pycache__/
+*.pyc
+.vscode/
+
