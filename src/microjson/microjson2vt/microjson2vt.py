@@ -30,7 +30,19 @@ def get_default_options():
 
 
 class MicroJsonVt:
+    """
+    MicroJsonVt class, which is the main class for generating vector tiles
+    from MicroJSON data
+    """
     def __init__(self, data, options, log_level=logging.INFO):
+        """
+        Constructor for MicroJsonVt class
+
+        Args:
+            data (dict): The data to be converted to vector tiles
+            options (dict): The options to be used for generating vector tiles
+            log_level (int): The logging level to be used
+        """
         logging.basicConfig(
             level=log_level, format='%(asctime)s %(levelname)s %(message)s')
         options = self.options = extend(get_default_options(), options)
@@ -82,6 +94,18 @@ class MicroJsonVt:
     # zoom or the number of points is low as specified in the options.
 
     def split_tile(self, features, z, x, y, cz=None, cx=None, cy=None):
+        """
+        Splits features from a parent tile to sub-tiles.
+        
+        Args:
+            features (list): The features to be split
+            z (int): The zoom level of the parent tile
+            x (int): The x coordinate of the parent tile
+            y (int): The y coordinate of the parent tile
+            cz (int): The zoom level of the target tile
+            cx (int): The x coordinate of the target tile
+            cy (int): The y coordinate of the target tile
+        """
         stack = [features, z, x, y]
         options = self.options
         # avoid recursion by using a processing queue
@@ -104,7 +128,7 @@ class MicroJsonVt:
 
                 logging.debug(
                     f'tile z{z}-{x}-{y} (features: {tile.get("numFeatures")}, points: {tile.get("numPoints")}, simplified: {tile.get("numSimplified")})')
-                logging.debug(f'creation end')
+                logging.debug('creation end')
                 key = f'z{z}'
                 self.stats[key] = self.stats.get(key, 0) + 1
                 self.total += 1
@@ -233,7 +257,7 @@ class MicroJsonVt:
 
         self.split_tile(parent.get('source'), z0, x0, y0, z, x, y)
 
-        logging.debug(f'drilling down end')
+        logging.debug('drilling down end')
 
         transformed = transform_tile(
             self.tiles[id_], extent) if self.tiles.get(
@@ -242,15 +266,38 @@ class MicroJsonVt:
 
 
 def to_Id(z, x, y):
+    """
+    Converts the zoom, x, and y coordinates to a unique id
+    
+    Args:
+        z (int): The zoom level
+        x (int): The x coordinate
+        y (int): The y coordinate
+    """
     id_ = (((1 << z) * y + x) * 32) + z
     return id_
 
 
 def extend(dest, src):
+    """
+    Extends the destination dictionary with the source dictionary
+
+    Args:
+        dest (dict): The destination dictionary
+        src (dict): The source dictionary
+    """
     for key, _ in src.items():
         dest[key] = src[key]
     return dest
 
 
 def microjson2vt(data, options, log_level=logging.INFO):
+    """
+    Converts MicroJSON data to intermediate vector tiles
+
+    Args:
+        data (dict): The MicroJSON data to be converted to vector tiles
+        options (dict): The options to be used for generating vector tiles
+        log_level (int): The logging level to be used
+    """
     return MicroJsonVt(data, options, log_level)

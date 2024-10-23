@@ -111,16 +111,16 @@ def add_line(result, geom, tile, tolerance, is_polygon, is_outer):
 
 def rewind(ring, clockwise):
     area = 0
-    l = len(ring)
-    j = l - 2
-    for i in range(0, l, 2):
+    ringl = len(ring)
+    j = ringl - 2
+    for i in range(0, ringl, 2):
         area += (ring[i] - ring[j]) * (ring[i + 1] + ring[j + 1])
         j = i
     if (area > 0) == clockwise:
-        for i in range(0, l, 2):
+        for i in range(0, ringl, 2):
             x = ring[i]
             y = ring[i + 1]
-            ring[i] = ring[l - 2 - i]
-            ring[i + 1] = ring[l - 1 - i]
-            ring[l - 2 - i] = x
-            ring[l - 1 - i] = y
+            ring[i] = ring[ringl - 2 - i]
+            ring[i + 1] = ring[ringl - 1 - i]
+            ring[ringl - 2 - i] = x
+            ring[ringl - 1 - i] = y

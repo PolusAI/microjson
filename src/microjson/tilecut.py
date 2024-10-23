@@ -19,9 +19,12 @@ logger.setLevel(logging.INFO)
 def getbounds(microjson_file: str) -> List[float]:
     """
     Get the max and min bounds for coordinates of the MicroJSON file
-    :param microjson_file: Path to the MicroJSON file
-    :return: List of max and min bounds for the coordinates
-    Format: [minx, miny, maxx, maxy]
+    
+    Args:
+        microjson_file (str): Path to the MicroJSON file
+
+    Returns:
+        List[float]: List of the bounds [minx, miny, maxx, maxy]
     """
     with open(microjson_file, 'r') as file:
         data = json.load(file)
@@ -51,6 +54,9 @@ def getbounds(microjson_file: str) -> List[float]:
 
 
 class TileHandler:
+    """
+    Class to handle the generation of tiles from MicroJSON data
+    """
     tile_json: TileModel
     pbf: bool
     id_counter: int
@@ -60,9 +66,11 @@ class TileHandler:
         """
         Initialize the TileHandler with a TileJSON configuration and optional
         PBF flag
-        :param tileobj: TileJSON configuration
-        :param pbf: Flag to indicate whether to generate PBF files  (default:
-        False)
+       
+        Args:
+        tileobj (TileModel): TileJSON configuration
+        pbf (bool): Flag to indicate whether to encode the tiles in PBF
+
         """
         # read the tilejson file to string
         self.tile_json = tileobj
@@ -76,12 +84,27 @@ class TileHandler:
                         ) -> List[str]:
         """
         Generate tiles in form of JSON or PBF files from MicroJSON data.
-        :param microjson_data_path: Path to the MicroJSON data.
-        :return: List of paths to the generated tiles.
+
+        Args:
+            microjson_data_path (Union[str, Path]): Path to the MicroJSON data file
+            validate (bool): Flag to indicate whether to validate the MicroJSON data
+
+        Returns:
+            List[str]: List of paths to the generated tiles
         """
         def save_tile(tile_data, z, x, y, tiles_path_template):
             """
             Save a single tile to a file based on the template path.
+
+            Args:
+                tile_data: The tile data to save
+                z: The zoom level of the tile
+                x: The x coordinate of the tile
+                y: The y coordinate of the tile
+                tiles_path_template: The template path for the tiles
+
+            Returns:
+                str: The path to the saved tile
             """
             # Format the path template with actual tile coordinates
             tile_path = str(tiles_path_template).format(z=z, x=x, y=y)
@@ -97,7 +120,17 @@ class TileHandler:
             # return the path to the saved tile
             return tile_path
 
-        def convert_id_to_int(data):
+        def convert_id_to_int(data) -> dict:
+            """
+            Convert all id fields in the data to integers
+
+            Args:
+                data: The data to convert
+
+            Returns:
+                dict: The data with all id fields converted to integers
+            """
+        
 
             # check if data is a list
             if isinstance(data, list):
