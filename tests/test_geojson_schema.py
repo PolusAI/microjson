@@ -3,7 +3,7 @@ import jsonschema
 import pytest
 from jsonschema import validate
 
-from microjson.utils import gather_example_files
+from microjson.fileutils import gather_example_files
 
 # Load the generated GeoJSON schema
 with open("geojson_schema.json") as f:

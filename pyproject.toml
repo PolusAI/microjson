@@ -1,5 +1,5 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.3"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
@@ -27,21 +27,41 @@ where = ["src"]
 
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
-bfio = {version = "2.3.6", extras = ["all"]}
-scyjava = "^1.9.1"
-typer = "^0.7.0"
-scipy = ">=1.8,<1.9.2"
-filepattern = "^2.0.1"
-fastapi = "^0.103.1"
-llvmlite = "^0.40.1"
-vaex = "^4.17.0"
 pydantic = "^2.3.0"
 scikit-image = "0.20.0"
 geojson-pydantic = "^1.0.2"
 geojson2vt = "^1.0.1"
 vt2pbf = "^0.1.5"
 protobuf = "^4.25.3"
+geojson = "^3.1.0"
+shapely = "^2.0.6"
 
+
+
+[tool.poetry.dependencies.bfio]     
+version = "2.4.3"
+extras = ["all"]   
+optional = true
+
+[tool.poetry.dependencies.scipy]     
+version = ">=1.8,<1.9.2"
+optional = true
+
+[tool.poetry.dependencies.filepattern] 
+version = "^2.0.1"
+optional = true
+
+[tool.poetry.dependencies.vaex]      
+version = "^4.17.0"
+optional = true
+
+[tool.poetry.extras]
+all = [
+    "bfio", 
+    "scipy", 
+    "filepattern", 
+    "vaex"
+]
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
