@@ -2,10 +2,10 @@
 from typing import Any, List, Optional, Union, Dict, Literal, TypeVar
 from enum import Enum
 from pydantic import BaseModel, StrictInt, StrictStr, RootModel
-from provenance import Workflow
-from provenance import WorkflowCollection
-from provenance import Artifact
-from provenance import ArtifactCollection
+from .provenance import Workflow
+from .provenance import WorkflowCollection
+from .provenance import Artifact
+from .provenance import ArtifactCollection
 from geojson_pydantic import Feature, FeatureCollection, GeometryCollection
 from geojson_pydantic import Point, MultiPoint, LineString, MultiLineString
 from geojson_pydantic import Polygon, MultiPolygon

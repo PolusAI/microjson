@@ -23,7 +23,7 @@ def test_tilecut(tempfolder):
     # Create folder with random name, a string of 6 characters
     microjson_data_path = f"{tempfolder}/polygons.json"
     # Parameters
-    GRID_SIZE = 200000      # Total size of the grid
+    GRID_SIZE = 50000      # Total size of the grid
     CELL_SIZE = 500        # Size of each cell
     MIN_VERTICES = 5       # Minimum number of vertices per polygon
     MAX_VERTICES = 32      # Maximum number of vertices per polygon

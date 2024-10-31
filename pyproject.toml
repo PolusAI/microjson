@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "microjson"
-version = "0.1.11"
+version = "0.2.0"
 description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
 readme = "README_short.md"
 authors = ["Bengt Ljungquist <bengt.ljungquist@nextonicsolutions.com>"]
@@ -15,15 +15,12 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 keywords = ["json", "microscopy", "microjson"]
+packages = [
+    { include = "microjson", from = "src" }
+]
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.27.1"
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
 
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
@@ -44,7 +41,7 @@ extras = ["all"]
 optional = true
 
 [tool.poetry.dependencies.scipy]     
-version = ">=1.8,<1.9.2"
+version = ">=1.8"
 optional = true
 
 [tool.poetry.dependencies.filepattern] 
@@ -78,9 +75,10 @@ mkdocstrings = "^0.23.0"
 
 [tool.pytest.ini_options]
 testpaths = ["tests/"]
+pythonpath = ["src/"]
 
 [tool.bumpver]
-current_version = "0.1.11"
+current_version = "0.2.0"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
@@ -90,3 +88,4 @@ push            = false
 [tool.bumpver.file_patterns]
 "pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
 "src/microjson/__init__.py" = ["{version}"]
+".bumpversion.cfg" = ["current_version = {version}"]
