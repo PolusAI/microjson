@@ -43,8 +43,8 @@ def _walk_list(lst):
     if len(lst) == 0:
         return
     if isinstance(lst[0], list):
-        for l in lst:
-            _walk_list(l)
+        for li in lst:
+            _walk_list(li)
     elif isinstance(lst[0], int):
         for i in range(len(lst)):
             lst[i] = float(lst[i])

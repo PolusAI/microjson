@@ -12,9 +12,12 @@ class TileLayer(BaseModel):
         minzoom (Optional[int]): The minimum zoom level for the layer.
         maxzoom (Optional[int]): The maximum zoom level for the layer.
         description (Optional[str]): A description of the layer.
-        fieldranges (Optional[Dict[str, List[Union[int, float, str]]]]): The ranges of the fields.
-        fieldenums (Optional[Dict[str, List[str]]): The enums of the fields.
-        fielddescriptions (Optional[Dict[str, str]]): The descriptions of the fields.
+        fieldranges (Optional[Dict[str, List[Union[int, float, str]]]]):
+            The ranges of the fields.
+        fieldenums (Optional[Dict[str, List[str]]]):
+            The enums of the fields.
+        fielddescriptions (Optional[Dict[str, str]]):
+            The descriptions of the fields.
     """
     id: str
     fields: Union[None, Dict[str, str]] = None
@@ -43,8 +46,10 @@ class TileModel(BaseModel):
         data (Optional[Union[Path, AnyUrl]]): The data of the tileset.
         minzoom (Optional[int]): The minimum zoom level of the tileset.
         maxzoom (Optional[int]): The maximum zoom level of the tileset.
-        bounds (Optional[conlist(float, min_length=4, max_length=10)]): The bounds of the tileset.
-        center (Optional[conlist(float, min_length=3, max_length=6)]): The center of the tileset.
+        bounds (Optional[conlist(float, min_length=4, max_length=10)]):
+            The bounds of the tileset.
+        center (Optional[conlist(float, min_length=3, max_length=6)]):
+            The center of the tileset.
         fillzoom (Optional[int]): The fill zoom level of the tileset.
         vector_layers (List[TileLayer]): The vector layers of the tileset.
 

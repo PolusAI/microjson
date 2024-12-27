@@ -106,7 +106,7 @@ class Identity(CoordinateTransformation):
 
 class Translation(CoordinateTransformation):
     """Translation transformation
-    
+
     Args:
         type (Literal["translation"]): The type of the transformation
         translation (List[float]): The translation vector
@@ -118,7 +118,7 @@ class Translation(CoordinateTransformation):
 
 class Scale(CoordinateTransformation):
     """Scale transformation
-    
+
     Args:
         type (Literal["scale"]): The type of the transformation
         scale (List[float]): The scale vector
@@ -130,11 +130,13 @@ class Scale(CoordinateTransformation):
 
 class Multiscale(BaseModel):
     """A coordinate system for MicroJSON coordinates
-    
+
     Args:
         axes (List[Axis]): The axes of the coordinate system
-        coordinateTransformations (Optional[List[CoordinateTransformation]]): A list of coordinate transformations
-        transformationMatrix (Optional[List[List[float]]): The transformation matrix
+        coordinateTransformations (Optional[List[CoordinateTransformation]]):
+            A list of coordinate transformations
+        transformationMatrix (Optional[List[List[float]]):
+            The transformation matrix
     """
 
     axes: List[Axis]
@@ -145,12 +147,14 @@ class Multiscale(BaseModel):
 class MicroFeature(Feature):
     """A MicroJSON feature, which is a GeoJSON feature with additional
     metadata
-    
+
     Args:
         multiscale (Optional[Multiscale]): The coordinate system of the feature
-        ref (Optional[Union[StrictStr, StrictInt]]): A reference to the parent feature
-        parentId (Optional[Union[StrictStr, StrictInt]]): A reference to the parent feature
-        featureClass (Optional[str]): The class of the feature    
+        ref (Optional[Union[StrictStr, StrictInt]]):
+            A reference to the parent feature
+        parentId (Optional[Union[StrictStr, StrictInt]]):
+            A reference to the parent feature
+        featureClass (Optional[str]): The class of the feature
     """
 
     multiscale: Optional[Multiscale] = None
@@ -165,14 +169,15 @@ class MicroFeature(Feature):
 class MicroFeatureCollection(FeatureCollection):
     """A MicroJSON feature collection, which is a GeoJSON feature
     collection with additional metadata.
-    
+
     Args:
         properties (Optional[Props]): The properties of the feature collection
-        id (Optional[Union[StrictStr, StrictInt]]): The ID of the feature collection
-        provenance (Optional[Union[Workflow, WorkflowCollection, Artifact, ArtifactCollection]]): The provenance of the feature collection
+        id (Optional[Union[StrictStr, StrictInt]]): The ID of the feature coll.
+        provenance (Optional[Union[Workflow,
+            WorkflowCollection,
+            Artifact,
+            ArtifactCollection]]): The provenance of the feature collection
     """
-
-
 
     properties: Optional[Union[Props, None]] = None  # type: ignore
     id: Optional[Union[StrictStr, StrictInt]] = None

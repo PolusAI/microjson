@@ -1,5 +1,7 @@
 # MicroJSON Examples
+
 ## Basic MicroJSON
+
 This JSON file demonstrates how MicroJSON can be used to define and describe different structures related to imaging, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
 
 ```json
