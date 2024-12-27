@@ -4,8 +4,6 @@
 
 # Modifications by PolusAI, 2024
 
-from .simplify import simplify
-
 
 def create_tile(features, z, tx, ty, options):
     features = features if features is not None else []
@@ -88,14 +86,12 @@ def add_feature(tile, feature, tolerance, options):
 
 
 def add_line(result, geom, tile, tolerance, is_polygon, is_outer):
-    sq_tolerance = tolerance * tolerance
+
     # Convert geom to list of [x, y] pairs
     coords = [[geom[i], geom[i+1]] for i in range(0, len(geom), 3)]
 
-    if tolerance > 0:
-        simplified_coords = simplify(coords, sq_tolerance)
-    else:
-        simplified_coords = coords
+    # No simplification at the single tile
+    simplified_coords = coords
 
     # flatten the simplified coords to a 1D list of x, y, 0 values
     ring = []

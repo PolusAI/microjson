@@ -80,14 +80,18 @@ class MicroJsonVt:
                         coords = [[ring[i], ring[i + 1]] for i in range(
                             0, len(ring), 3)]
                         scoords = simplify(coords, tolerance)
-
-                        # flatten the simplified coords
-                        simplified_ring = []
-                        for i in range(len(scoords)):
-                            simplified_ring.append(scoords[i][0])
-                            simplified_ring.append(scoords[i][1])
-                            simplified_ring.append(0)
-                        feature[geometry_key][iring] = simplified_ring
+                        # Check that it has at least 4 pairs of coordinates
+                        if len(scoords) < 4:
+                            # If not, use the original coordinates
+                            feature[geometry_key][iring] = ring
+                        else:
+                            # flatten the simplified coords
+                            simplified_ring = []
+                            for i in range(len(scoords)):
+                                simplified_ring.append(scoords[i][0])
+                                simplified_ring.append(scoords[i][1])
+                                simplified_ring.append(0)
+                            feature[geometry_key][iring] = simplified_ring
 
         # tiles and tile_coords are part of the public API
         self.tiles = {}

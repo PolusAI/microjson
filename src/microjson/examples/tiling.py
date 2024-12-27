@@ -30,7 +30,7 @@ def main():
     ]
 
     # Create a microjson file with random polygons
-    GRID_SIZE = 20000
+    GRID_SIZE = 10000
     CELL_SIZE = 100
     MIN_VERTICES = 10
     MAX_VERTICES = 100
