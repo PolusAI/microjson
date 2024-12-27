@@ -21,7 +21,7 @@ def main():
             maxzoom=10,
             description="Layer containing polygon data",
             fieldranges={
-                "id": [1, 99999999]
+                "num_vertices": [10, 100]
             },
             fieldenums={
                 "polytype": ["Type1", "Type2", "Type3", "Type4"]
