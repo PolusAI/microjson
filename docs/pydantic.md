@@ -40,12 +40,6 @@ Represents a GeoJSON MultiPolygon object.
 
 ### Compound Objects
 
-#### Multiscale
-
-A coordinate system for MicroJSON features or feature collections.
-
-::: microjson.model.Multiscale
-
 #### GeometryCollection
 
 A collection of multiple geometries. From [geojson-pydantic](https://developmentseed.org/geojson-pydantic/), included here for reference.

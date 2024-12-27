@@ -30,6 +30,8 @@ This specification outlines how to use TileJSON to integrate tiled MicroJSON dat
   - **`minzoom` and `maxzoom`:** Optional. The range of zoom levels at which the layer is visible.
 - **`fillzoom`:** Optional. An integer specifying the zoom level from which to generate overzoomed tiles.
 - **`legend`:** Optional. Contains a legend to be displayed with the tileset.
+- **`multiscale`:** Optional. A multiscale object as defined in the section [Multiscale Object](#multiscale-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units.
+- **`scale_factor`:** Optional. A float specifying the scale factor for the tileset. If not present, the default value of 2 is assumed. Unless the use case requires a different scale factor, it is highly recommended to use the default value, as it is widely supported and assumed by many viewers.
 
 The following fields of TileJSON may be used if the use case requires it, and are included here for completeness:
 
@@ -37,6 +39,28 @@ The following fields of TileJSON may be used if the use case requires it, and ar
 - **`grids`:** The URL pattern for accessing grid data.
 - **`data`:** Optional. The URL pattern for accessing data. Used for GeoJSON originally, which in this specification is replaced by MicroJSON and used in the `tiles` field.
 - **`template`:** Optional. Contains a mustache template to be used to format data from grids for interaction.
+
+### Multiscale Object
+
+A multiscale object represents the choice of axes (2-5D) and potentially their transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. If the field is present, it MUST have the following properties:
+
+- `"axes"`: Representing the choice of axes as an array of Axis objects.
+
+It may contain either of, but NOT both of the following properties:
+
+- `"coordinateTransformations"`: Representing the set of coordinate transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST be an array of objects, each object representing a coordinate transformation. Each object MUST have properties as follows:
+  - `"type"`: Representing the type of the coordinate transformation. Currently supported types are `"identity"`, `"scale"`, and `"translate"`. If the type is `"scale"`, the object MUST have the property `"scale"`, representing the scaling factor. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"translate"`, the object MUST have the property `"translate"`, representing the translation vector. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"identity"`, the object MUST NOT have any other properties.
+- `"transformationMatrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
+
+### Axis Object
+
+Together with the other axes in the axes array, an axis object represents the coordinate system of the MicroJSON object (2D-5D)
+It MUST have the following properties:
+
+- `"name"`: Representing the name of the axis. It MUST be a string.
+It may contain the following properties:
+- `"unit"`: Representing the units of the corresponding axis of the geometries in the MicroJSON object. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
+- `"description"`: A string describing the axis.
 
 ## Pydantic Model for TileJSON for MicroJSON
 
@@ -111,7 +135,40 @@ This file is located in the `examples/tiles` directory of the repository, and is
             }
         }
     ],
-    "fillzoom": 3
+    "fillzoom": 3,
+    "multiscale": {
+        "axes": [
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "space",
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "space",
+                "description": "y-axis"
+            }
+        ],
+        "transformationMatrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    }
 }
 ```
 

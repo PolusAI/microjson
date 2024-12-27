@@ -167,39 +167,6 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             }
         }
     ],
-    "multiscale": {
-        "axes": [
-            {
-                "name": "x",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "x-axis"
-            },
-            {
-                "name": "y",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "y-axis"
-            }
-        ],
-        "transformationMatrix": [
-            [
-                1.0,
-                0.0,
-                0.0
-            ],
-            [
-                0.0,
-                1.0,
-                0.0
-            ],
-            [
-                0.0,
-                0.0,
-                0.0
-            ]
-        ]
-    },
     "provenance": {
         "type": "Artifact",
         "id": "artifact_1",
@@ -341,39 +308,6 @@ This enhancement not only increases the utility of MicroJSON in various scientif
             }
         }
     ],
-    "multiscale": {
-        "axes": [
-            {
-                "name": "x",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "x-axis"
-            },
-            {
-                "name": "y",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "y-axis"
-            }
-        ],
-        "transformationMatrix": [
-            [
-                1.0,
-                0.0,
-                0.0
-            ],
-            [
-                0.0,
-                1.0,
-                0.0
-            ],
-            [
-                0.0,
-                0.0,
-                0.0
-            ]
-        ]
-    },
     "provenance": {
         "type": "WorkflowCollection",
         "workflows": [
