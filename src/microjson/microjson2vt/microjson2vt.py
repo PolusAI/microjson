@@ -5,12 +5,11 @@
 # Modifications by PolusAI, 2024
 
 import logging
-from datetime import datetime
-
 from .convert import convert
 from .clip import clip
 from .transform import transform_tile
 from .tile import create_tile
+from .simplify import simplify
 
 
 def get_default_options():
@@ -62,13 +61,38 @@ class MicroJsonVt:
 
         features = convert(data, options)
 
+        # Create a separate geometry for each zoom level
+        for z in range(options.get('maxZoom') + 1):
+            for feature in features:
+                feature[f'geometry_z{z}'] = feature['geometry'].copy()
+
+        # Simplify features for each zoom level
+        for z in range(options.get('maxZoom') + 1):
+            tolerance = (options.get('tolerance') / ((1 << z) * options.get(
+                'extent'))) ** 2
+            for feature in features:
+                geometry_key = f'geometry_z{z}'
+                # check feature type only simplify Polygon
+                if feature['type'] == 'Polygon':
+                    for iring in range(len(feature[geometry_key])):
+                        ring = feature[geometry_key][iring]
+                        # Convert geom to list of [x, y] pairs
+                        coords = [[ring[i], ring[i + 1]] for i in range(
+                            0, len(ring), 3)]
+                        scoords = simplify(coords, tolerance)
+
+                        # flatten the simplified coords
+                        simplified_ring = []
+                        for i in range(len(scoords)):
+                            simplified_ring.append(scoords[i][0])
+                            simplified_ring.append(scoords[i][1])
+                            simplified_ring.append(0)
+                        feature[geometry_key][iring] = simplified_ring
+
         # tiles and tile_coords are part of the public API
         self.tiles = {}
         self.tile_coords = []
 
-        logging.debug('preprocess data end')
-        logging.debug(
-            f'index: maxZoom: {options.get("indexMaxZoom")}, maxPoints: {options.get("indexMaxPoints")}')
         self.stats = {}
         self.total = 0
 
@@ -78,13 +102,6 @@ class MicroJsonVt:
         # start slicing from the top tile down
         if len(features) > 0:
             self.split_tile(features, 0, 0, 0)
-
-        if len(features) > 0:
-            logging.debug(
-                f'features: {self.tiles[0].get("numFeatures")}, points: {self.tiles[0].get("numPoints")}')
-            stop = datetime.now()
-        logging.debug(f'generate tiles end: {stop}')
-        logging.debug('tiles generated:', self.total, self.stats)
 
     # splits features from a parent tile to sub-tiles.
     # z, x, and y are the coordinates of the parent tile
@@ -96,7 +113,7 @@ class MicroJsonVt:
     def split_tile(self, features, z, x, y, cz=None, cx=None, cy=None):
         """
         Splits features from a parent tile to sub-tiles.
-        
+
         Args:
             features (list): The features to be split
             z (int): The zoom level of the parent tile
@@ -120,17 +137,30 @@ class MicroJsonVt:
             tile = self.tiles.get(id_, None)
 
             if tile is None:
-                logging.debug('creation start')
+                # Use simplified geometries for this zoom level
+
+                simplified_features = [
+                    {
+                        **feature,
+                        "geometry": feature[f'geometry_z{z}']
+                    }
+                    for feature in features
+                ]
 
                 self.tiles[id_] = create_tile(features, z, x, y, options)
                 tile = self.tiles[id_]
                 self.tile_coords.append({'z': z, 'x': x, 'y': y})
 
-                logging.debug(
-                    f'tile z{z}-{x}-{y} (features: {tile.get("numFeatures")}, points: {tile.get("numPoints")}, simplified: {tile.get("numSimplified")})')
-                logging.debug('creation end')
                 key = f'z{z}'
                 self.stats[key] = self.stats.get(key, 0) + 1
+                self.total += 1
+
+                self.tiles[id_] = create_tile(
+                    simplified_features, z, x, y, options)
+                tile = self.tiles[id_]
+                self.tile_coords.append({'z': z, 'x': x, 'y': y})
+
+                self.stats[f'z{z}'] = self.stats.get(f'z{z}', 0) + 1
                 self.total += 1
 
             # save reference to original geometry in tile so that we can drill
@@ -174,23 +204,23 @@ class MicroJsonVt:
             br = None
 
             left = clip(features, z2, x - k1, x + k3, 0,
-                        tile['minX'], tile['maxX'], options)
+                        tile['minX'], tile['maxX'], options, z+1)
             right = clip(features, z2, x + k2, x + k4, 0,
-                         tile['minX'], tile['maxX'], options)
+                         tile['minX'], tile['maxX'], options, z+1)
             features = None
 
             if left is not None:
                 tl = clip(left, z2, y - k1, y + k3, 1,
-                          tile['minY'], tile['maxY'], options)
+                          tile['minY'], tile['maxY'], options, z+1)
                 bl = clip(left, z2, y + k2, y + k4, 1,
-                          tile['minY'], tile['maxY'], options)
+                          tile['minY'], tile['maxY'], options, z+1)
                 left = None
 
             if right is not None:
                 tr = clip(right, z2, y - k1, y + k3, 1,
-                          tile['minY'], tile['maxY'], options)
+                          tile['minY'], tile['maxY'], options, z+1)
                 br = clip(right, z2, y + k2, y + k4, 1,
-                          tile['minY'], tile['maxY'], options)
+                          tile['minY'], tile['maxY'], options, z+1)
                 right = None
 
             logging.debug('clipping ended')
@@ -250,7 +280,7 @@ class MicroJsonVt:
         if parent is None or parent.get('source', None) is None:
             return None
 
-        # if we found a parent tile containing the original geometry, we can 
+        # if we found a parent tile containing the original geometry, we can
         # drill down from it
         logging.debug(f'found parent tile z{z0}-{x0}-{y0}')
         logging.debug('drilling down start')
@@ -268,7 +298,7 @@ class MicroJsonVt:
 def to_Id(z, x, y):
     """
     Converts the zoom, x, and y coordinates to a unique id
-    
+
     Args:
         z (int): The zoom level
         x (int): The x coordinate

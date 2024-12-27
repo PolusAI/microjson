@@ -53,3 +53,5 @@ def vt_feature2geojson_feature(feature, size, x0, y0):
         },
         "properties": feature.get('tags', {})
     }
+
+

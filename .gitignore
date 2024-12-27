@@ -9,3 +9,4 @@ tiles/
 .vscode/
 dist/
 .mypy_cache/
+.hintrc

@@ -77,7 +77,8 @@ def add_feature(tile, feature, tolerance, options):
         tileFeature = {
             "geometry": simplified,
             "type": 3 if type_ == 'Polygon' or type_ == 'MultiPolygon' else (
-                2 if type_ == 'LineString' or type_ == 'MultiLineString' else 1),
+                2 if type_ == 'LineString' or type_ == 'MultiLineString'
+                else 1),
             "tags": tags
         }
         current_id = feature.get('id', None)
@@ -105,7 +106,7 @@ def add_line(result, geom, tile, tolerance, is_polygon, is_outer):
 
     if is_polygon:
         rewind(ring, is_outer)
-    
+
     result.append(ring)
 
 

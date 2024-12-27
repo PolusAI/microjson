@@ -1,6 +1,6 @@
 import os
 from .microjson2vt.microjson2vt import microjson2vt
-from microjson.tilemodel import TileModel
+from .tilehandler import TileHandler
 from microjson import MicroJSON
 import json
 from pydantic import ValidationError
@@ -8,9 +8,8 @@ from pydantic import ValidationError
 from typing import List, Union
 from pathlib import Path
 import logging
+from shapely.geometry import Polygon
 from vt2pbf import vt2pbf
-# import mapbox_vector_tile
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -19,7 +18,7 @@ logger.setLevel(logging.INFO)
 def getbounds(microjson_file: str) -> List[float]:
     """
     Get the max and min bounds for coordinates of the MicroJSON file
-    
+
     Args:
         microjson_file (str): Path to the MicroJSON file
 
@@ -28,7 +27,7 @@ def getbounds(microjson_file: str) -> List[float]:
     """
     with open(microjson_file, 'r') as file:
         data = json.load(file)
-    
+
     # get the bounds
     minx = miny = float('inf')
     maxx = maxy = float('-inf')
@@ -53,30 +52,22 @@ def getbounds(microjson_file: str) -> List[float]:
     return [minx, miny, maxx, maxy]
 
 
-class TileHandler:
-    """
-    Class to handle the generation of tiles from MicroJSON data
-    """
-    tile_json: TileModel
-    pbf: bool
-    id_counter: int
-    id_set: set
+def geojson2vt_to_shapely(geometry_data):
+    # Extract coordinates and type
 
-    def __init__(self, tileobj: TileModel, pbf: bool = False):
-        """
-        Initialize the TileHandler with a TileJSON configuration and optional
-        PBF flag
-       
-        Args:
-        tileobj (TileModel): TileJSON configuration
-        pbf (bool): Flag to indicate whether to encode the tiles in PBF
+    geom_type = geometry_data['type']
 
-        """
-        # read the tilejson file to string
-        self.tile_json = tileobj
-        self.pbf = pbf
-        self.id_counter = 0
-        self.id_set = set()
+    # Based on the `type` field, determine the geometry shape
+    if geom_type == 3:  # 3 usually represents Polygon in such data formats
+        coordinates = geometry_data['geometry'][0]  # Only take outer ring
+        geometry_data['geometry'] = Polygon(coordinates)
+    else:
+        raise ValueError("Unsupported geometry type")
+
+    return geometry_data
+
+
+class TileWriter (TileHandler):
 
     def microjson2tiles(self,
                         microjson_data_path: Union[str, Path],
@@ -86,8 +77,10 @@ class TileHandler:
         Generate tiles in form of JSON or PBF files from MicroJSON data.
 
         Args:
-            microjson_data_path (Union[str, Path]): Path to the MicroJSON data file
-            validate (bool): Flag to indicate whether to validate the MicroJSON data
+            microjson_data_path (Union[str, Path]): Path to the
+            MicroJSON data file
+            validate (bool): Flag to indicate whether to validate
+            the MicroJSON data
 
         Returns:
             List[str]: List of paths to the generated tiles
@@ -114,13 +107,14 @@ class TileHandler:
             # correct format, e.g., PBF or JSON)
             with open(
                 tile_path,
-                'wb' if tile_path.endswith('.pbf') else 'w') as f:
+                'wb' if tile_path.endswith('.pbf') else 'w'
+            ) as f:
                 f.write(tile_data)
-            
+
             # return the path to the saved tile
             return tile_path
 
-        def convert_id_to_int(data) -> dict:
+        def convert_id_to_int(data) -> int | dict | list:
             """
             Convert all id fields in the data to integers
 
@@ -130,7 +124,6 @@ class TileHandler:
             Returns:
                 dict: The data with all id fields converted to integers
             """
-        
 
             # check if data is a list
             if isinstance(data, list):
@@ -158,11 +151,11 @@ class TileHandler:
                 return data
             else:
                 return int(data)
-            
+
         # Load the MicroJSON data
         with open(microjson_data_path, 'r') as file:
             microjson_data = json.load(file)
-        
+
         # Validate the MicroJSON data
         if validate:
             try:
@@ -170,20 +163,20 @@ class TileHandler:
             except ValidationError as e:
                 logger.error(f"MicroJSON data validation failed: {e}")
                 return []
-        
+
         # TODO currently only supports one tile layer
         # calculate maxzoom and minzoom from layer and global tilejson
 
-        maxzoom = min(self.tile_json.maxzoom, 
-                      self.tile_json.vector_layers[0].maxzoom)
+        maxzoom = min(self.tile_json.maxzoom,
+                      self.tile_json.vector_layers[0].maxzoom)  # type: ignore
         minzoom = max(self.tile_json.minzoom,
-                      self.tile_json.vector_layers[0].minzoom)
+                      self.tile_json.vector_layers[0].minzoom)  # type: ignore
 
         # Options for geojson2vt from TileJSON
         options = {
             'maxZoom': maxzoom,  # max zoom in the final tileset
-            'indexMaxZoom': self.tile_json.maxzoom,  # max zoom in the initial tile index
-            'indexMaxPoints': 0,  # max number of points per tile, set to 0 for no restriction
+            'indexMaxZoom': self.tile_json.maxzoom,  # tile index max zoom
+            'indexMaxPoints': 0,  # max number of points per tile, 0 if none
             'bounds': self.tile_json.bounds
         }
 
@@ -195,8 +188,6 @@ class TileHandler:
 
         # get tilepath from tilejson self.tile_json.tiles
         # extract the folder from the filepath
-        tilefolder = Path(self.tile_json.tiles[0]).parent
-
 
         for tileno in tile_index.tiles:
             atile = tile_index.tiles[tileno]
@@ -206,9 +197,8 @@ class TileHandler:
                 continue
             tile_data = tile_index.get_tile(z, x, y)
 
-            # convert all id to int, as there is a bug in the geojson2vt
-            # library
-            tile_data = convert_id_to_int(tile_data)
+            for item in tile_data['features']:
+                item['id'] = int(item['id'])
 
             # add name to the tile_data
             tile_data["name"] = "tile"
@@ -216,10 +206,10 @@ class TileHandler:
                 # Using mapbox_vector_tile to encode tile data to PBF
                 encoded_data = vt2pbf(tile_data)
             else:
+
                 encoded_data = json.dumps(tile_data)
 
             generated_tiles.append(save_tile(
                 encoded_data, z, x, y, self.tile_json.tiles[0]))
 
         return generated_tiles
-        

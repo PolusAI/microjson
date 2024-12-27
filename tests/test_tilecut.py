@@ -5,7 +5,7 @@ import shutil
 import string
 import microjson as mj
 import pytest
-from microjson.tilecut import getbounds, TileHandler
+from microjson.tilewriter import getbounds, TileWriter
 from microjson.polygen import assign_meta_types_and_values, generate_polygons
 
 
@@ -96,7 +96,7 @@ def test_tilecut(tempfolder):
     assert os.path.getsize(f"{tempfolder}/tiles/metadata.json") > 0
 
     # Initialize the TileHandler
-    handler = TileHandler(tileobj, pbf=True)
+    handler = TileWriter(tileobj, pbf=True)
 
     # Cut the MicroJSON file into tiles
     tiles = handler.microjson2tiles(microjson_data_path)

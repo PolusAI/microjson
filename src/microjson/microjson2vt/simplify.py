@@ -4,11 +4,11 @@
 
 # Modifications by PolusAI, 2024
 
-def simplify(coords, sq_tolerance):
+def simplify(coords, sq_tolerance, min_vertices=4):
     """Simplifies a list of coordinates using the Ramer-Douglas-Peucker
     algorithm."""
 
-    if len(coords) <= 2:
+    if len(coords) <= min_vertices:
         return coords
 
     def get_sq_seg_dist(px, py, x, y, bx, by):
@@ -44,7 +44,7 @@ def simplify(coords, sq_tolerance):
             index = i
             max_sq_dist = sq_dist
 
-    if max_sq_dist > sq_tolerance:
+    if max_sq_dist > sq_tolerance and sq_tolerance > 0:
         left_simplified = simplify(coords[:index+1], sq_tolerance)
         right_simplified = simplify(coords[index:], sq_tolerance)
 
