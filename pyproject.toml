@@ -26,7 +26,7 @@ ipykernel = "^6.27.1"
 python = ">=3.9.15,<3.12"
 pydantic = "^2.3.0"
 scikit-image = "0.20.0"
-geojson-pydantic = "^1.0.2"
+geojson-pydantic = "^1.2.0"
 geojson2vt = "^1.0.1"
 vt2pbf = "^0.1.5"
 protobuf = "^4.25.3"
@@ -71,6 +71,7 @@ ruff = "^0.0.274"
 mypy = "^1.4.0"
 mkdocs = "^1.5.3"
 mkdocstrings = "^0.23.0"
+mkdocs-material = "^9.5.49"
 
 
 [tool.pytest.ini_options]
