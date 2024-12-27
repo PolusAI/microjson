@@ -8,9 +8,7 @@ MicroJSON is a format, inspired by [GeoJSON](https://geojson.org), for encoding 
 
 ### MicroJSON Object
 
-A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON. What separates MicroJSON from GeoJSON is that it may have a member `"multiscale"` in a Feature or FeatureCollection object:  
-
-- `"multiscale"`: (Optional) A multiscale object as defined in the section [Multiscale object](#multiscale-object). If this property is not present, the default coordinate system is assumed to be the same as the image coordinate system, using cartesian coordinates and pixels as units. It is recommended to define this property at the top level of the MicroJSON object, but it may also be defined at the level of a Feature or Geometry object, in which case it overrides the top level coordinate system.
+A MicroJSON object is a JSON object that represents a geometry, feature, or collection of features, or more precisely, be either of type (having value of top level field `type` as) `"Geometry"`, `"Feature"`, or `"Featurecollection"`, that is, the same as for GeoJSON.
 
 A MicroJSON object may have a `"bbox"` property":
 
