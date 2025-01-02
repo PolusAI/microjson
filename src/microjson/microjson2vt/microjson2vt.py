@@ -14,7 +14,7 @@ from .simplify import simplify
 
 def get_default_options():
     return {
-        "maxZoom": 14,            # max zoom to preserve detail on
+        "maxZoom": 8,            # max zoom to preserve detail on
         "indexMaxZoom": 5,        # max zoom in the tile index
         "indexMaxPoints": 100000,  # max number of points per tile in the index
         "tolerance": 50,          # simplification tolerance (higher - simpler)

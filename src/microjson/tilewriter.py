@@ -198,7 +198,8 @@ class TileWriter (TileHandler):
             tile_data = tile_index.get_tile(z, x, y)
 
             for item in tile_data['features']:
-                item['id'] = int(item['id'])
+                if 'id' in item:
+                    item['id'] = int(item['id'])
 
             # add name to the tile_data
             tile_data["name"] = "tile"

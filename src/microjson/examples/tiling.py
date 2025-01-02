@@ -3,9 +3,23 @@ from pathlib import Path
 from microjson.tilemodel import TileJSON, TileModel, TileLayer
 import os
 from microjson.polygen import generate_polygons
+import argparse
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("microjson_data_path", nargs='?',
+                        default="",
+                        help="Path to the MicroJSON data file")
+    args = parser.parse_args()
+
+    if args.microjson_data_path:
+        microjson_data_path = args.microjson_data_path
+        do_generate = False
+    else:
+        microjson_data_path = "example.json"
+        do_generate = True
+
     # clear the tiles directory
     os.system("rm -rf tiles")
 
@@ -29,34 +43,32 @@ def main():
         )
     ]
 
-    # Create a microjson file with random polygons
-    GRID_SIZE = 10000
-    CELL_SIZE = 100
-    MIN_VERTICES = 10
-    MAX_VERTICES = 100
-    meta_types = {
-        "id": "str",
-        "num_vertices": "int",
-    }
-    meta_values_options = {
-        "polytype": ["Type1", "Type2", "Type3", "Type4"]
-    }
-    microjson_data_path = "tiles/microjson_data.json"
-    generate_polygons(
-        GRID_SIZE,
-        CELL_SIZE,
-        MIN_VERTICES,
-        MAX_VERTICES,
-        meta_types,
-        meta_values_options,
-        microjson_data_path
-    )
+    if do_generate:
+        # Create a microjson file with random polygons
+        GRID_SIZE = 10000
+        CELL_SIZE = 100
+        MIN_VERTICES = 10
+        MAX_VERTICES = 100
+        meta_types = {
+            "id": "str",
+            "num_vertices": "int",
+        }
+        meta_values_options = {
+            "polytype": ["Type1", "Type2", "Type3", "Type4"]
+        }
+
+        generate_polygons(
+            GRID_SIZE,
+            CELL_SIZE,
+            MIN_VERTICES,
+            MAX_VERTICES,
+            meta_types,
+            meta_values_options,
+            microjson_data_path
+        )
 
     # get bounds
     maxbounds = getbounds(microjson_data_path)
-    # set min to 0
-    maxbounds[0] = 0
-    maxbounds[1] = 0
 
     center = [0,
               (maxbounds[0] + maxbounds[2]) / 2,
