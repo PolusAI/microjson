@@ -1,4 +1,8 @@
-from microjson.tilewriter import TileWriter, getbounds
+from microjson.tilewriter import (
+    TileWriter,
+    getbounds,
+    extract_fields_ranges_enums
+)
 from pathlib import Path
 from microjson.tilemodel import TileJSON, TileModel, TileLayer
 import os
@@ -12,10 +16,29 @@ def main():
                         default="",
                         help="Path to the MicroJSON data file")
     args = parser.parse_args()
+    #
+    args.microjson_data_path = "tabular_statistics_output_overlay.json"
 
     if args.microjson_data_path:
         microjson_data_path = args.microjson_data_path
         do_generate = False
+
+        # Extract fields, ranges, enums from the provided MicroJSON
+        field_names, field_ranges, field_enums = extract_fields_ranges_enums(
+            microjson_data_path)
+
+        # Create a TileLayer including the extracted fields
+        vector_layers = [
+            TileLayer(
+                id="extracted-layer",
+                fields=field_names,
+                minzoom=0,
+                maxzoom=10,
+                description="Layer with extracted fields",
+                fieldranges=field_ranges,
+                fieldenums=field_enums,
+            )
+        ]
     else:
         microjson_data_path = "example.json"
         do_generate = True
@@ -26,23 +49,6 @@ def main():
     # create the tiles directory
     os.makedirs("tiles")
 
-    # Define your vector layers with appropriate settings
-    vector_layers = [
-        TileLayer(
-            id="polygon-layer",
-            fields={"id": "String", "polytype": "String"},
-            minzoom=0,
-            maxzoom=10,
-            description="Layer containing polygon data",
-            fieldranges={
-                "num_vertices": [10, 100]
-            },
-            fieldenums={
-                "polytype": ["Type1", "Type2", "Type3", "Type4"]
-            },
-        )
-    ]
-
     if do_generate:
         # Create a microjson file with random polygons
         GRID_SIZE = 10000
@@ -50,12 +56,27 @@ def main():
         MIN_VERTICES = 10
         MAX_VERTICES = 100
         meta_types = {
-            "id": "str",
             "num_vertices": "int",
         }
         meta_values_options = {
             "polytype": ["Type1", "Type2", "Type3", "Type4"]
         }
+
+        vector_layers = [
+            TileLayer(
+                id="polygon-layer",
+                fields={"id": "String", "polytype": "String"},
+                minzoom=0,
+                maxzoom=10,
+                description="Layer containing polygon data",
+                fieldranges={
+                    "num_vertices": [10, 100]
+                },
+                fieldenums={
+                    "polytype": ["Type1", "Type2", "Type3", "Type4"]
+                },
+            )
+        ]
 
         generate_polygons(
             GRID_SIZE,

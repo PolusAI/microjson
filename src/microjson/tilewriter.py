@@ -67,6 +67,57 @@ def geojson2vt_to_shapely(geometry_data):
     return geometry_data
 
 
+def extract_fields_ranges_enums(microjson_file: str):
+    """
+    Extract field names, ranges, and enums from the provided MicroJSON
+    file.
+    Returns:
+        tuple: (dict with field names and types,
+                dict of field ranges,
+                dict of field enums)
+    """
+    import json
+
+    def get_json_type(value):
+        if value is None:
+            # Set to String if None
+            return 'String'
+        if isinstance(value, bool):
+            return 'Boolean'
+        if isinstance(value, (int, float)):
+            return 'Number'
+        if isinstance(value, dict):
+            return 'Object'
+        if isinstance(value, list):
+            return 'Array'
+        return 'String'
+
+    with open(microjson_file, 'r') as file:
+        data = json.load(file)
+
+    field_names: dict[str, str] = {}
+    field_ranges = {}
+    field_enums: dict[str, set[str]] = {}
+
+    for feature in data.get('features', []):
+        props = feature.get('properties', {})
+        for key, val in props.items():
+            if key not in field_names.keys():
+                field_names[key] = get_json_type(val)
+            if isinstance(val, (int, float)):
+                if key not in field_ranges:
+                    field_ranges[key] = [val, val]
+                else:
+                    field_ranges[key][0] = min(field_ranges[key][0], val)
+                    field_ranges[key][1] = max(field_ranges[key][1], val)
+            if isinstance(val, str):
+                if key not in field_enums:
+                    field_enums[key] = set()
+                field_enums[key].add(val)
+
+    return field_names, field_ranges, field_enums
+
+
 class TileWriter (TileHandler):
 
     def microjson2tiles(self,
