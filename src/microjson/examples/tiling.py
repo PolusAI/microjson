@@ -16,8 +16,6 @@ def main():
                         default="",
                         help="Path to the MicroJSON data file")
     args = parser.parse_args()
-    #
-    args.microjson_data_path = "tabular_statistics_output_overlay.json"
 
     if args.microjson_data_path:
         microjson_data_path = args.microjson_data_path
