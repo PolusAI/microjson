@@ -11,3 +11,5 @@ dist/
 .mypy_cache/
 .hintrc
 *.zip
+testdata/
+
