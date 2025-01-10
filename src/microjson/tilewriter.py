@@ -9,18 +9,19 @@ from typing import List, Union
 from pathlib import Path
 import logging
 from shapely.geometry import Polygon
-from vt2pbf import vt2pbf
+from .vt2pbf import vt2pbf
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def getbounds(microjson_file: str) -> List[float]:
+def getbounds(microjson_file: str, square: bool = False) -> List[float]:
     """
     Get the max and min bounds for coordinates of the MicroJSON file
 
     Args:
         microjson_file (str): Path to the MicroJSON file
+        square (bool): Flag to indicate whether to return square bounds
 
     Returns:
         List[float]: List of the bounds [minx, miny, maxx, maxy]
@@ -49,6 +50,9 @@ def getbounds(microjson_file: str) -> List[float]:
                                 miny = min(miny, coord[1])
                                 maxx = max(maxx, coord[0])
                                 maxy = max(maxy, coord[1])
+    if square:
+        maxx = max(maxx - minx, maxy - miny) + minx
+        maxy = max(maxx - minx, maxy - miny) + miny
     return [minx, miny, maxx, maxy]
 
 
@@ -255,7 +259,7 @@ class TileWriter (TileHandler):
             # add name to the tile_data
             tile_data["name"] = "tile"
             if self.pbf:
-                # Using mapbox_vector_tile to encode tile data to PBF
+                # Using vt2pbf to encode tile data to PBF
                 encoded_data = vt2pbf(tile_data)
             else:
 

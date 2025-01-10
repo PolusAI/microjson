@@ -87,7 +87,7 @@ def main():
         )
 
     # get bounds
-    maxbounds = getbounds(microjson_data_path)
+    maxbounds = getbounds(microjson_data_path, square=True)
 
     center = [0,
               (maxbounds[0] + maxbounds[2]) / 2,
