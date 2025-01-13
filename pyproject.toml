@@ -19,6 +19,12 @@ packages = [
     { include = "microjson", from = "src" }
 ]
 
+[tool.poetry.urls]
+Documentation = "https://polusai.github.io/microjson/"
+Source = "https://github.com/polusai/microjson"
+Tracker = "https://github.com/polusai/microjson/issues"
+
+
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.27.1"
 
