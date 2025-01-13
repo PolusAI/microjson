@@ -94,11 +94,21 @@ The module:
 ::: microjson.microjson2vt.microjson2vt.MicroJsonVt
     :docstring:
 
-## Tilewriter module
+## TileWriter module
 
-The Tilewriter module is a helper module that can be used to generate binary tiles from a large MicroJSON file, my utilizing both microjson2vt and vt2pbf.
+The TileWriter module is a helper module that can be used to generate binary tiles from a large MicroJSON file, my utilizing both microjson2vt and vt2pbf.
 ::: microjson.tilewriter
     :docstring:
+
+An example of how to use the TileWriter module is located in the `src/microjson/examples/tiling.py` file of the repository. The example demonstrates how to generate binary tiles from a large MicroJSON file.
+
+## TileReader module
+
+Correspondingly, the TileReader module is a helper module that can be used to read binary tiles and convert them back to MicroJSON objects.
+::: microjson.tilereader
+    :docstring:
+
+An example of how to use the TileReader module is located in the `src/microjson/examples/readtiles.py` file of the repository. The example demonstrates how to read binary tiles and convert them back to MicroJSON objects.
 
 ## TileJSON for MicroJSON example with Vector Layers
 
