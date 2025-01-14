@@ -51,7 +51,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"id"`: (Optional) A unique identifier for this feature.
 - `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
 - `"parentId"`: (Optional) A reference to the parent feature, e.g. the id of the feature that this feature is a part of.
-- `"feeatureClass"`: (Optional) A string indicating the class of the feature, e.g. "cell", "nucleus", "mitochondria", etc.
+- `"featureClass"`: (Optional) A string indicating the class of the feature, e.g. "cell", "nucleus", "mitochondria", etc.
 
 
 #### Special Feature Objects
