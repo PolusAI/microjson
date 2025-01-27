@@ -51,7 +51,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"id"`: (Optional) A unique identifier for this feature.
 - `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
 - `"parentId"`: (Optional) A reference to the parent feature, e.g. the id of the feature that this feature is a part of.
-- `"feeatureClass"`: (Optional) A string indicating the class of the feature, e.g. "cell", "nucleus", "mitochondria", etc.
+- `"featureClass"`: (Optional) A string indicating the class of the feature, e.g. "cell", "nucleus", "mitochondria", etc.
 
 
 #### Special Feature Objects
@@ -85,18 +85,24 @@ A multiscale object represents the choice of axes (2-5D) and potentially their t
 - `"axes"`: Representing the choice of axes as an array of Axis objects.
 
 It may contain either of, but NOT both of the following properties:
+
 - `"coordinateTransformations"`: Representing the set of coordinate transformations that should be applied to the numerical data in order to arrive to the actual size of the object described. It MUST be an array of objects, each object representing a coordinate transformation. Each object MUST have properties as follows:
+
     - `"type"`: Representing the type of the coordinate transformation. Currently supported types are `"identity"`, `"scale"`, and `"translate"`. If the type is `"scale"`, the object MUST have the property `"scale"`, representing the scaling factor. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"translate"`, the object MUST have the property `"translate"`, representing the translation vector. It MUST be an array of numbers, with the number of elements equal to the number of axes in the coordinate system. If the type is `"identity"`, the object MUST NOT have any other properties.
-- `"transformationMatrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
+    - `"transformationMatrix"`: Representing the transformation matrix from the coordinate system of the image to the coordinate system of the MicroJSON object. It MUST be an array of arrays of numbers, with the number of rows equal to the number of axes in the coordinate system, and the number of columns equal to the number of axes in the image coordinate system. The transformation matrix MUST be invertible.
 
 
 ### Axis Object
 
-Together with the other axes in the axes array, an axis object represents the coordinate system of the MicroJSON object (2D-5D)
+
+Together with the other axes in the axes array, an axis object represents the choice of aces of the MicroJSON object (2D-5D)
 It MUST have the following properties:
+
 - `"name"`: Representing the name of the axis. It MUST be a string.
+
 It may contain the following properties:
-- `"unit"`: Representing the units of the corresponding axis of the geometries in the MicroJSON object. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
+
+- `"unit"`: Representing the units of the corresponding axis in the axes property. It MUST be an array with the elements having any of the following values: `[“angstrom", "attometer", "centimeter", "decimeter", "exameter", "femtometer", "foot", "gigameter", "hectometer", "inch", "kilometer", "megameter", "meter", "micrometer", "mile", "millimeter", "nanometer", "parsec", "petameter", "picometer", "terameter", "yard", "yoctometer", "yottameter", "zeptometer", "zettameter“]`
 - `"description"`: A string describing the axis.
 
 
