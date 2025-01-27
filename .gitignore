@@ -1,4 +1,6 @@
 poetry.lock
+tmp*
+dist/*
 src/microjson/__pycache__/
 tests/__pycache__/
 tiles/
