@@ -9,4 +9,9 @@ tiles/
 */__pycache__/
 *.pyc
 .vscode/
+dist/
+.mypy_cache/
+.hintrc
+*.zip
+testdata/
 

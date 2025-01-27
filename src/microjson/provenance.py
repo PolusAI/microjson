@@ -44,4 +44,3 @@ class WorkflowCollection(BaseModel):
     """WorkflowCollection object representing a collection of workflows"""
     type: Literal["WorkflowCollection"]
     workflows: List[Workflow]
-

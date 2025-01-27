@@ -21,8 +21,9 @@ def convert(data, options):
     bounds = options.get('bounds')
     if projector is None:
         projector = CartesianProjector(
-            options.get('bounds')) if bounds is not None else MercatorProjector()
-        
+            options.get('bounds')) if bounds is not None else \
+            MercatorProjector()
+
     return projector.convert(data, options)
 
 
@@ -51,6 +52,11 @@ class AbstractProjector(ABC):
                     features,
                     data.get('features')[i],
                     options, i)
+                # check that geometry is not empty
+                if len(features[-1].get('geometry')) == 0:
+                    # remove feature with index i
+                    features.pop()
+
         elif data.get('type') == 'Feature':
             self.convert_feature(features, data, options)
         else:
@@ -66,13 +72,16 @@ class AbstractProjector(ABC):
 
         if coords is not None and len(coords) == 0:
             return
-        
+
         type_ = geojson.get('geometry').get('type')
         tolerance = math.pow(options.get(
-            'tolerance') / ((1 << options.get('maxZoom')) * options.get('extent')), 2)
+            'tolerance') / ((1 << options.get('maxZoom')) * options.get(
+                'extent')), 2)
         geometry = Slice([])
         id_ = geojson.get('id')
-        if options.get('promoteId', None) is not None and geojson.get('properties', None) is not None and 'promoteId' in geojson.get('properties'):
+        if options.get('promoteId', None) is not None and geojson.get(
+            'properties', None) is not None and 'promoteId' in geojson.get(
+                'properties'):
             id_ = geojson['properties'][options.get('promoteId')]
         elif options.get('generateId', False):
             id_ = index if index is not None else 0
@@ -174,7 +183,7 @@ class CartesianProjector(AbstractProjector):
 
     def project_y(self, y):
         return (y - self.bounds[1]) / (self.bounds[3] - self.bounds[1])
-    
+
 
 class MercatorProjector(AbstractProjector):
     def project_x(self, x):

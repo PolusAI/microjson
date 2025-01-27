@@ -47,38 +47,5 @@
             "ref": "s3://mybucket/myfile.tif",
             "featureClass": "cellpath"
         }
-    ],
-    "multiscale": {
-        "axes": [
-            {
-                "name": "x",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "x-axis"
-            },
-            {
-                "name": "y",
-                "unit": "micrometer",
-                "type": "space",
-                "description": "y-axis"
-            }
-        ],
-        "transformationMatrix": [
-            [
-                1.0,
-                0.0,
-                0.0
-            ],
-            [
-                0.0,
-                1.0,
-                0.0
-            ],
-            [
-                0.0,
-                0.0,
-                0.0
-            ]
-        ]
-    }
+    ]
 }

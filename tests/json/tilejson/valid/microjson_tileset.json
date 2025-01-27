@@ -34,5 +34,38 @@
 
         }
     ],
-    "fillzoom": 3
+    "fillzoom": 3,
+    "multiscale": {
+        "axes": [
+            {
+                "name": "x",
+                "unit": "micrometer",
+                "type": "space",
+                "description": "x-axis"
+            },
+            {
+                "name": "y",
+                "unit": "micrometer",
+                "type": "space",
+                "description": "y-axis"
+            }
+        ],
+        "transformationMatrix": [
+            [
+                1.0,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                1.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    }
 }

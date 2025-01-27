@@ -2,13 +2,9 @@
 
 This guide demonstrates how to designate metadata in MicroJSON using the `properties` field in the `Feature` class. The `properties` field is used to store metadata related to a feature. This guide provides examples of how to populate these fields in both JSON and Python.
 
-## Properties Class Overview
-
-In MicroJSON, metadata related to a feature is stored in the `Properties` class. This class has 
-
 Now, let's explore an example to understand how these fields can be populated in both JSON and Python.
 
-### JSON Example
+## JSON Example
 
 ```json
 {
@@ -40,7 +36,7 @@ Now, let's explore an example to understand how these fields can be populated in
 }
 ```
 
-### Python Example
+## Python Example
 
 ```python
 from microjson.model import MicroFeature, Properties

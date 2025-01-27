@@ -18,8 +18,8 @@ class Point(BaseModel):
     bbox: Optional[List[float]] = Field(None, min_length=4, title='Bbox')
     type: Type = Field(..., title='Type')
     coordinates: List[float] = Field(...,
-                                     max_length=3, 
-                                     min_length=2, 
+                                     max_length=3,
+                                     min_length=2,
                                      title='Coordinates')
 
 

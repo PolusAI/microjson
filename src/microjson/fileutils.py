@@ -1,5 +1,6 @@
 import os
 
+
 def gather_example_files(directory) -> list:
     """
     Gather all the .json files in a directory and its subdirectories.

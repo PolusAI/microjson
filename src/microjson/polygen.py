@@ -1,6 +1,3 @@
-# Model for generating a sample MicroJSON file with polygons
-
-import geojson
 import random
 import math
 import string
@@ -8,7 +5,6 @@ from shapely.geometry import MultiPoint
 from shapely.geometry.polygon import orient
 from typing import List
 import microjson.model as mj
-import json
 
 
 def generate_convex_polygon(x0, y0, x1, y1, num_vertices) -> List[float]:
@@ -140,7 +136,6 @@ def generate_polygons(grid_size, cell_size, min_vertices, max_vertices,
 
             # Base properties
             base_properties = {
-                "id": int(f"{i}{j}"),
                 "num_vertices": len(coordinates[0]),
             }
 
@@ -151,15 +146,12 @@ def generate_polygons(grid_size, cell_size, min_vertices, max_vertices,
                 type="Feature",
                 geometry=mj.Polygon(
                     type="Polygon",
-                    coordinates=coordinates
+                    coordinates=coordinates  # type: ignore
                 ),
+                id=int(f"{i}{j}"),
                 properties=properties
             )
             features.append(feature)
-    #
-    # Write the feature collection to a new file
-    #
-            
     # create microjson root object and validate it
     mjfc = mj.MicroFeatureCollection(
         properties={},

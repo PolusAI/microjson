@@ -10,8 +10,8 @@ This document describes the Pydantic models used for GeoJSON and MicroJSON objec
 
 ### Base Objects
 
-
 ### Geometry Types
+
 Uses geojson-pydantic models for GeoJSON geometry types, included here for reference. Please refer to the [geojson-pydantic documentation](https://developmentseed.org/geojson-pydantic/) for more information.
 
 #### Point
@@ -38,32 +38,19 @@ Represents a GeoJSON Polygon object.
 
 Represents a GeoJSON MultiPolygon object.
 
-
 ### Compound Objects
 
-#### Multiscale
-
-A coordinate system for MicroJSON features or feature collections.
-
-::: microjson.model.Multiscale
-
 #### GeometryCollection
 
-A coordinate system for MicroJSON features or feature collections.
-
-::: microjson.model.Multiscale
-
-#### GeometryCollection
-
-A collection of multiple geometries. From geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
+A collection of multiple geometries. From [geojson-pydantic](https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### Feature
 
-Represents a GeoJSON feature object, from geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
+Represents a GeoJSON feature object, from [geojson-pydantic](https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### FeatureCollection
 
-Represents a GeoJSON feature collection, from geojson-pydantic(https://developmentseed.org/geojson-pydantic/), included here for reference.
+Represents a GeoJSON feature collection, from [geojson-pydantic](https://developmentseed.org/geojson-pydantic/), included here for reference.
 
 #### GeoJSON
 
