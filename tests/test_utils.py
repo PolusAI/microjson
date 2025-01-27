@@ -6,14 +6,14 @@ import shutil
 import tempfile
 from pathlib import Path
 from typing import Union
-import numpy as np
-from pydantic import ValidationError
 import pytest
-import skimage as sk
+
 HAS_BFIO = False
 try:
     import bfio
     HAS_BFIO = True
+    import numpy as np
+    import skimage as sk
 except ImportError:
     pass
 

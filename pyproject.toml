@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "microjson"
-version = "0.1.11"
+version = "0.2.0"
 description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
 readme = "README_short.md"
 authors = ["Bengt Ljungquist <bengt.ljungquist@nextonicsolutions.com>"]
@@ -28,15 +28,17 @@ where = ["src"]
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
 pydantic = "^2.3.0"
-scikit-image = "0.20.0"
 geojson-pydantic = "^1.0.2"
+jsonschema = "^4.0.0"
 geojson2vt = "^1.0.1"
 vt2pbf = "^0.1.5"
 protobuf = "^4.25.3"
 geojson = "^3.1.0"
 shapely = "^2.0.6"
 
-
+[tool.poetry.dependencies.scikit-image]
+version = "^0.20.0"
+optional = true
 
 [tool.poetry.dependencies.bfio]     
 version = "2.4.3"
@@ -44,15 +46,19 @@ extras = ["all"]
 optional = true
 
 [tool.poetry.dependencies.scipy]     
-version = ">=1.8,<1.9.2"
+version = "^1.9.1"
 optional = true
 
 [tool.poetry.dependencies.filepattern] 
 version = "^2.0.1"
 optional = true
 
-[tool.poetry.dependencies.vaex]      
-version = "^4.17.0"
+[tool.poetry.dependencies.vaex-core]      
+version = "^4.8.0"
+optional = true
+
+[tool.poetry.dependencies.matplotlib]
+version = "^3.5.1"
 optional = true
 
 [tool.poetry.extras]
@@ -60,7 +66,9 @@ all = [
     "bfio", 
     "scipy", 
     "filepattern", 
-    "vaex"
+    "vaex-core",
+    "scikit-image",
+    "matplotlib",
 ]
 
 [tool.poetry.dev-dependencies]
@@ -80,7 +88,7 @@ mkdocstrings = "^0.23.0"
 testpaths = ["tests/"]
 
 [tool.bumpver]
-current_version = "0.1.11"
+current_version = "0.2.0"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
