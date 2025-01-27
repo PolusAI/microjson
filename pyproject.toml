@@ -25,15 +25,17 @@ ipykernel = "^6.27.1"
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
 pydantic = "^2.3.0"
-scikit-image = "0.20.0"
 geojson-pydantic = "^1.0.2"
+jsonschema = "^4.0.0"
 geojson2vt = "^1.0.1"
 vt2pbf = "^0.1.5"
 protobuf = "^4.25.3"
 geojson = "^3.1.0"
 shapely = "^2.0.6"
 
-
+[tool.poetry.dependencies.scikit-image]
+version = "^0.20.0"
+optional = true
 
 [tool.poetry.dependencies.bfio]     
 version = "2.4.3"
@@ -48,8 +50,12 @@ optional = true
 version = "^2.0.1"
 optional = true
 
-[tool.poetry.dependencies.vaex]      
-version = "^4.17.0"
+[tool.poetry.dependencies.vaex-core]      
+version = "^4.8.0"
+optional = true
+
+[tool.poetry.dependencies.matplotlib]
+version = "^3.5.1"
 optional = true
 
 [tool.poetry.extras]
@@ -57,7 +63,9 @@ all = [
     "bfio", 
     "scipy", 
     "filepattern", 
-    "vaex"
+    "vaex-core",
+    "scikit-image",
+    "matplotlib",
 ]
 
 [tool.poetry.dev-dependencies]
