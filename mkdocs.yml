@@ -51,6 +51,7 @@ nav:
     - About MicroJSON: 'about.md'
     - License: 'license.md'
     - Roadmap: 'roadmap.md'
+    - Integration with OME: 'ome.md'
 
   - GitHub: https://github.com/polusai/microjson
   - Pypi: https://pypi.org/project/microjson/

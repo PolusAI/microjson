@@ -3,6 +3,7 @@
 In this tutorial, we explain how a Python script is used to convert a pandas DataFrame into a MicroJSON FeatureCollection object.
 
 ## Example dataframe to MicroJSON conversion
+
 ::: microjson.examples.df_to_microjson.df_to_microjson
     :docstring:
 
@@ -23,7 +24,9 @@ Here's a breakdown of the steps involved:
 4. **Create a FeatureCollection Object**: Finally, it aggregates all the features into a MicroJSON `FeatureCollection` object, including the calculated value ranges and other optional metadata.
 
 ## Example dataframe creation, conversion and MicroJSON output
+
 Below, we convert a pandas DataFrame into a MicroJSON FeatureCollection object. It includes an example of creating a DataFrame with two features, one Point and one Polygon, and converting it into a FeatureCollection model using the `df_to_microjson` function as described above, and then serializing the model to a JSON string.
+
 ```python
 if __name__ == "__main__":
     # Example DataFrame with two features: one Point and one Polygon

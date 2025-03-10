@@ -1,5 +1,7 @@
 # MicroJSON Examples
+
 ## Basic MicroJSON
+
 This JSON file demonstrates how MicroJSON can be used to define and describe different structures related to imaging, such as cells and their nuclei, including their spatial relationships, identifiers, labels, and color representations.
 
 ```json
@@ -30,40 +32,7 @@ This JSON file demonstrates how MicroJSON can be used to define and describe dif
             "ratioInfectivity": [0.1, 0.2, 0.3, 0.4, 0.5]
         }
       }
-    ],
-    "multiscale": {
-      "axes": [
-          {
-              "name": "x",
-              "unit": "micrometer",
-              "type": "space",
-              "description": "x-axis"
-          },
-          {
-              "name": "y",
-              "unit": "micrometer",
-              "type": "space",
-              "description": "y-axis"
-          }
-      ],
-      "transformationMatrix": [
-          [
-              1.0,
-              0.0,
-              0.0
-          ],
-          [
-              0.0,
-              1.0,
-              0.0
-          ],
-          [
-              0.0,
-              0.0,
-              0.0
-          ]
-      ]
-    }
+    ]
   }
   
 ```
