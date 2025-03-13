@@ -30,7 +30,6 @@ ipykernel = "^6.27.1"
 [tool.poetry.dependencies]
 python = ">=3.9.15,<3.12"
 pydantic = "^2.3.0"
-scikit-image = "0.20.0"
 geojson-pydantic = "^1.2.0"
 geojson2vt = "^1.0.1"
 protobuf = "^5.29.3"
