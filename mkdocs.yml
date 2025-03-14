@@ -47,6 +47,7 @@ nav:
   - Extensions:
     - Provenance in MicroJSON: 'provenance.md'
     - MicroJSON tiling: 'tiling.md'
+    - Tiling Demo (Notebook): 'tiling_demo.md'
   - About:
     - About MicroJSON: 'about.md'
     - License: 'license.md'
