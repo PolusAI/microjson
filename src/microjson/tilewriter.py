@@ -289,6 +289,11 @@ class TileWriter (TileHandler):
             elif self.parquet:
                 # encoded_data = pd.DataFrame(tile_data)
                 encoded_data = gpd.GeoDataFrame(tile_data)
+
+                # drop metadata columns
+                encoded_data['new_geometry'] = encoded_data['features'].apply(lambda x: x['geometry'])
+                encoded_data = encoded_data[['new_geometry']]
+
             else:
                 encoded_data = json.dumps(tile_data)
 
