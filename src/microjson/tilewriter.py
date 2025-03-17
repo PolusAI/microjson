@@ -292,6 +292,7 @@ class TileWriter (TileHandler):
 
                 # drop metadata columns
                 encoded_data['new_geometry'] = encoded_data['features'].apply(lambda x: x['geometry'])
+                # encoded_data['Label'] = encoded_data['features'].apply(lambda x: x['Label'])
                 encoded_data = encoded_data[['new_geometry']]
 
             else:
