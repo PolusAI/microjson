@@ -14,6 +14,9 @@ from .vt2pbf import vt2pbf
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+import pandas as pd
+import geopandas as gpd
+
 
 def getbounds(microjson_file: str, square: bool = False) -> List[float]:
     """
@@ -160,11 +163,14 @@ class TileWriter (TileHandler):
 
             # Save the tile data (this assumes tile_data is already in the
             # correct format, e.g., PBF or JSON)
-            with open(
-                tile_path,
-                'wb' if tile_path.endswith('.pbf') else 'w'
-            ) as f:
-                f.write(tile_data)
+            if tile_path.endswith('.parquet'):
+                tile_data.to_parquet(tile_path)
+            else:
+                with open(
+                    tile_path,
+                    'wb' if tile_path.endswith('.pbf') else 'w'
+                ) as f:
+                    f.write(tile_data)
 
             # return the path to the saved tile
             return tile_path
@@ -258,12 +264,39 @@ class TileWriter (TileHandler):
 
             # add name to the tile_data
             tile_data["name"] = "tile"
+
+            # print('tile_data before encoding')
+            # print(tile_data.keys())
+            # print(json.dumps(tile_data['features']))
+
+            # convert this dictionary to a geodataframe using gpd.GeoDataFrame.from_features
+            # tmp = gpd.GeoDataFrame.from_features(tile_data['features'])
+            # print(tmp)
+
+            # print('-------------------------')
+            # print('-------------------------')
+
+            # print('testing geopandas!')
+            # gdf = gpd.GeoDataFrame(tile_data)
+            # print(gdf)
+
+            # print('self.pbf', self.pbf)
+            # print('self.parquet', self.parquet)
+
             if self.pbf:
                 # Using vt2pbf to encode tile data to PBF
                 encoded_data = vt2pbf(tile_data)
+            elif self.parquet:
+                # encoded_data = pd.DataFrame(tile_data)
+                encoded_data = gpd.GeoDataFrame(tile_data)
             else:
-
                 encoded_data = json.dumps(tile_data)
+
+            # print('self.tile_json.tiles[0]')
+            # print(self.tile_json.tiles[0])
+
+            # print('type(encoded_data)')
+            # print(type(encoded_data))
 
             generated_tiles.append(save_tile(
                 encoded_data, z, x, y, self.tile_json.tiles[0]))
