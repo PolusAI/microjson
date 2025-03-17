@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!-- This example demonstrates how to load and display vector tiles in Leaflet using the Leaflet.VectorGrid plugin. -->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Simple Vector Tiles with L.CRS.Simple</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <style>
+        #map {
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.vectorgrid/dist/Leaflet.VectorGrid.js"></script>
+    <script>
+        // Define custom CRS
+        var customCRS = L.extend({}, L.CRS.Simple, {
+            transformation: new L.Transformation(1, 0, 1, 0),
+            scale: function (zoom) {
+                return Math.pow(2, zoom);
+            },
+            zoom: function (scale) {
+                return Math.log(scale) / Math.LN2;
+            }
+        });
+
+        // Create map with custom CRS
+        var map = L.map('map', {
+            crs: customCRS,
+            minZoom: 0,
+            maxZoom: 8,
+            center: [50, 50], // Center the map to match the coordinate system
+            zoom: 2,
+            zoomSnap: 1,
+            zoomDelta: 1,
+            maxBounds: [[0, 0], [200, 200]],  // Set the bounds to fit the coordinate system
+            noWrap: true
+        });
+        // Define vector tile options
+        var vectorTileOptions = {
+            rendererFactory: L.canvas.tile,
+            vectorTileLayerStyles: {
+                geojsonLayer: {
+                    fillColor: '#ffff00',
+                    fillOpacity: 1,
+                    weight: 1,
+                    opacity: 0.5,
+                    color: '#000000',
+                    fill: true
+                }
+            },
+            interactive: true,
+            noWrap: true,
+        };
+
+        // Add vector tile layer
+
+        console.log()
+        var vectorGrid = L.vectorGrid.protobuf('http://localhost:8080/tiles/{z}/{x}/{y}.pbf', vectorTileOptions).addTo(map);
+
+        // Variable to track the currently active tooltip
+        let activeTooltip = null;
+
+        // Function to handle mouseover event
+        function onFeatureMouseOver(e) {
+        const properties = e.layer.properties;
+        const latlng = e.latlng;
+
+        // If there's already an active tooltip, remove it
+        if (activeTooltip) {
+            map.removeLayer(activeTooltip);
+        }
+
+        // Create a new tooltip
+        const tooltipContent = Object.entries(properties)
+            .map(([key, value]) => `<strong>${key}:</strong> ${value}`)
+            .join('<br>');
+
+        activeTooltip = L.tooltip({
+            permanent: false,
+            direction: 'auto',
+            className: 'feature-tooltip',
+        })
+            .setContent(tooltipContent)
+            .setLatLng(latlng)
+            .addTo(map);
+        }
+
+        // Function to handle mousemove event
+        function onFeatureMouseMove(e) {
+        const latlng = e.latlng;
+
+        if (activeTooltip) {
+            activeTooltip.setLatLng(latlng); // Update the tooltip position
+        }
+        }
+
+        // Function to handle mouseout event
+        function onFeatureMouseOut(e) {
+        if (activeTooltip) {
+            map.removeLayer(activeTooltip); // Remove the tooltip
+            activeTooltip = null; // Reset the active tooltip
+        }
+        }
+
+        // Attach event handlers to the vector grid
+        vectorGrid.on('mouseover', onFeatureMouseOver);
+        vectorGrid.on('mousemove', onFeatureMouseMove);
+        vectorGrid.on('mouseout', onFeatureMouseOut);
+
+        // Optional: Handle click events
+        vectorGrid.on('click', function (e) {
+            console.log('Clicked feature properties:', e.layer.properties);
+        });
+
+        // Error handling for tile loading
+        vectorGrid.on('tileerror', function (error) {
+            console.error('Tile loading error:', error);
+        });
+
+        vectorGrid.on('click', function (e) {
+            console.log(e.layer.properties); // Log properties of the clicked feature
+        });
+    </script>
+</body>
+
+</html>

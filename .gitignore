@@ -14,4 +14,4 @@ dist/
 .hintrc
 *.zip
 testdata/
-
+*.ipynb_checkpoints

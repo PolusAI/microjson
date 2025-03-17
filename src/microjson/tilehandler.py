@@ -7,10 +7,11 @@ class TileHandler:
     """
     tile_json: TileModel
     pbf: bool
+    parquet: bool
     id_counter: int
     id_set: set
 
-    def __init__(self, tileobj: TileModel, pbf: bool = False):
+    def __init__(self, tileobj: TileModel, pbf: bool = False, parquet: bool = False):
         """
         Initialize the TileHandler with a TileJSON configuration and optional
         PBF flag
@@ -23,5 +24,6 @@ class TileHandler:
         # read the tilejson file to string
         self.tile_json = tileobj
         self.pbf = pbf
+        self.parquet = parquet
         self.id_counter = 0
         self.id_set = set()
