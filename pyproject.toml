@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "microjson"
-version = "0.4.1"
+version = "0.4.2"
 description = "MicroJSON is a library for validating, parsing, and manipulating MicroJSON data."
 readme = "README_short.md"
 authors = ["Bengt Ljungquist <bengt.ljungquist@nextonicsolutions.com>"]
@@ -45,7 +45,7 @@ version = "^0.20.0"
 optional = true
 
 [tool.poetry.dependencies.bfio]
-version = "2.4.5"
+version = "0.4.2"
 extras = ["all"]
 optional = true
 
@@ -95,7 +95,7 @@ testpaths = ["tests/"]
 pythonpath = ["src/"]
 
 [tool.bumpver]
-current_version = "0.4.1"
+current_version = "0.4.2"
 version_pattern = "MAJOR.MINOR.PATCH"
 commit_message  = "Bump version {old_version} -> {new_version}"
 commit          = true
