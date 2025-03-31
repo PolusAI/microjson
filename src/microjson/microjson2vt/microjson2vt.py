@@ -5,12 +5,104 @@
 # Modifications by PolusAI, 2024
 
 import logging
+import math
 from .convert import convert
 from .clip import clip
 from .transform import transform_tile
 from .tile import create_tile
 from .simplify import simplify
 
+
+def default_tolerance_func(z, options):
+    """Calculates the default simplification tolerance based on zoom level."""
+    # Ensure options exist and have defaults if necessary
+    tolerance_val = options.get('tolerance', 50) # Use default if not present
+    extent_val = options.get('extent', 4096)     # Use default if not present
+    denominator = (1 << z) * extent_val
+    if denominator == 0:
+         # Avoid division by zero, return a very small tolerance
+         # Consider if raising an error might be better depending on context
+         return 1e-12
+    return (tolerance_val / denominator) ** 2
+
+
+# --- Alternative Tolerance Functions ---
+
+def linear_tolerance_func(z, options):
+    """Linear scaling: tolerance decreases linearly with map scale."""
+    tolerance_val = options.get('tolerance', 50)
+    extent_val = options.get('extent', 4096)
+    denominator = (1 << z) * extent_val
+    if denominator == 0:
+        return 1e-12 # Avoid division by zero
+    # Note: No square here compared to default
+    return tolerance_val / denominator
+
+def constant_tolerance_func(z, options):
+    """Constant tolerance relative to extent (same simplification regardless of zoom)."""
+    tolerance_val = options.get('tolerance', 50)
+    extent_val = options.get('extent', 4096)
+    if extent_val == 0:
+        return 1e-12 # Avoid division by zero
+    # Apply the base tolerance scaled by extent, squared like the default, but without zoom factor
+    return (tolerance_val / extent_val) ** 2
+    # Alternative: return a fixed value if extent scaling is not desired e.g. options.get('tolerance', 50)
+
+def slow_exponential_tolerance_func(z, options, exponent=1.5):
+    """Slower exponential decay (exponent < 2). Tune exponent as needed."""
+    tolerance_val = options.get('tolerance', 50)
+    extent_val = options.get('extent', 4096)
+    denominator = (1 << z) * extent_val
+    if denominator == 0:
+        return 1e-12
+    return (tolerance_val / denominator) ** exponent
+
+def logarithmic_tolerance_func(z, options):
+    """Logarithmic scaling: tolerance decreases slowly, especially at high zooms."""
+    tolerance_val = options.get('tolerance', 50)
+    extent_val = options.get('extent', 4096)
+    # Use log(z + 2) to avoid log(0) or log(1) issues at low zooms
+    log_factor = math.log(z + 2)
+    if extent_val == 0 or log_factor == 0:
+         return 1e-12 # Avoid division by zero
+    # Example scaling - adjust as needed
+    return tolerance_val / (log_factor * extent_val)
+
+def step_tolerance_func(z, options):
+    """Step function: different tolerance levels for different zoom ranges."""
+    base_tolerance = options.get('tolerance', 50)
+    extent = options.get('extent', 4096)
+    index_max_zoom = options.get('indexMaxZoom', 5)
+    max_zoom = options.get('maxZoom', 8)
+
+    # Define zoom thresholds and corresponding multipliers
+    if z < index_max_zoom - 1: # Low zooms (e.g., < 4 if indexMaxZoom is 5)
+        effective_tolerance = base_tolerance * 4
+    elif z < max_zoom - 1: # Mid zooms (e.g., 4-6 if maxZoom is 8)
+        effective_tolerance = base_tolerance * 1.5
+    else: # High zooms (e.g., >= 7 if maxZoom is 8)
+        effective_tolerance = base_tolerance * 0.5
+
+    # Apply scaling based on extent and zoom, similar to default
+    denominator = (1 << z) * extent
+    if denominator == 0:
+        return 1e-12
+    return (effective_tolerance / denominator) ** 2
+    # Alternative: Return a tolerance based only on the step, scaled by extent
+    # if extent == 0: return 1e-12
+    # return (effective_tolerance / extent) ** 2
+
+
+# --- End Alternative Tolerance Functions ---
+
+AVAILABLE_TOLERANCE_FUNCTIONS = {
+    "default": default_tolerance_func,
+    "linear": linear_tolerance_func,
+    "constant": constant_tolerance_func,
+    "slow_exponential": slow_exponential_tolerance_func,
+    "logarithmic": logarithmic_tolerance_func,
+    "step": step_tolerance_func,
+}
 
 def get_default_options():
     return {
@@ -24,7 +116,8 @@ def get_default_options():
         "promoteId": None,        # name of a feature property to be promoted
         "generateId": False,      # whether to generate feature ids.
         "projector": None,        # which projection to use
-        "bounds": None            # [west, south, east, north]
+        "bounds": None,           # [west, south, east, north]
+        "tolerance_function": default_tolerance_func # function to calculate tolerance per zoom
     }
 
 
@@ -46,6 +139,22 @@ class MicroJsonVt:
             level=log_level, format='%(asctime)s %(levelname)s %(message)s')
         options = self.options = extend(get_default_options(), options)
 
+        # Validate and resolve tolerance_function
+        tolerance_setting = options.get('tolerance_function')
+        if isinstance(tolerance_setting, str):
+            if tolerance_setting in AVAILABLE_TOLERANCE_FUNCTIONS:
+                options['tolerance_function'] = AVAILABLE_TOLERANCE_FUNCTIONS[tolerance_setting]
+            else:
+                raise ValueError(
+                    f"Invalid tolerance function key: '{tolerance_setting}'. "
+                    f"Available keys: {list(AVAILABLE_TOLERANCE_FUNCTIONS.keys())}"
+                )
+        elif not callable(tolerance_setting):
+            raise TypeError(
+                "Option 'tolerance_function' must be a callable function or a valid string key."
+            )
+        # If it's already callable, we use it directly.
+
         logging.debug('preprocess data start')
 
         if options.get('maxZoom') < 0 or options.get('maxZoom') > 24:
@@ -66,10 +175,12 @@ class MicroJsonVt:
             for feature in features:
                 feature[f'geometry_z{z}'] = feature['geometry'].copy()
 
+        tolerance_func = options['tolerance_function'] # Resolved above
+
         # Simplify features for each zoom level
         for z in range(options.get('maxZoom') + 1):
-            tolerance = (options.get('tolerance') / ((1 << z) * options.get(
-                'extent'))) ** 2
+            # Calculate tolerance using the provided or default function
+            tolerance = tolerance_func(z, options)
             for feature in features:
                 geometry_key = f'geometry_z{z}'
                 # check feature type only simplify Polygon

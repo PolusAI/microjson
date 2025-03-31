@@ -129,7 +129,8 @@ class TileWriter (TileHandler):
 
     def microjson2tiles(self,
                         microjson_data_path: Union[str, Path],
-                        validate: bool = False
+                        validate: bool = False,
+                        tolerance_key: str = "default"
                         ) -> List[str]:
         """
         Generate tiles in form of JSON or PBF files from MicroJSON data.
@@ -238,7 +239,8 @@ class TileWriter (TileHandler):
             'maxZoom': maxzoom,  # max zoom in the final tileset
             'indexMaxZoom': self.tile_json.maxzoom,  # tile index max zoom
             'indexMaxPoints': 0,  # max number of points per tile, 0 if none
-            'bounds': self.tile_json.bounds
+            'bounds': self.tile_json.bounds,
+            'tolerance_function': tolerance_key # Pass the string key
         }
 
         # Convert GeoJSON to intermediate vector tiles
