@@ -42,7 +42,7 @@ MicroJSON is compatible with any application or tool that process JSON data. Its
 
 ## Examples
 
-Refer to the examples foler to see samples of MicroJSON files as well as a simple parsing example, or the [example in the documentation](docs/example.md)
+Refer to the examples folder to see samples of MicroJSON files as well as a simple parsing example, or the [example in the documentation](docs/example.md)
 
 ## Specification
 

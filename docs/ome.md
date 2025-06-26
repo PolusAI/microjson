@@ -33,7 +33,7 @@ While TileJSON has traditionally been used in 2D applications, there is nothing 
 2. Associate NGFF array chunks with tile indices (z/x/y) derived from spatial transformations, given the NGFF multiscale metadata and the corresponding TileJSON metadata.
 3. A practical observation is that if the multiscale pyramids differs, transformations between the two systems are needed, in addition to what is described above, which could be avoided by using the same multiscale pyramid structure in both systems. This is also valid for the tile size (expressed in the global coordinates), which should be the same in both systems for a specific zoom level.
 4. Layering of data is supported in TileJSON, as the array `vector_layers` in its schema. Layers are thus stored together for each tile, as a contrast to the NGFF, where the layers are stored in separate arrays as labeled images.
-5. The NGFF raster data hierarchy could be expressed with a TileJSON which does not have a vector layer but intead just maps the raster data endpoints as formatted in the field `tiles` in the TileJSON schema.
+5. The NGFF raster data hierarchy could be expressed with a TileJSON which does not have a vector layer but instead just maps the raster data endpoints as formatted in the field `tiles` in the TileJSON schema.
 
 ## Incorporating MicroJSON and Vector Tiles
 
