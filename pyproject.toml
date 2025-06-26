@@ -109,7 +109,7 @@ push            = false
 
 [tool.codespell]
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
-skip = '.git*'
+skip = '.git*,invalid'
 check-hidden = true
 ignore-regex = '^\s*"image/\S+": ".*'
 # ignore-words-list = ''
