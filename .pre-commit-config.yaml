@@ -44,3 +44,9 @@ repos:
       - id: mypy
         additional_dependencies: [types-requests==2.31.0.1]
         args: [--follow-imports=skip]
+  
+  - repo: https://github.com/codespell-project/codespell
+    # Configuration for codespell is in .pre-commit-config.yaml
+    rev: v2.4.1
+    hooks:
+    - id: codespell

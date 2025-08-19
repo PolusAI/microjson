@@ -206,7 +206,7 @@ class OmeMicrojsonModel:
         x: int,
         y: int,
     ) -> tuple[Any, list[list[list[Any]]]]:
-        """Calculate object boundries as series of vertices/points
+        """Calculate object boundaries as series of vertices/points
         forming a polygon."""
         label, coordinates = [], []
         objects = ndimage.measurements.find_objects(label_image)

@@ -21,7 +21,7 @@ The provenance model structure comprises `WorkflowCollection`, `Workflow`, `Arti
 - **Workflow Object:** Captures essential workflow details, including identifiers and descriptive metadata. This metadata links MicroJSON objects to their respective workflows.
 - **Artifact and Artifact Collection Objects:** Represent single files or directories and collections of these, respectively, providing a link between the physical data and the workflows.
 - **Workflow Provenance Object:** Details specific instances of workflow runs, including run identifiers, duration, operator, and the input/output parameters.
-Of these, Workflow, WorkflowCollection, Artifact, and ArtifactCollection can funtion as the top object in the provenance part of a MicroJSON file.
+Of these, Workflow, WorkflowCollection, Artifact, and ArtifactCollection can function as the top object in the provenance part of a MicroJSON file.
 - **MicroJSON Link Object:** Provides a link to a specific MicroJSON object, specifying which parts of the object's properties are pertinent to the workflow run. While this object is required, and the id property is required, the specification of a field in the MicroJSON object is optional. If no field is specified, the entire MicroJSON object is considered to be pertinent to the workflow run or artifact.
 
 ## Data Provenance and MicroJSON Traceability Link

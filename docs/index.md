@@ -40,7 +40,7 @@ A feature object represents a spatially bounded entity associated with propertie
 - `"geometry"`: A geometry object as defined in the section above or a JSON null value.
 - `"properties"`: (Optional) A JSON object containing properties and metadata specific to the feature, or a JSON null value. It consists of key-value pairs, where the key is a string and the value is a any JSON value. The value may be a string, number, array, object.
 - `"id"`: (Optional) A unique identifier for this feature.
-- `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr strcture, e.g. "s3://zarr-demo/store/my_array.zarr".
+- `"ref"`: (Optional) A reference to an external resource, e.g. URI to a zarr structure, e.g. "s3://zarr-demo/store/my_array.zarr".
 - `"parentId"`: (Optional) A reference to the parent feature, e.g. the id of the feature that this feature is a part of.
 - `"feeatureClass"`: (Optional) A string indicating the class of the feature, e.g. "cell", "nucleus", "mitochondria", etc.
 

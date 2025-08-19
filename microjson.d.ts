@@ -247,7 +247,7 @@ export interface MicroFeatureCollection {
   coordinateSystem?: CoordinateSystem | null;
   valueRange?: ValueRange;
   descriptive_fields?: DescriptiveFields;
-  propertie?: Properties | null;
+  property?: Properties | null;
   [k: string]: unknown;
 }
 /**

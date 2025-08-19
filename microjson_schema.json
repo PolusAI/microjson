@@ -469,7 +469,7 @@
                     "default": null,
                     "title": "Descriptive Fields"
                 },
-                "propertie": {
+                "property": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/Properties"
