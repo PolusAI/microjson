@@ -58,8 +58,11 @@ We welcome contributions to the development and enhancement of MicroJSON. Whethe
 
 ## License
 
-MicroJSON is licensed under [MIT License](./LICENSE).
+MicroJSON is primarily licensed under the [MIT License](./LICENSE).
+
+Portions of this project are derived from 'geojson2vt' and are located in 'src/microjson/microjson2vt'.
+These portions are licensed under the [ISC License](./src/microjson/microjson2vt/LICENSE).
 
 ---
 
-This project is maintained by Polus AI. For any queries or further discussion, please contact [contact details].
+This project is maintained by NovaGen Research Fund. For any queries or further discussion, please contact [Novagen](info@novagenresearch.org).
