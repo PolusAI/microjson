@@ -1,13 +1,6 @@
-This project is primarily licensed under the MIT License; see below for details.
-
-Portions of this project are derived from 'geojson2vt' and are located in 'src/microjson/microjson2vt'.
-These portions are licensed under the ISC License. See 'src/microjson/microjson2vt/LICENSE' for details.
-
----
-
 MIT License
 
-Copyright (c) 2023 PolusAI
+Copyright (c) 2025 NovaGen Research Fund
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
