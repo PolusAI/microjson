@@ -1,5 +1,5 @@
 from typing import List, Optional, Union, Dict, Literal
-from enum import Enum
+from enum import StrEnum
 from pydantic import BaseModel, AnyUrl, conlist, RootModel
 from pydantic import StrictStr
 from pathlib import Path
@@ -31,7 +31,7 @@ class TileLayer(BaseModel):
     fielddescriptions: Optional[Dict[str, str]] = None
 
 
-class Unit(Enum):
+class Unit(StrEnum):
     """A unit of measurement"""
 
     ANGSTROM = "angstrom"
@@ -65,7 +65,7 @@ class Unit(Enum):
     DEGREE = "degree"
 
 
-class AxisType(Enum):
+class AxisType(StrEnum):
     """The type of an axis"""
 
     SPACE = "space"
