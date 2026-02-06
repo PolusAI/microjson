@@ -8,7 +8,6 @@ import numpy as np
 import re
 import shutil
 from concurrent.futures import ThreadPoolExecutor
-from concurrent.futures import as_completed
 from itertools import product
 
 import skimage as sk
@@ -114,19 +113,18 @@ class OmeMicrojsonModel:
                             x,
                             y,
                         )
-                        if as_completed(future):  # type: ignore
-                            label, coordinates = future.result()
-            
-                            if len(label) and len(coordinates) > 0:
-                                label = [i + idx for i in range(
-                                    1, len(label) + 1)]
-                                idx = 0
-                                if len(label) == 1:
-                                    idx += label[0]
-                                else:
-                                    idx += label[-1]
-                                self.polygons_to_microjson(
-                                    i, label, coordinates)
+                        label, coordinates = future.result()
+
+                        if len(label) and len(coordinates) > 0:
+                            label = [i + idx for i in range(
+                                1, len(label) + 1)]
+                            idx = 0
+                            if len(label) == 1:
+                                idx += label[0]
+                            else:
+                                idx += label[-1]
+                            self.polygons_to_microjson(
+                                i, label, coordinates)
 
                     else:
                         future = executor.submit(
@@ -135,18 +133,17 @@ class OmeMicrojsonModel:
                             x,
                             y,
                         )
-                        if as_completed(future):  # type: ignore
-                            label, coordinates = future.result()
-                            if len(label) and len(coordinates) > 0:
-                                label = [i + idx for i in range(
-                                    1, len(label) + 1)]
-                                idx = 0
-                                if len(label) == 1:
-                                    idx += label[0]
-                                else:
-                                    idx += label[-1]
-                                self.polygons_to_microjson(
-                                    i, label, coordinates)
+                        label, coordinates = future.result()
+                        if len(label) and len(coordinates) > 0:
+                            label = [i + idx for i in range(
+                                1, len(label) + 1)]
+                            idx = 0
+                            if len(label) == 1:
+                                idx += label[0]
+                            else:
+                                idx += label[-1]
+                            self.polygons_to_microjson(
+                                i, label, coordinates)
 
     def get_line_number(self, filename, target_string) -> int:
         line_number = 0

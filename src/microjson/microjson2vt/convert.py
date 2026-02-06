@@ -33,7 +33,7 @@ class AbstractProjector(ABC):
     Concrete classes should implement the project_x and project_y methods.
 
     """
-    def __init__(self, bounds):
+    def __init__(self, bounds=None):
         self.bounds = bounds
 
     @abstractmethod

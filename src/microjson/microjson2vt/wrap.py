@@ -40,9 +40,9 @@ def shift_feature_coords(features, offset):
         # new_geometry = None
         new_geometry = []
 
-        if type_ == 'Pint' or type_ == 'MultiPint' or type_ == 'LineString':
+        if type_ == 'Point' or type_ == 'MultiPoint' or type_ == 'LineString':
             new_geometry = shift_coords(feature.get('geometry'), offset)
-        elif type_ == 'MultiLineSting' or type_ == 'Polygon':
+        elif type_ == 'MultiLineString' or type_ == 'Polygon':
             new_geometry = []
             for line in feature.get('geometry'):
                 new_geometry.append(shift_coords(line, offset))

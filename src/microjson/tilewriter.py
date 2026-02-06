@@ -54,8 +54,9 @@ def getbounds(microjson_file: str, square: bool = False) -> List[float]:
                                 maxx = max(maxx, coord[0])
                                 maxy = max(maxy, coord[1])
     if square:
-        maxx = max(maxx - minx, maxy - miny) + minx
-        maxy = max(maxx - minx, maxy - miny) + miny
+        side = max(maxx - minx, maxy - miny)
+        maxx = side + minx
+        maxy = side + miny
     return [minx, miny, maxx, maxy]
 
 

@@ -253,7 +253,6 @@ class MicroJsonVt:
 
             if tile is None:
                 # Use simplified geometries for this zoom level
-
                 simplified_features = [
                     {
                         **feature,
@@ -261,14 +260,6 @@ class MicroJsonVt:
                     }
                     for feature in features
                 ]
-
-                self.tiles[id_] = create_tile(features, z, x, y, options)
-                tile = self.tiles[id_]
-                self.tile_coords.append({'z': z, 'x': x, 'y': y})
-
-                key = f'z{z}'
-                self.stats[key] = self.stats.get(key, 0) + 1
-                self.total += 1
 
                 self.tiles[id_] = create_tile(
                     simplified_features, z, x, y, options)
