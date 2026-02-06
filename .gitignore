@@ -15,3 +15,4 @@ dist/
 *.zip
 testdata/
 *.ipynb_checkpoints
+data/

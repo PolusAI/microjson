@@ -41,7 +41,7 @@ def add_feature(tile, feature, tolerance, options):
     tile['maxX'] = max(tile['maxX'], feature['maxX'])
     tile['maxY'] = max(tile['maxY'], feature['maxY'])
 
-    if type_ == 'Point' or type == 'MultiPoint':
+    if type_ == 'Point' or type_ == 'MultiPoint':
         for i in range(0, len(geom), 3):
             simplified.append(geom[i])
             simplified.append(geom[i + 1])
