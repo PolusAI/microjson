@@ -1,0 +1,1564 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Bengt Ljungquist">
+      
+      
+      
+        <link rel="prev" href="../tiling/">
+      
+      
+        <link rel="next" href="../about/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tiling Demo (Notebook) - MicroJSON Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#microjson-tiling-demo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MicroJSON Documentation" class="md-header__button md-logo" aria-label="MicroJSON Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroJSON Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tiling Demo (Notebook)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../example/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../pydantic/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Core Pydantic model
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../provenance/" class="md-tabs__link">
+          
+  
+  
+  Extensions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../about/" class="md-tabs__link">
+          
+  
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://github.com/polusai/microjson" class="md-tabs__link">
+        
+  
+  
+    
+  
+  GitHub
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://pypi.org/project/microjson/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Pypi
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MicroJSON Documentation" class="md-nav__button md-logo" aria-label="MicroJSON Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroJSON Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create model example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata_example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metadata example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pydantic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Pydantic model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extensions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extensions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provenance in MicroJSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroJSON tiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiling Demo (Notebook)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiling Demo (Notebook)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-required-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Required Libraries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#option-1-generate-sample-polygon-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: Generate Sample Polygon Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#option-2-use-existing-microjson-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Use Existing MicroJSON Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualize-the-microjson-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualize the MicroJSON Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extract-fields-ranges-and-enums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extract Fields, Ranges, and Enums
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-vector-layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Define Vector Layers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-bounds-and-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get Bounds and Center
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-tile-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the Tile Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export-tilejson-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export TileJSON Metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generate-vector-tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Vector Tiles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About MicroJSON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration with OME
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/polusai/microjson" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitHub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://pypi.org/project/microjson/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pypi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="microjson-tiling-demo">MicroJSON Tiling Demo</h1>
+<p>This notebook demonstrates how to use the MicroJSON tiling functionality to create vector tiles from MicroJSON data. Vector tiles are a way to efficiently store and serve geospatial data for web mapping applications.</p>
+<h2 id="overview">Overview</h2>
+<p>In this demo, we will:
+1. Generate sample polygon data (or use existing MicroJSON data)
+2. Create a TileJSON specification
+3. Generate vector tiles from the MicroJSON data
+4. Save the tiles and metadata for use in web mapping applications</p>
+<h2 id="import-required-libraries">Import Required Libraries</h2>
+<p>First, let's import the necessary libraries for tiling MicroJSON data.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microjson.tilewriter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TileWriter</span><span class="p">,</span>
+    <span class="n">getbounds</span><span class="p">,</span>
+    <span class="n">extract_fields_ranges_enums</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microjson.tilemodel</span><span class="w"> </span><span class="kn">import</span> <span class="n">TileJSON</span><span class="p">,</span> <span class="n">TileModel</span><span class="p">,</span> <span class="n">TileLayer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microjson.polygen</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_polygons</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</code></pre></div>
+
+<h2 id="option-1-generate-sample-polygon-data">Option 1: Generate Sample Polygon Data</h2>
+<p>If you don't have existing MicroJSON data, we can generate sample polygon data using the <code>generate_polygons</code> function.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Parameters for generating polygons</span>
+<span class="n">GRID_SIZE</span> <span class="o">=</span> <span class="mi">10000</span>  <span class="c1"># Size of the grid</span>
+<span class="n">CELL_SIZE</span> <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># Size of each cell in the grid</span>
+<span class="n">MIN_VERTICES</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Minimum number of vertices per polygon</span>
+<span class="n">MAX_VERTICES</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># Maximum number of vertices per polygon</span>
+
+<span class="c1"># Metadata types and options</span>
+<span class="n">meta_types</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;num_vertices&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">meta_values_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;polytype&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Type1&quot;</span><span class="p">,</span> <span class="s2">&quot;Type2&quot;</span><span class="p">,</span> <span class="s2">&quot;Type3&quot;</span><span class="p">,</span> <span class="s2">&quot;Type4&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Output file path</span>
+<span class="n">microjson_data_path</span> <span class="o">=</span> <span class="s2">&quot;example_generated.json&quot;</span>
+
+<span class="c1"># Generate polygons</span>
+<span class="n">generate_polygons</span><span class="p">(</span>
+    <span class="n">GRID_SIZE</span><span class="p">,</span>
+    <span class="n">CELL_SIZE</span><span class="p">,</span>
+    <span class="n">MIN_VERTICES</span><span class="p">,</span>
+    <span class="n">MAX_VERTICES</span><span class="p">,</span>
+    <span class="n">meta_types</span><span class="p">,</span>
+    <span class="n">meta_values_options</span><span class="p">,</span>
+    <span class="n">microjson_data_path</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated polygon data saved to </span><span class="si">{</span><span class="n">microjson_data_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Generated polygon data saved to example_generated.json
+</code></pre></div>
+
+<h2 id="option-2-use-existing-microjson-data">Option 2: Use Existing MicroJSON Data</h2>
+<p>Alternatively, you can use existing MicroJSON data. Uncomment and modify the following cell to use your own data.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># microjson_data_path = &quot;path/to/your/data.json&quot;</span>
+<span class="c1"># print(f&quot;Using existing MicroJSON data from {microjson_data_path}&quot;)</span>
+</code></pre></div>
+
+<h2 id="visualize-the-microjson-data">Visualize the MicroJSON Data</h2>
+<p>Let's take a look at the structure of our MicroJSON data.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Load and display the first few features of the MicroJSON data</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">microjson_data_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># Display basic information about the data</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of features: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;features&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[]))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Display the first feature (truncated for readability)</span>
+<span class="k">if</span> <span class="s1">&#39;features&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">first_feature</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sample feature:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">first_feature</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)[:</span><span class="mi">500</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nx">Number</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">features</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span>
+
+<span class="nx">Sample</span><span class="w"> </span><span class="nx">feature</span><span class="p">:</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="m m-Double">62.7619624272948</span><span class="p">,</span>
+<span class="w">          </span><span class="m m-Double">9.7445327252005</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="m m-Double">66.55786998050925</span><span class="p">,</span>
+<span class="w">          </span><span class="m m-Double">10.453250162004622</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="m m-Double">86.82803641255592</span><span class="p">,</span>
+<span class="w">          </span><span class="m m-Double">51.64994084555056</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="m m-Double">77.93853896392383</span><span class="p">,</span>
+<span class="w">          </span><span class="m m-Double">68.85236038607228</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="m m-Double">67.57602296868663</span><span class="p">,</span>
+<span class="w">          </span><span class="m m-Double">78.79357410969412</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mi">4</span><span class="o">...</span>
+</code></pre></div>
+
+<h2 id="extract-fields-ranges-and-enums">Extract Fields, Ranges, and Enums</h2>
+<p>For existing MicroJSON data, we can extract field information, value ranges, and enumeration values.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Extract fields, ranges, and enums from the MicroJSON data</span>
+<span class="n">field_names</span><span class="p">,</span> <span class="n">field_ranges</span><span class="p">,</span> <span class="n">field_enums</span> <span class="o">=</span> <span class="n">extract_fields_ranges_enums</span><span class="p">(</span><span class="n">microjson_data_path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracted field names:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">field_names</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracted field ranges:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">field_ranges</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracted field enums:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">field_enums</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">Extracted</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">names</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;num_vertices&#39;</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Number&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;polytype&#39;</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;String&#39;</span><span class="p">}</span>
+
+<span class="n">Extracted</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">ranges</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;num_vertices&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">24</span><span class="p">]}</span>
+
+<span class="n">Extracted</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">enums</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;polytype&#39;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s1">&#39;Type3&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Type2&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Type1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Type4&#39;</span><span class="p">}}</span>
+</code></pre></div>
+
+<h2 id="define-vector-layers">Define Vector Layers</h2>
+<p>Now, let's define the vector layers for our tiles. We'll use the extracted field information.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create a TileLayer using the extracted fields</span>
+<span class="n">vector_layers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">TileLayer</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;polygon-layer&quot;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="o">=</span><span class="n">field_names</span><span class="p">,</span>
+        <span class="n">minzoom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">maxzoom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Layer containing polygon data&quot;</span><span class="p">,</span>
+        <span class="n">fieldranges</span><span class="o">=</span><span class="n">field_ranges</span><span class="p">,</span>
+        <span class="n">fieldenums</span><span class="o">=</span><span class="n">field_enums</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector layer defined with the following properties:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ID: </span><span class="si">{</span><span class="n">vector_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fields: </span><span class="si">{</span><span class="n">vector_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fields</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zoom range: </span><span class="si">{</span><span class="n">vector_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">minzoom</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">vector_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">maxzoom</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="nx">Vector</span><span class="w"> </span><span class="nx">layer</span><span class="w"> </span><span class="nx">defined</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">following</span><span class="w"> </span><span class="nx">properties</span><span class="p">:</span>
+<span class="nx">ID</span><span class="p">:</span><span class="w"> </span><span class="nx">polygon</span><span class="o">-</span><span class="nx">layer</span>
+<span class="nx">Fields</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">&#39;</span><span class="nx">num_vertices</span><span class="err">&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">Number</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">polytype</span><span class="err">&#39;</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">String</span><span class="err">&#39;</span><span class="p">}</span>
+<span class="nx">Zoom</span><span class="w"> </span><span class="nx">range</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span>
+</code></pre></div>
+
+<h2 id="get-bounds-and-center">Get Bounds and Center</h2>
+<p>Next, we'll calculate the bounds of our data to properly configure the tile model.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Get bounds of the data (square=True ensures the bounds form a square)</span>
+<span class="n">maxbounds</span> <span class="o">=</span> <span class="n">getbounds</span><span class="p">(</span><span class="n">microjson_data_path</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bounds: </span><span class="si">{</span><span class="n">maxbounds</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate the center of the bounds</span>
+<span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">maxbounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">maxbounds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">maxbounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">maxbounds</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Center: </span><span class="si">{</span><span class="n">center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Bounds: [5.352408515784582, 5.049442955279417, 9995.190828709661, 9994.887863149157]
+Center: [0, 5000.271618612723, 4999.9686530522185]
+</code></pre></div>
+
+<h2 id="create-the-tile-model">Create the Tile Model</h2>
+<p>Now, let's create the TileModel that will define our tile set.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create output directory for tiles</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;tiles&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Instantiate TileModel with our settings</span>
+<span class="n">tile_model</span> <span class="o">=</span> <span class="n">TileModel</span><span class="p">(</span>
+    <span class="n">tilejson</span><span class="o">=</span><span class="s2">&quot;3.0.0&quot;</span><span class="p">,</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tiles/</span><span class="si">{z}</span><span class="s2">/</span><span class="si">{x}</span><span class="s2">/</span><span class="si">{y}</span><span class="s2">.pbf&quot;</span><span class="p">)],</span>  <span class="c1"># Local path or URL</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example Tile Layer&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A TileJSON example incorporating MicroJSON data&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="n">attribution</span><span class="o">=</span><span class="s2">&quot;Polus AI&quot;</span><span class="p">,</span>
+    <span class="n">minzoom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">maxzoom</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">bounds</span><span class="o">=</span><span class="n">maxbounds</span><span class="p">,</span>
+    <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span>
+    <span class="n">vector_layers</span><span class="o">=</span><span class="n">vector_layers</span>
+<span class="p">)</span>
+
+<span class="c1"># Create the root model with our TileModel instance</span>
+<span class="n">tileobj</span> <span class="o">=</span> <span class="n">TileJSON</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">tile_model</span><span class="p">)</span>
+
+<span class="c1"># Display the TileJSON specification</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TileJSON specification:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tileobj</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">TileJSON</span><span class="w"> </span><span class="n">specification</span><span class="p">:</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;tilejson&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;tiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;tiles/{z}/{x}/{y}.pbf&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Example Tile Layer&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A TileJSON example incorporating MicroJSON data&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;attribution&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polus AI&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;template&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;legend&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;scheme&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;grids&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;minzoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;maxzoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;bounds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="mf">5.352408515784582</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">5.049442955279417</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">9995.190828709661</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">9994.887863149157</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;center&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">5000.271618612723</span><span class="p">,</span>
+<span class="w">    </span><span class="mf">4999.9686530522185</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;fillzoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;vector_layers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;polygon-layer&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;fields&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;num_vertices&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;polytype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="s2">&quot;minzoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;maxzoom&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Layer containing polygon data&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;fieldranges&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;num_vertices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">          </span><span class="mi">24</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="s2">&quot;fieldenums&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;polytype&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="s2">&quot;Type3&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;Type2&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;Type1&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="s2">&quot;Type4&quot;</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="s2">&quot;fielddescriptions&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="s2">&quot;multiscale&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;scale_factor&quot;</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">null</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="export-tilejson-metadata">Export TileJSON Metadata</h2>
+<p>Let's export the TileJSON metadata to a file.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Export to tilejson</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;tiles/metadata.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tileobj</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TileJSON metadata exported to tiles/metadata.json&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">TileJSON</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="n">exported</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">tiles</span><span class="o">/</span><span class="n">metadata</span><span class="o">.</span><span class="n">json</span>
+</code></pre></div>
+
+<h2 id="generate-vector-tiles">Generate Vector Tiles</h2>
+<p>Finally, let's generate the vector tiles from our MicroJSON data.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Initialize the TileWriter</span>
+<span class="n">handler</span> <span class="o">=</span> <span class="n">TileWriter</span><span class="p">(</span><span class="n">tile_model</span><span class="p">,</span> <span class="n">pbf</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Convert MicroJSON to tiles</span>
+<span class="n">handler</span><span class="o">.</span><span class="n">microjson2tiles</span><span class="p">(</span><span class="n">microjson_data_path</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector tiles generated successfully!&quot;</span><span class="p">)</span>
+
+<span class="c1"># List the generated tile directories to verify</span>
+<span class="n">tile_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;tiles&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;tiles&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">))]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated tile zoom levels: </span><span class="si">{</span><span class="n">tile_dirs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>Vector tiles generated successfully!
+Generated tile zoom levels: [&#39;7&#39;, &#39;2&#39;, &#39;0&#39;, &#39;tiled_example&#39;, &#39;1&#39;, &#39;5&#39;, &#39;3&#39;, &#39;4&#39;, &#39;6&#39;]
+</code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>In this notebook, we've demonstrated how to:</p>
+<ol>
+<li>Generate or use existing MicroJSON data</li>
+<li>Extract field information from the data</li>
+<li>Define vector layers for our tiles</li>
+<li>Calculate bounds and center for our tile set</li>
+<li>Create a TileJSON specification</li>
+<li>Generate vector tiles from MicroJSON data</li>
+</ol>
+<p>These vector tiles can now be used in web mapping applications like Mapbox GL JS, Leaflet, or OpenLayers to display the data interactively.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      (c) 2023 PolusAI
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/json.min.js"></script>
+      
+        <script src="../init_highlight.js"></script>
+      
+    
+  </body>
+</html>
