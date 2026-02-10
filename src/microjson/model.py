@@ -1,6 +1,7 @@
 """MicroJSON and GeoJSON models, defined manually using pydantic."""
-from typing import Any, Optional, Union, Dict, TypeVar
-from pydantic import BaseModel, StrictInt, StrictStr, RootModel
+
+from typing import Any, Optional, Union, Dict
+from pydantic import StrictInt, StrictStr, RootModel
 from .provenance import Workflow
 from .provenance import WorkflowCollection
 from .provenance import Artifact
@@ -8,7 +9,6 @@ from .provenance import ArtifactCollection
 from geojson_pydantic import Feature, FeatureCollection, GeometryCollection
 from geojson_pydantic import Point, MultiPoint, LineString, MultiLineString
 from geojson_pydantic import Polygon, MultiPolygon
-
 
 GeometryType = Union[  # type: ignore
     Point,
@@ -20,8 +20,6 @@ GeometryType = Union[  # type: ignore
     GeometryCollection,
     type(None),
 ]
-
-Props = TypeVar("Props", bound=Union[Dict[str, Any], BaseModel])
 
 
 class GeoJSON(RootModel):
@@ -64,17 +62,14 @@ class MicroFeatureCollection(FeatureCollection):
             ArtifactCollection]]): The provenance of the feature collection
     """
 
-    properties: Optional[Union[Props, None]] = None  # type: ignore
+    properties: Optional[Dict[str, Any]] = None
     id: Optional[Union[StrictStr, StrictInt]] = None
-    provenance: Optional[Union[Workflow,
-                               WorkflowCollection,
-                               Artifact,
-                               ArtifactCollection]] = None
+    provenance: Optional[
+        Union[Workflow, WorkflowCollection, Artifact, ArtifactCollection]
+    ] = None
 
 
 class MicroJSON(RootModel):
     """The root object of a MicroJSON file"""
 
-    root: Union[MicroFeature,  # type: ignore
-                MicroFeatureCollection,
-                GeometryType]
+    root: Union[MicroFeature, MicroFeatureCollection, GeometryType]  # type: ignore

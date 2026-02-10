@@ -1,7 +1,7 @@
 import os
 from .microjson2vt.microjson2vt import microjson2vt
 from .tilehandler import TileHandler
-from microjson import MicroJSON
+from .model import MicroJSON
 import json
 from pydantic import ValidationError
 
@@ -13,9 +13,6 @@ from .vt2pbf import vt2pbf
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
-import pandas as pd
-import geopandas as gpd
 
 
 def getbounds(microjson_file: str, square: bool = False) -> List[float]:
@@ -29,24 +26,24 @@ def getbounds(microjson_file: str, square: bool = False) -> List[float]:
     Returns:
         List[float]: List of the bounds [minx, miny, maxx, maxy]
     """
-    with open(microjson_file, 'r') as file:
+    with open(microjson_file, "r") as file:
         data = json.load(file)
 
     # get the bounds
-    minx = miny = float('inf')
-    maxx = maxy = float('-inf')
-    if 'features' in data:
-        for feature in data['features']:
-            if 'geometry' in feature:
-                if feature['geometry']['type'] == 'Polygon':
-                    for ring in feature['geometry']['coordinates']:
+    minx = miny = float("inf")
+    maxx = maxy = float("-inf")
+    if "features" in data:
+        for feature in data["features"]:
+            if "geometry" in feature:
+                if feature["geometry"]["type"] == "Polygon":
+                    for ring in feature["geometry"]["coordinates"]:
                         for coord in ring:
                             minx = min(minx, coord[0])
                             miny = min(miny, coord[1])
                             maxx = max(maxx, coord[0])
                             maxy = max(maxy, coord[1])
-                if feature['geometry']['type'] == 'MultiPolygon':
-                    for polygon in feature['geometry']['coordinates']:
+                if feature["geometry"]["type"] == "MultiPolygon":
+                    for polygon in feature["geometry"]["coordinates"]:
                         for ring in polygon:
                             for coord in ring:
                                 minx = min(minx, coord[0])
@@ -63,12 +60,12 @@ def getbounds(microjson_file: str, square: bool = False) -> List[float]:
 def geojson2vt_to_shapely(geometry_data):
     # Extract coordinates and type
 
-    geom_type = geometry_data['type']
+    geom_type = geometry_data["type"]
 
     # Based on the `type` field, determine the geometry shape
     if geom_type == 3:  # 3 usually represents Polygon in such data formats
-        coordinates = geometry_data['geometry'][0]  # Only take outer ring
-        geometry_data['geometry'] = Polygon(coordinates)
+        coordinates = geometry_data["geometry"][0]  # Only take outer ring
+        geometry_data["geometry"] = Polygon(coordinates)
     else:
         raise ValueError("Unsupported geometry type")
 
@@ -89,26 +86,26 @@ def extract_fields_ranges_enums(microjson_file: str):
     def get_json_type(value):
         if value is None:
             # Set to String if None
-            return 'String'
+            return "String"
         if isinstance(value, bool):
-            return 'Boolean'
+            return "Boolean"
         if isinstance(value, (int, float)):
-            return 'Number'
+            return "Number"
         if isinstance(value, dict):
-            return 'Object'
+            return "Object"
         if isinstance(value, list):
-            return 'Array'
-        return 'String'
+            return "Array"
+        return "String"
 
-    with open(microjson_file, 'r') as file:
+    with open(microjson_file, "r") as file:
         data = json.load(file)
 
     field_names: dict[str, str] = {}
     field_ranges = {}
     field_enums: dict[str, set[str]] = {}
 
-    for feature in data.get('features', []):
-        props = feature.get('properties', {})
+    for feature in data.get("features", []):
+        props = feature.get("properties", {})
         for key, val in props.items():
             if key not in field_names.keys():
                 field_names[key] = get_json_type(val)
@@ -126,13 +123,14 @@ def extract_fields_ranges_enums(microjson_file: str):
     return field_names, field_ranges, field_enums
 
 
-class TileWriter (TileHandler):
+class TileWriter(TileHandler):
 
-    def microjson2tiles(self,
-                        microjson_data_path: Union[str, Path],
-                        validate: bool = False,
-                        tolerance_key: str = "default"
-                        ) -> List[str]:
+    def microjson2tiles(
+        self,
+        microjson_data_path: Union[str, Path],
+        validate: bool = False,
+        tolerance_key: str = "default",
+    ) -> List[str]:
         """
         Generate tiles in form of JSON or PBF files from MicroJSON data.
 
@@ -145,6 +143,7 @@ class TileWriter (TileHandler):
         Returns:
             List[str]: List of paths to the generated tiles
         """
+
         def save_tile(tile_data, z, x, y, tiles_path_template):
             """
             Save a single tile to a file based on the template path.
@@ -165,13 +164,10 @@ class TileWriter (TileHandler):
 
             # Save the tile data (this assumes tile_data is already in the
             # correct format, e.g., PBF or JSON)
-            if tile_path.endswith('.parquet'):
+            if tile_path.endswith(".parquet"):
                 tile_data.to_parquet(tile_path)
             else:
-                with open(
-                    tile_path,
-                    'wb' if tile_path.endswith('.pbf') else 'w'
-                ) as f:
+                with open(tile_path, "wb" if tile_path.endswith(".pbf") else "w") as f:
                     f.write(tile_data)
 
             # return the path to the saved tile
@@ -196,7 +192,7 @@ class TileWriter (TileHandler):
             # check if data is a dict
             elif isinstance(data, dict):
                 for key, value in data.items():
-                    if key == 'id':
+                    if key == "id":
                         if value is None:
                             data[key] = self.id_counter
                             self.id_counter += 1
@@ -216,7 +212,7 @@ class TileWriter (TileHandler):
                 return int(data)
 
         # Load the MicroJSON data
-        with open(microjson_data_path, 'r') as file:
+        with open(microjson_data_path, "r") as file:
             microjson_data = json.load(file)
 
         # Validate the MicroJSON data
@@ -230,18 +226,20 @@ class TileWriter (TileHandler):
         # TODO currently only supports one tile layer
         # calculate maxzoom and minzoom from layer and global tilejson
 
-        maxzoom = min(self.tile_json.maxzoom,
-                      self.tile_json.vector_layers[0].maxzoom)  # type: ignore
-        minzoom = max(self.tile_json.minzoom,
-                      self.tile_json.vector_layers[0].minzoom)  # type: ignore
+        maxzoom = min(
+            self.tile_json.maxzoom, self.tile_json.vector_layers[0].maxzoom
+        )  # type: ignore
+        minzoom = max(
+            self.tile_json.minzoom, self.tile_json.vector_layers[0].minzoom
+        )  # type: ignore
 
         # Options for geojson2vt from TileJSON
         options = {
-            'maxZoom': maxzoom,  # max zoom in the final tileset
-            'indexMaxZoom': self.tile_json.maxzoom,  # tile index max zoom
-            'indexMaxPoints': 0,  # max number of points per tile, 0 if none
-            'bounds': self.tile_json.bounds,
-            'tolerance_function': tolerance_key # Pass the string key
+            "maxZoom": maxzoom,  # max zoom in the final tileset
+            "indexMaxZoom": self.tile_json.maxzoom,  # tile index max zoom
+            "indexMaxPoints": 0,  # max number of points per tile, 0 if none
+            "bounds": self.tile_json.bounds,
+            "tolerance_function": tolerance_key,  # Pass the string key
         }
 
         # Convert GeoJSON to intermediate vector tiles
@@ -261,53 +259,32 @@ class TileWriter (TileHandler):
                 continue
             tile_data = tile_index.get_tile(z, x, y)
 
-            for item in tile_data['features']:
-                if 'id' in item:
-                    item['id'] = int(item['id'])
+            for item in tile_data["features"]:
+                if "id" in item:
+                    item["id"] = int(item["id"])
 
             # add name to the tile_data
             tile_data["name"] = "tile"
-
-            # print('tile_data before encoding')
-            # print(tile_data.keys())
-            # print(json.dumps(tile_data['features']))
-
-            # convert this dictionary to a geodataframe using gpd.GeoDataFrame.from_features
-            # tmp = gpd.GeoDataFrame.from_features(tile_data['features'])
-            # print(tmp)
-
-            # print('-------------------------')
-            # print('-------------------------')
-
-            # print('testing geopandas!')
-            # gdf = gpd.GeoDataFrame(tile_data)
-            # print(gdf)
-
-            # print('self.pbf', self.pbf)
-            # print('self.parquet', self.parquet)
 
             if self.pbf:
                 # Using vt2pbf to encode tile data to PBF
                 encoded_data = vt2pbf(tile_data)
             elif self.parquet:
-                # encoded_data = pd.DataFrame(tile_data)
+                import geopandas as gpd
+
                 encoded_data = gpd.GeoDataFrame(tile_data)
 
                 # drop metadata columns
-                encoded_data['new_geometry'] = encoded_data['features'].apply(lambda x: x['geometry'])
-                # encoded_data['Label'] = encoded_data['features'].apply(lambda x: x['Label'])
-                encoded_data = encoded_data[['new_geometry']]
+                encoded_data["new_geometry"] = encoded_data["features"].apply(
+                    lambda x: x["geometry"]
+                )
+                encoded_data = encoded_data[["new_geometry"]]
 
             else:
                 encoded_data = json.dumps(tile_data)
 
-            # print('self.tile_json.tiles[0]')
-            # print(self.tile_json.tiles[0])
-
-            # print('type(encoded_data)')
-            # print(type(encoded_data))
-
-            generated_tiles.append(save_tile(
-                encoded_data, z, x, y, self.tile_json.tiles[0]))
+            generated_tiles.append(
+                save_tile(encoded_data, z, x, y, self.tile_json.tiles[0])
+            )
 
         return generated_tiles

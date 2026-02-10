@@ -10,20 +10,19 @@ from .feature import Slice, create_feature
 
 def wrap(features, options):
     # wrap not needed for cartesian coordinates
-    buffer = options.get('buffer') / options.get('extent')
+    buffer = options.get("buffer") / options.get("extent")
     merged = features
-    left = clip(features, 1, -1 - buffer, buffer,
-                0, -1, 2, options)  # left world copy
-    right = clip(features, 1,  1 - buffer, 2 + buffer,
-                 0, -1, 2, options)  # right world copy
+    left = clip(features, 1, -1 - buffer, buffer, 0, -1, 2, options)  # left world copy
+    right = clip(
+        features, 1, 1 - buffer, 2 + buffer, 0, -1, 2, options
+    )  # right world copy
 
     if left is not None or right is not None:
         c = clip(features, 1, -buffer, 1 + buffer, 0, -1, 2, options)
         merged = c if c is not None else []  # :nter world copy
 
         if left is not None:
-            merged = shift_feature_coords(
-                left, 1) + merged  # merge left into center
+            merged = shift_feature_coords(left, 1) + merged  # merge left into center
         if right is not None:
             # merge right into center
             merged = merged + (shift_feature_coords(right, -1))
@@ -36,26 +35,27 @@ def shift_feature_coords(features, offset):
 
     for i in range(len(features)):
         feature = features[i]
-        type_ = feature.get('type')
+        type_ = feature.get("type")
         # new_geometry = None
         new_geometry = []
 
-        if type_ == 'Point' or type_ == 'MultiPoint' or type_ == 'LineString':
-            new_geometry = shift_coords(feature.get('geometry'), offset)
-        elif type_ == 'MultiLineString' or type_ == 'Polygon':
+        if type_ == "Point" or type_ == "MultiPoint" or type_ == "LineString":
+            new_geometry = shift_coords(feature.get("geometry"), offset)
+        elif type_ == "MultiLineString" or type_ == "Polygon":
             new_geometry = []
-            for line in feature.get('geometry'):
+            for line in feature.get("geometry"):
                 new_geometry.append(shift_coords(line, offset))
-        elif type_ == 'MultiPolygon':
+        elif type_ == "MultiPolygon":
             new_geometry = []
-            for polygon in feature.get('geometry'):
+            for polygon in feature.get("geometry"):
                 new_polygon = []
                 for line in polygon:
                     new_polygon.append(shift_coords(line, offset))
                 new_geometry.append(new_polygon)
 
-        new_features.append(create_feature(
-            feature.get('id'), type_, new_geometry, feature.get('tags')))
+        new_features.append(
+            create_feature(feature.get("id"), type_, new_geometry, feature.get("tags"))
+        )
     return new_features
 
 
